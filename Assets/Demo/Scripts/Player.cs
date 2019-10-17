@@ -28,6 +28,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float impulseDecay = 1f;
 
+
+    [SerializeField]
+    private float slopeForce;
+    [SerializeField]
+    private float slopeForceRayLength;
+
     // Functions
     private void Start()
     {
@@ -82,7 +88,11 @@ public class Player : MonoBehaviour
         motion.y += gravity * Time.deltaTime;
         controller.Move((motion + outsideImpulse) * Time.deltaTime);
 
-        if (controller.velocity.magnitude < outsideImpulseTreshold)
+        if ((inputV != 0 || inputH != 0 && OnSlope()))
+            controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);
+
+        if ((controller.velocity.magnitude < outsideImpulseTreshold) || (controller.isGrounded))
+        //if ((controller.velocity.magnitude < outsideImpulseTreshold))
         {
             outsideImpulse = Vector3.zero;
         }
@@ -118,10 +128,21 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(SpeedBoost(dashSpeed, moveSpeed, dashTime));
     }
-
     public void Boost(Transform transform)
     {
         outsideImpulse = transform.TransformDirection(Vector3.forward) * baseBoostLevel * transform.localScale.x;
+    }
+    private bool OnSlope()
+    {
+        if (isJumping)
+            return false;
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, controller.height / 2 * slopeForceRayLength))
+            if (hit.normal != Vector3.up)
+                return true;
+        return false;
     }
 }
 
