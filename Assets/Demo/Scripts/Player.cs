@@ -17,6 +17,17 @@ public class Player : MonoBehaviour
     private float currentJumpHeight;
     private float currentSpeed;
 
+    public Vector3 outsideImpulse = Vector3.zero;
+
+    [SerializeField]
+    private float baseBoostLevel = 100f;
+
+    [SerializeField]
+    private float outsideImpulseTreshold = 1f;
+
+    [SerializeField]
+    private float impulseDecay = 1f;
+
     // Functions
     private void Start()
     {
@@ -69,7 +80,16 @@ public class Player : MonoBehaviour
 
 
         motion.y += gravity * Time.deltaTime;
-        controller.Move(motion * Time.deltaTime);
+        controller.Move((motion + outsideImpulse) * Time.deltaTime);
+
+        if (controller.velocity.magnitude < outsideImpulseTreshold)
+        {
+            outsideImpulse = Vector3.zero;
+        }
+        else
+        {
+            outsideImpulse = Vector3.Lerp(outsideImpulse, Vector3.zero, impulseDecay * Time.deltaTime);
+        }
     }
     private void Move(float inputH, float inputV, float speed)
     {
@@ -97,6 +117,11 @@ public class Player : MonoBehaviour
     public void Dash()
     {
         StartCoroutine(SpeedBoost(dashSpeed, moveSpeed, dashTime));
+    }
+
+    public void Boost(Transform transform)
+    {
+        outsideImpulse = transform.TransformDirection(Vector3.forward) * baseBoostLevel * transform.localScale.x;
     }
 }
 
