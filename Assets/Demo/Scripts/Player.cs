@@ -97,7 +97,14 @@ public class Player : MonoBehaviour
             {
                 outsideImpulse[i] = Mathf.Lerp(outsideImpulse[i], 0f, (controller.isGrounded ? impulseDecay : airImpulseDecay) * Time.deltaTime);
             }
+
+            if (((i == 1) || (Mathf.Abs(outsideImpulse[i]) < currentSpeed * 2f)) && (((controller.velocity[i] < 0f) && (outsideImpulse[i] > 0f)) || ((controller.velocity[i] > 0f) && (outsideImpulse[i] < 0f))))
+            {
+                motion[i] += outsideImpulse[i];
+                outsideImpulse[i] = 0f;
+            }
         }
+
     }
     private void Move(float inputH, float inputV, float speed)
     {
@@ -128,6 +135,7 @@ public class Player : MonoBehaviour
     }
     public void Boost(Transform transform)
     {
+        motion.y = 0f;
         outsideImpulse = transform.TransformDirection(Vector3.forward) * baseBoostLevel * transform.localScale.x;
         isBoosting = true;
     }
