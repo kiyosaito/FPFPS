@@ -28,7 +28,10 @@ public class Player : MonoBehaviour
     private float outsideImpulseTreshold = 1f;
 
     [SerializeField]
-    private float impulseDecay = 1f;
+    private float impulseDecay = 2f;
+
+    [SerializeField]
+    private float airImpulseDecay = 1f;
 
     // Functions
     private void Start()
@@ -84,14 +87,16 @@ public class Player : MonoBehaviour
         motion.y += gravity * Time.deltaTime;
         controller.Move((motion + outsideImpulse) * Time.deltaTime);
 
-        if ((controller.velocity.magnitude < outsideImpulseTreshold) || ((controller.isGrounded) && (isBoosting == true)))
+        for (int i = 0; i < 3; ++i)
         {
-            outsideImpulse = Vector3.zero;
-            isBoosting = false;
-        }
-        else
-        {
-            outsideImpulse = Vector3.Lerp(outsideImpulse, Vector3.zero, impulseDecay * Time.deltaTime);
+            if (((currentSpeed * outsideImpulseTreshold) > Mathf.Abs(outsideImpulse[i])) && controller.isGrounded)
+            {
+                outsideImpulse[i] = 0f;
+            }
+            else
+            {
+                outsideImpulse[i] = Mathf.Lerp(outsideImpulse[i], 0f, (controller.isGrounded ? impulseDecay : airImpulseDecay) * Time.deltaTime);
+            }
         }
     }
     private void Move(float inputH, float inputV, float speed)
