@@ -27,11 +27,12 @@ public class CameraLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Clamp the camera on pitch
+        float newPitch = Mathf.Clamp(euler.x - Input.GetAxis("Mouse Y") * speed.y * Time.deltaTime, minPitch, maxPitch);
+
         // Rotate the camera with Mouse movement
         euler.y += Input.GetAxis("Mouse X") * speed.x * Time.deltaTime;
-        euler.x -= Input.GetAxis("Mouse Y") * speed.y * Time.deltaTime;
-
-        // Clamp the camera on pitch
+        euler.x = newPitch;
 
         // Apply euler to the Player & Camera seperately
         transform.parent.localEulerAngles = new Vector3(0, euler.y, 0);
