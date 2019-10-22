@@ -66,8 +66,9 @@ public class ChargedWeapon : MonoBehaviour
     [SerializeField]
     private float _rotTreshold = 5f;
 
-    [SerializeField]
-    private ParticleSystem _shot = null;
+    private ChargedWeaponEffect _shotEffect = null;
+
+    private Vector3 _lastHitPos = Vector3.zero;
 
     #endregion
 
@@ -75,10 +76,18 @@ public class ChargedWeapon : MonoBehaviour
 
     private void Start()
     {
+        // TODO: Move this to a more generic place, like a GameManager
+        for (int i = 0; i < 32; ++i)
+        {
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("TargetLayer"), i);
+        }
+
         if (null == _cam)
         {
             _cam = Camera.main;
         }
+
+        _shotEffect = GetComponent<ChargedWeaponEffect>();
     }
 
     private void Update()
@@ -191,38 +200,41 @@ public class ChargedWeapon : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(_cam.transform.position, _cam.transform.TransformDirection(Vector3.forward), out hit, _maxDistance, _hitMask))
         {
-            if (null != hit.collider)
-            {
-                _currentTarget = hit.collider.GetComponent<Target>();
+            _currentTarget = hit.collider.GetComponent<Target>();
 
-                // We check if it hit a target
-                if (null != _currentTarget)
-                {
-                    // We make the weapon immediately face the target
-                    transform.LookAt(hit.point);
-                }
-            }
+            // We check if it hit a target
+            //if (null != _currentTarget)
+            //{
+            //    // We make the weapon immediately face the target
+            //    transform.LookAt(hit.point);
+            //}
+
+            _lastHitPos = hit.point;
         }
-
-        if (null == _currentTarget)
+        else
         {
-            // If we don't have a target, we gradually move facing the same direction as the player head/camera
-            if (Mathf.Abs(Quaternion.Angle(transform.rotation, _cam.transform.rotation)) < _rotTreshold)
-            {
-                transform.rotation = _cam.transform.rotation;
-            }
-            else
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, _cam.transform.rotation, _rotSlerpRate * Time.deltaTime);
-            }
+            _lastHitPos = transform.position + _cam.transform.TransformDirection(Vector3.forward) * _maxDistance;
         }
+
+        //if (null == _currentTarget)
+        //{
+        //    // If we don't have a target, we gradually move facing the same direction as the player head/camera
+        //    if (Mathf.Abs(Quaternion.Angle(transform.rotation, _cam.transform.rotation)) < _rotTreshold)
+        //    {
+        //        transform.rotation = _cam.transform.rotation;
+        //    }
+        //    else
+        //    {
+        //        transform.rotation = Quaternion.Slerp(transform.rotation, _cam.transform.rotation, _rotSlerpRate * Time.deltaTime);
+        //    }
+        //}
     }
 
     private void Shoot()
     {
-        if (null != _shot)
+        if (null != _shotEffect)
         {
-            _shot.Play();
+            _shotEffect.PlayShotEffect(_lastHitPos);
         }
 
         if (null != _currentTarget)
@@ -233,9 +245,9 @@ public class ChargedWeapon : MonoBehaviour
 
     private void ShootCharged()
     {
-        if (null != _shot)
+        if (null != _shotEffect)
         {
-            _shot.Play();
+            _shotEffect.PlayChargedShotEffect(_lastHitPos);
         }
 
         if (null != _currentTarget)
