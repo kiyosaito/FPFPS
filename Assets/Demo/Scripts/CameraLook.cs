@@ -27,6 +27,17 @@ public class CameraLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isCursorHidden = isCursorHidden != (Input.GetKeyDown(KeyCode.Escape));
+
+        if (isCursorHidden)
+        {
+            Cursor.lockState = CursorLockMode.None;
+
+            // Lock and hide it
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false; // ... Invisible!
+        }
+
         // Clamp the camera on pitch
         float newPitch = Mathf.Clamp(euler.x - Input.GetAxis("Mouse Y") * speed.y * Time.deltaTime, minPitch, maxPitch);
 
@@ -37,5 +48,6 @@ public class CameraLook : MonoBehaviour
         // Apply euler to the Player & Camera seperately
         transform.parent.localEulerAngles = new Vector3(0, euler.y, 0);
         transform.localEulerAngles = new Vector3(euler.x, 0, 0);
+
     }
 }
