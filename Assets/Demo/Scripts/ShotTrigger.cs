@@ -12,7 +12,7 @@ public class ShotTrigger : MonoBehaviour, Target
     [SerializeField]
     private UnityEvent onShoot = default;
 
-    public void GetShot(bool charged)
+    public void GetShot(bool charged, Vector3 point)
     {
         onShoot.Invoke();
 
