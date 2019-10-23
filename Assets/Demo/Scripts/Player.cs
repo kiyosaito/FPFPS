@@ -17,8 +17,6 @@ public class Player : MonoBehaviour
     private float currentJumpHeight;
     private float currentSpeed;
 
-    public bool isBoosting;
-
     public Vector3 outsideImpulse = Vector3.zero;
 
     [SerializeField]
@@ -135,13 +133,12 @@ public class Player : MonoBehaviour
     }
     public void Boost(Transform transform)
     {
-        motion.y = 0f;
-        outsideImpulse = transform.TransformDirection(Vector3.forward) * baseBoostLevel * transform.localScale.x;
-        isBoosting = true;
+        Boost(transform.TransformDirection(Vector3.forward) * transform.localScale.x);
     }
-    public void Propel(Transform transform)
+    public void Boost(Vector3 boost)
     {
-        outsideImpulse = transform.TransformDirection(Vector3.forward) * baseBoostLevel * transform.localScale.x;
+        motion.y = 0f;
+        outsideImpulse = boost * baseBoostLevel;
     }
 }
 
