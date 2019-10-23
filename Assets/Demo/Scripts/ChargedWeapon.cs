@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 public interface Target
 {
-    void GetShot(bool charged);
+    void GetShot(bool charged, Vector3 point);
 }
 
 public class ChargedWeapon : MonoBehaviour
@@ -196,6 +196,8 @@ public class ChargedWeapon : MonoBehaviour
 
     private void AimWeapon()
     {
+        _currentTarget = null;
+
         // We send out a ray from the center of the camera
         RaycastHit hit;
         if (Physics.Raycast(_cam.transform.position, _cam.transform.TransformDirection(Vector3.forward), out hit, _maxDistance, _hitMask))
@@ -239,7 +241,7 @@ public class ChargedWeapon : MonoBehaviour
 
         if (null != _currentTarget)
         {
-            _currentTarget.GetShot(false);
+            _currentTarget.GetShot(false, _lastHitPos);
         }
     }
 
@@ -252,7 +254,7 @@ public class ChargedWeapon : MonoBehaviour
 
         if (null != _currentTarget)
         {
-            _currentTarget.GetShot(true);
+            _currentTarget.GetShot(true, _lastHitPos);
         }
     }
 
