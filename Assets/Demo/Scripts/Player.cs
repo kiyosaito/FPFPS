@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private bool isJumping;
     private float currentJumpHeight;
     private float currentSpeed;
+    private bool canAirJump;
 
     public Vector3 outsideImpulse = Vector3.zero;
 
@@ -60,7 +61,7 @@ public class Player : MonoBehaviour
         Move(inputDir.x, inputDir.z, currentSpeed);
 
         // If is Grounded
-        if (controller.isGrounded)
+        if (controller.isGrounded || canAirJump == true)
         {
             // .. And jump?
             if (inputJump)
@@ -68,16 +69,15 @@ public class Player : MonoBehaviour
                 Jump(jumpHeight);
             }
 
-            // Cancel the y velocity
-            motion.y = 0f;
-
             // Is jumping bool set to true
             if (isJumping)
             {
+                motion.y = 0f;
                 // Set jump height
                 motion.y = currentJumpHeight;
                 // Reset back to false
                 isJumping = false;
+                canAirJump = false;
             }
         }
 
@@ -139,6 +139,10 @@ public class Player : MonoBehaviour
     {
         motion.y = 0f;
         outsideImpulse = boost * baseBoostLevel;
+    }
+    public void AirJump()
+    {
+        canAirJump = true;
     }
 }
 

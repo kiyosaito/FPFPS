@@ -26,3 +26,4 @@ public class ShotTrigger : MonoBehaviour, Target
         }
     }
 }
+
