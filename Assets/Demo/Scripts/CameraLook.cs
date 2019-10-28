@@ -27,7 +27,7 @@ public class CameraLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isCursorHidden = isCursorHidden != (Input.GetKeyDown(KeyCode.Escape));
+        isCursorHidden = isCursorHidden != (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Escape));
 
         if (isCursorHidden)
         {
@@ -39,10 +39,10 @@ public class CameraLook : MonoBehaviour
         }
 
         // Clamp the camera on pitch
-        float newPitch = Mathf.Clamp(euler.x - Input.GetAxis("Mouse Y") * speed.y * Time.deltaTime, minPitch, maxPitch);
+        float newPitch = Mathf.Clamp(euler.x - InputManager.Instance.GetAxis(InputManager.AxisInputs.LookVertical) * speed.y * Time.deltaTime, minPitch, maxPitch);
 
         // Rotate the camera with Mouse movement
-        euler.y += Input.GetAxis("Mouse X") * speed.x * Time.deltaTime;
+        euler.y += InputManager.Instance.GetAxis(InputManager.AxisInputs.LookHorizontal) * speed.x * Time.deltaTime;
         euler.x = newPitch;
 
         // Apply euler to the Player & Camera seperately

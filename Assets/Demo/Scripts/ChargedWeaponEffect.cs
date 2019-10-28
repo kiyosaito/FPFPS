@@ -34,22 +34,12 @@ public class ChargedWeaponEffect : MonoBehaviour
 
     #region Public Functions
 
-    public void PlayShotEffect(Vector3 targetPos)
+    public void PlayShotEffect(bool charged, Vector3 targetPos)
     {
         _line.SetPosition(0, _shotOrigin.position);
         _line.SetPosition(1, targetPos);
-        _line.startColor = Color.yellow;
-        _line.endColor = Color.yellow;
-        _line.enabled = true;
-        Invoke("TurnOff", 0.25f);
-    }
-
-    public void PlayChargedShotEffect(Vector3 targetPos)
-    {
-        _line.SetPosition(0, _shotOrigin.position);
-        _line.SetPosition(1, targetPos);
-        _line.startColor = Color.red;
-        _line.endColor = Color.red;
+        _line.startColor = (charged ? Color.red : Color.yellow);
+        _line.endColor = (charged ? Color.red : Color.yellow);
         _line.enabled = true;
         Invoke("TurnOff", 0.25f);
     }

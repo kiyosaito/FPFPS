@@ -41,12 +41,12 @@ public class Player : MonoBehaviour
     private void Update()
     {
         // W A S D / Right Left Up Down Arrow Input
-        float inputH = Input.GetAxis("Horizontal");
-        float inputV = Input.GetAxis("Vertical");
+        float inputH = InputManager.Instance.GetAxis(InputManager.AxisInputs.MoveHorizontal);
+        float inputV = InputManager.Instance.GetAxis(InputManager.AxisInputs.MoveVertical);
         // Left Shift Input
 
         // Space Bar Input
-        bool inputJump = Input.GetButtonDown("Jump");
+        bool inputJump = InputManager.Instance.GetButtonDown(InputManager.InputKeys.Jump);
         // Put Horizontal & Vertical input into vector
         Vector3 inputDir = new Vector3(inputH, 0f, inputV);
         // Rotate direction to Player's Direction
@@ -149,6 +149,12 @@ public class Player : MonoBehaviour
     public void AirJump()
     {
         canAirJump = true;
+    }
+    public void Warp(Vector3 loc)
+    {
+        controller.enabled = false;
+        transform.position = loc;
+        controller.enabled = true;
     }
 }
 
