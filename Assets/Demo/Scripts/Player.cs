@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         Move(inputDir.x, inputDir.z, currentSpeed);
 
         // If is Grounded
-        if (controller.isGrounded || canAirJump == true)
+        if (controller.isGrounded || canAirJump)
         {
             // .. And jump?
             if (inputJump)
@@ -69,8 +69,11 @@ public class Player : MonoBehaviour
                 Jump(jumpHeight);
             }
 
-            // Cancel the y velocity
-            motion.y = 0f;
+            // Cancel the y velocity if grounded
+            if (controller.isGrounded)
+            {
+                motion.y = 0f;
+            }
 
             // Is jumping bool set to true
             if (isJumping)
