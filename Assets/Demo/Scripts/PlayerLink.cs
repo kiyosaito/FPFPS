@@ -12,9 +12,10 @@ public class PlayerLink : ScriptableObject
         get { return _instance; }
     }
 
-    private void Awake()
+    [RuntimeInitializeOnLoadMethod]
+    private static void Init()
     {
-        _instance = this;
+        _instance = Resources.LoadAll<PlayerLink>("")[0];
     }
 
     #endregion

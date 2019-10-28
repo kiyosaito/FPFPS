@@ -5,14 +5,19 @@ public class BreakShot : MonoBehaviour, SpecialShot
     public bool Shoot(Vector3 hitPos, RaycastHit hit)
     {
         RaycastHit potHit = hit;
-        BreakableObject pot = potHit.collider.gameObject.GetComponent<BreakableObject>();
+        BreakableObject pot = null;
+
+        if (null != hit.collider)
+        {
+            pot = potHit.collider.gameObject.GetComponent<BreakableObject>();
+        }
+
+        ChargedWeapon weapon = PlayerLink.Instance.WeaponInstance;
 
         while (null != pot)
         {
             pot.GetShot(true, hit.point);
             pot = null;
-
-            ChargedWeapon weapon = PlayerLink.Instance.WeaponInstance;
 
             weapon.AimWeapon();
             potHit = weapon.LastHit;
