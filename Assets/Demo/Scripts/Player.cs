@@ -69,10 +69,13 @@ public class Player : MonoBehaviour
                 Jump(jumpHeight);
             }
 
+            // Cancel the y velocity
+            motion.y = 0f;
+
             // Is jumping bool set to true
             if (isJumping)
             {
-                motion.y = 0f;
+                
                 // Set jump height
                 motion.y = currentJumpHeight;
                 // Reset back to false
