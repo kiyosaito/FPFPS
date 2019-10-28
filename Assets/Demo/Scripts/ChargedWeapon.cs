@@ -1,9 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
+// Interface for targets that can be shot by the weapon
 public interface Target
 {
     void GetShot(bool charged, Vector3 point);
+}
+
+// Interface for special shot types
+public interface SpecialShot
+{
+    bool Shoot(Vector3 hitPos, RaycastHit hit);
+
+    void Disappear();
 }
 
 public class ChargedWeapon : MonoBehaviour
@@ -58,17 +67,22 @@ public class ChargedWeapon : MonoBehaviour
     [SerializeField]
     private float _maxDistance = 100f;
 
-    // The rate the weapon returns to the neautral rotation when there's no target available
-    [SerializeField]
-    private float _rotSlerpRate = 1f;
-
-    // The angle treshold below which the weapon snaps to the same rotation as the camera, instead of slerping
-    [SerializeField]
-    private float _rotTreshold = 5f;
-
     private ChargedWeaponEffect _shotEffect = null;
 
     private Vector3 _lastHitPos = Vector3.zero;
+
+    private RaycastHit _lastHit = default;
+
+    private SpecialShot _special = null;
+
+    #endregion
+
+    #region Public Properties
+
+    public RaycastHit LastHit
+    {
+        get { return _lastHit; }
+    }
 
     #endregion
 
@@ -96,8 +110,7 @@ public class ChargedWeapon : MonoBehaviour
 
         _timer = Mathf.Max(0f, _timer - Time.deltaTime);
 
-        // TODO: change to use input manager, instead of directly getting the input
-        if (Input.GetMouseButton(0))
+        if (InputManager.Instance.GetMouseButton())
         {
             // The shoot button is held
             switch (_weaponState)
@@ -158,7 +171,7 @@ public class ChargedWeapon : MonoBehaviour
                     break;
                 case WeaponStates.Charging:
                     // If the weapon was charging, release a normal shot and start reload
-                    Shoot();
+                    Shoot(false);
                     _weaponState = WeaponStates.Reload;
                     _timer = _reloadTime;
                     break;
@@ -171,7 +184,7 @@ public class ChargedWeapon : MonoBehaviour
                     break;
                 case WeaponStates.Charged:
                     // If the weapon was charged, release a charged shot
-                    ShootCharged();
+                    Shoot(true);
                     _weaponState = WeaponStates.Reload;
                     _timer = _reloadTime;
                     break;
@@ -194,7 +207,32 @@ public class ChargedWeapon : MonoBehaviour
 
     #region Private Functions
 
-    private void AimWeapon()
+    private void Shoot(bool charged)
+    {
+        if (null != _shotEffect)
+        {
+            _shotEffect.PlayShotEffect(charged, _lastHitPos);
+        }
+
+        if ((null != _special) && charged)
+        {
+            if(_special.Shoot(_lastHitPos, _lastHit))
+            {
+                _special.Disappear();
+                _special = null;
+            }
+        }
+        else if (null != _currentTarget)
+        {
+            _currentTarget.GetShot(charged, _lastHitPos);
+        }
+    }
+
+    #endregion
+
+    #region Public Functions
+
+    public void AimWeapon()
     {
         _currentTarget = null;
 
@@ -203,59 +241,25 @@ public class ChargedWeapon : MonoBehaviour
         if (Physics.Raycast(_cam.transform.position, _cam.transform.TransformDirection(Vector3.forward), out hit, _maxDistance, _hitMask))
         {
             _currentTarget = hit.collider.GetComponent<Target>();
-
-            // We check if it hit a target
-            //if (null != _currentTarget)
-            //{
-            //    // We make the weapon immediately face the target
-            //    transform.LookAt(hit.point);
-            //}
-
             _lastHitPos = hit.point;
         }
         else
         {
             _lastHitPos = transform.position + _cam.transform.TransformDirection(Vector3.forward) * _maxDistance;
         }
-
-        //if (null == _currentTarget)
-        //{
-        //    // If we don't have a target, we gradually move facing the same direction as the player head/camera
-        //    if (Mathf.Abs(Quaternion.Angle(transform.rotation, _cam.transform.rotation)) < _rotTreshold)
-        //    {
-        //        transform.rotation = _cam.transform.rotation;
-        //    }
-        //    else
-        //    {
-        //        transform.rotation = Quaternion.Slerp(transform.rotation, _cam.transform.rotation, _rotSlerpRate * Time.deltaTime);
-        //    }
-        //}
+        _lastHit = hit;
     }
 
-    private void Shoot()
+    // Function to add a special shot type to the weapon
+    public void AddSpecial(SpecialShot special)
     {
-        if (null != _shotEffect)
+        if (null != _special)
         {
-            _shotEffect.PlayShotEffect(_lastHitPos);
+            // If we already had a special shot, replace the existing one with the new one
+            _special.Disappear();
         }
 
-        if (null != _currentTarget)
-        {
-            _currentTarget.GetShot(false, _lastHitPos);
-        }
-    }
-
-    private void ShootCharged()
-    {
-        if (null != _shotEffect)
-        {
-            _shotEffect.PlayChargedShotEffect(_lastHitPos);
-        }
-
-        if (null != _currentTarget)
-        {
-            _currentTarget.GetShot(true, _lastHitPos);
-        }
+        _special = special;
     }
 
     #endregion
