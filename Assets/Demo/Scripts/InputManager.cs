@@ -11,6 +11,19 @@ public sealed class InputManager : UnitySingleton<InputManager>
 
     private float _mouseSensitivity = 1f;
 
+    private float _keyboardSensitivity = 20f;
+
+    private class AxisValue
+    {
+        public float axisValue;
+        public InputKeys positiveButton;
+        public InputKeys negativeButton;
+
+        public AxisValue(InputKeys pos, InputKeys neg) { axisValue = 0f; positiveButton = pos; negativeButton = neg; }
+    };
+
+    private Dictionary<AxisInputs, AxisValue> _axisValues = new Dictionary<AxisInputs, AxisValue>();
+
     #endregion
 
     #region Public Properties
@@ -21,12 +34,22 @@ public sealed class InputManager : UnitySingleton<InputManager>
         set { _mouseSensitivity = value; }
     }
 
+    public float KeyboardSensitivity
+    {
+        get { return _keyboardSensitivity; }
+        set { _keyboardSensitivity = value; }
+    }
+
     #endregion
 
     #region Private Functions
 
     protected override void Setup()
     {
+        // Map axis buttons to corresponding axis
+        _axisValues.Add(AxisInputs.MoveHorizontal, new AxisValue(InputKeys.MoveHorizontalPositive, InputKeys.MoveHorizontalNegative));
+        _axisValues.Add(AxisInputs.MoveVertical, new AxisValue(InputKeys.MoveVerticalPositive, InputKeys.MoveVerticalNegative));
+
         // Default keymapping
         _keyMapping.Add(InputKeys.MoveHorizontalPositive, KeyCode.D);
         _keyMapping.Add(InputKeys.MoveHorizontalNegative, KeyCode.A);
@@ -44,6 +67,10 @@ public sealed class InputManager : UnitySingleton<InputManager>
     {
         MoveHorizontal,
         MoveVertical,
+    };
+
+    public enum MouseAxisInputs
+    {
         LookHorizontal,
         LookVertical,
     };
@@ -60,22 +87,19 @@ public sealed class InputManager : UnitySingleton<InputManager>
 
     public float GetAxis(AxisInputs axis)
     {
+        return _axisValues[axis].axisValue;
+    }
+
+    public float GetMouseAxis(MouseAxisInputs axis)
+    {
         float inputValue = 0f;
 
         switch (axis)
         {
-            case AxisInputs.MoveHorizontal:
-                inputValue += (Input.GetKey(_keyMapping[InputKeys.MoveHorizontalPositive]) ? 1f : 0f);
-                inputValue += (Input.GetKey(_keyMapping[InputKeys.MoveHorizontalNegative]) ? -1f : 0f);
-                break;
-            case AxisInputs.MoveVertical:
-                inputValue += (Input.GetKey(_keyMapping[InputKeys.MoveVerticalPositive]) ? 1f : 0f);
-                inputValue += (Input.GetKey(_keyMapping[InputKeys.MoveVerticalNegative]) ? -1f : 0f);
-                break;
-            case AxisInputs.LookHorizontal:
+            case MouseAxisInputs.LookHorizontal:
                 inputValue = Input.GetAxis("Mouse X") * _mouseSensitivity;
                 break;
-            case AxisInputs.LookVertical:
+            case MouseAxisInputs.LookVertical:
                 inputValue = Input.GetAxis("Mouse Y") * _mouseSensitivity;
                 break;
         }
@@ -111,6 +135,21 @@ public sealed class InputManager : UnitySingleton<InputManager>
     public bool GetMouseButtonUp()
     {
         return Input.GetMouseButtonUp(_mouseButtonIdx);
+    }
+
+    #endregion
+
+    #region MonoBehaviour Functions
+
+    private void Update()
+    {
+        foreach (var axisValue in _axisValues)
+        {
+            float rawAxis = 0f;
+            rawAxis += (Input.GetKey(_keyMapping[axisValue.Value.positiveButton]) ? 1f : 0f);
+            rawAxis += (Input.GetKey(_keyMapping[axisValue.Value.negativeButton]) ? -1f : 0f);
+            axisValue.Value.axisValue += Mathf.Clamp(rawAxis - axisValue.Value.axisValue, -1f / _keyboardSensitivity, 1f / _keyboardSensitivity);
+        }
     }
 
     #endregion

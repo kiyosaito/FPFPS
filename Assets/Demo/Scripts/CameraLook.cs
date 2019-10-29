@@ -39,10 +39,10 @@ public class CameraLook : MonoBehaviour
         }
 
         // Clamp the camera on pitch
-        float newPitch = Mathf.Clamp(euler.x - InputManager.Instance.GetAxis(InputManager.AxisInputs.LookVertical) * speed.y * Time.deltaTime, minPitch, maxPitch);
+        float newPitch = Mathf.Clamp(euler.x - InputManager.Instance.GetMouseAxis(InputManager.MouseAxisInputs.LookVertical) * speed.y * Time.deltaTime, minPitch, maxPitch);
 
         // Rotate the camera with Mouse movement
-        euler.y += InputManager.Instance.GetAxis(InputManager.AxisInputs.LookHorizontal) * speed.x * Time.deltaTime;
+        euler.y += InputManager.Instance.GetMouseAxis(InputManager.MouseAxisInputs.LookHorizontal) * speed.x * Time.deltaTime;
         euler.x = newPitch;
 
         // Apply euler to the Player & Camera seperately
