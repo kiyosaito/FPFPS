@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckPointManager : MonoBehaviour
+public class CheckPointManager : UnitySingleton<CheckPointManager>
 {
     public Vector3 checkpoint;
 }

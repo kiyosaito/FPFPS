@@ -4,35 +4,25 @@ using UnityEngine;
 
 public class OutOfBounds : MonoBehaviour
 {
-    private Player playerScript;
-    private CheckPointManager checkPoint;
-    private GameObject player;
-
-    private void Awake()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerScript = player.GetComponent<Player>();
-        checkPoint = FindObjectOfType<CheckPointManager>();
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             DisablePlayer();
             Invoke("RespawnPlayer",0.5f);
-            Invoke("EnablePlayer", 0.5f);
+            Invoke("EnablePlayer", 1.5f);
         }
     }
     void DisablePlayer()
     {
-        playerScript.enabled = false;
+        PlayerLink.Instance.PlayerInstance.enabled = false;
     }
     void RespawnPlayer()
     {
-        player.transform.position = checkPoint.transform.position;
+        PlayerLink.Instance.PlayerInstance.gameObject.transform.position = CheckPointManager.Instance.checkpoint;
     }
     void EnablePlayer()
     {
-        playerScript.enabled = true;
+        PlayerLink.Instance.PlayerInstance.enabled = true;
     }
 }
