@@ -56,7 +56,8 @@ public sealed class InputManager : UnitySingleton<InputManager>
         _keyMapping.Add(InputKeys.MoveVerticalPositive, KeyCode.W);
         _keyMapping.Add(InputKeys.MoveVerticalNegative, KeyCode.S);
         _keyMapping.Add(InputKeys.Jump, KeyCode.Space);
-        _keyMapping.Add(InputKeys.Escape, KeyCode.Escape);
+        _keyMapping.Add(InputKeys.Menu, KeyCode.Escape);
+        _keyMapping.Add(InputKeys.QuickRestart, KeyCode.R);
     }
 
     #endregion
@@ -82,7 +83,8 @@ public sealed class InputManager : UnitySingleton<InputManager>
         MoveVerticalPositive,
         MoveVerticalNegative,
         Jump,
-        Escape,
+        Menu,
+        QuickRestart,
     };
 
     public float GetAxis(AxisInputs axis)

@@ -27,7 +27,12 @@ public class CameraLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isCursorHidden = isCursorHidden != (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Escape));
+        if (!PlayerLink.Instance.PlayerInstance.isActiveAndEnabled)
+        {
+            return;
+        }
+
+        isCursorHidden = isCursorHidden != (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Menu));
 
         if (isCursorHidden)
         {
@@ -49,5 +54,14 @@ public class CameraLook : MonoBehaviour
         transform.parent.localEulerAngles = new Vector3(0, euler.y, 0);
         transform.localEulerAngles = new Vector3(euler.x, 0, 0);
 
+    }
+
+    // Reset the camera to a specific rotation, used when restoring to previous checkpoint
+    public void ResetCamera(Quaternion resetRotation)
+    {
+        euler = resetRotation.eulerAngles;
+
+        transform.parent.localEulerAngles = new Vector3(0, euler.y, 0);
+        transform.localEulerAngles = new Vector3(euler.x, 0, 0);
     }
 }

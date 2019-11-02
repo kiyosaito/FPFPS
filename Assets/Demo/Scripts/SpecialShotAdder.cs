@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 
-public class SpecialShotAdder : MonoBehaviour
+public class SpecialShotAdder : ResetableObject
 {
+    #region Private Variables
+
+    private bool _available = true;
+
+    private bool _savedAvailable = true;
+
     private enum SpecialShotTypes
     {
         Launch,
@@ -12,8 +18,12 @@ public class SpecialShotAdder : MonoBehaviour
     [SerializeField]
     private SpecialShotTypes _type = SpecialShotTypes.Launch;
 
+    #endregion
+
+    #region MonoBehaviour Functions
+
     // TODO: Setup layers so there are less needless triggers
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         Player player = other.gameObject.GetComponent<Player>();
 
@@ -23,10 +33,15 @@ public class SpecialShotAdder : MonoBehaviour
 
             weapon.AddSpecial(AddSpecialShotComponent(weapon.gameObject));
 
-            // TODO: Consider if special shot dispenser recharges, or how to deal with loading back previous checkpoint
-            Destroy(this.gameObject);
+            // TODO: Consider if special shot dispenser recharges
+            gameObject.SetActive(false);
+            _available = false;
         }
     }
+
+    #endregion
+
+    #region Private Functions
 
     private SpecialShot AddSpecialShotComponent(GameObject weapon)
     {
@@ -47,4 +62,21 @@ public class SpecialShotAdder : MonoBehaviour
 
         return special;
     }
+
+    #endregion
+
+    #region Abstract class implementation
+
+    public override void SaveState()
+    {
+        _savedAvailable = _available;
+    }
+
+    public override void ResetState()
+    {
+        _available = _savedAvailable;
+        gameObject.SetActive(_available);
+    }
+
+    #endregion
 }
