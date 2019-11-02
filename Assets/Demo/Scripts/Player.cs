@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Variables
+    public const string playerTag = "Player";
+
     public float moveSpeed = 20f;
     public float dashSpeed = 20f;
     public float dashTime = 2f;
@@ -17,6 +19,7 @@ public class Player : MonoBehaviour
     private float currentJumpHeight;
     private float currentSpeed;
     private bool canAirJump;
+    private bool needToEndBoost = false; // Bool to keep track if we need to end the speed boost, or something else interrupted it
 
     public Vector3 outsideImpulse = Vector3.zero;
 
@@ -37,9 +40,19 @@ public class Player : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         currentSpeed = moveSpeed;
+
+        // The initial position of the player acts as the first checkpoint
+        CheckPointManager.Instance.CheckpointReached(transform);
     }
     private void Update()
     {
+        if (InputManager.Instance.GetButtonDown(InputManager.InputKeys.QuickRestart))
+        {
+            // If the player presses the restart button, respawn the player at the last checkpoint
+            CheckPointManager.Instance.StartRespawnSequence();
+            return;
+        }
+
         // W A S D / Right Left Up Down Arrow Input
         float inputH = InputManager.Instance.GetAxis(InputManager.AxisInputs.MoveHorizontal);
         float inputV = InputManager.Instance.GetAxis(InputManager.AxisInputs.MoveVertical);
@@ -118,11 +131,16 @@ public class Player : MonoBehaviour
     }
     IEnumerator SpeedBoost(float startDash, float endDash, float delay)
     {
+        needToEndBoost = true;
         currentSpeed = startDash;
 
         yield return new WaitForSeconds(delay);
 
-        currentSpeed = endDash;
+        if (needToEndBoost)
+        {
+            needToEndBoost = false;
+            currentSpeed = endDash;
+        }
     }
     public void Walk(float inputH, float inputV)
     {
@@ -155,6 +173,17 @@ public class Player : MonoBehaviour
         controller.enabled = false;
         transform.position = loc;
         controller.enabled = true;
+    }
+    public void ResetPlayer()
+    {
+        // Reset Player variables to start state
+        motion = Vector3.zero;
+        isJumping = false;
+        currentJumpHeight = jumpHeight;
+        currentSpeed = moveSpeed;
+        canAirJump = false;
+        outsideImpulse = Vector3.zero;
+        needToEndBoost = false;
     }
 }
 

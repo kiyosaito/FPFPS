@@ -106,6 +106,11 @@ public class ChargedWeapon : MonoBehaviour
 
     private void Update()
     {
+        if (!PlayerLink.Instance.PlayerInstance.isActiveAndEnabled)
+        {
+            return;
+        }
+
         AimWeapon();
 
         _timer = Mathf.Max(0f, _timer - Time.deltaTime);
@@ -260,6 +265,26 @@ public class ChargedWeapon : MonoBehaviour
         }
 
         _special = special;
+    }
+
+    // Reset the weapon to it's default state
+    public void ResetWeapon()
+    {
+        // Go to standby mode, and reset timer
+        _weaponState = WeaponStates.Standby;
+        _timer = 0f;
+
+        // Discard target information
+        _currentTarget = null;
+        _lastHitPos = Vector3.zero;
+        _lastHit = default;
+
+        // Remove special shot if one is present
+        if (null != _special)
+        {
+            _special.Disappear();
+            _special = null;
+        }
     }
 
     #endregion

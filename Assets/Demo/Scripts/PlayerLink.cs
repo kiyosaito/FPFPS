@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "PlayerLink", menuName = "PlayerLink", order = 52)]
 public class PlayerLink : ScriptableObject
 {
-    #region Singleton
+    #region Singleton Like Access
 
     private static PlayerLink _instance = null;
 
@@ -53,6 +53,25 @@ public class PlayerLink : ScriptableObject
             }
 
             return _weapon;
+        }
+    }
+
+    #endregion
+
+    #region Camera Look Instance Getter
+
+    private CameraLook _cameraLook = null;
+
+    public CameraLook CameraLookInstance
+    {
+        get
+        {
+            if (null == _cameraLook)
+            {
+                _cameraLook = FindObjectOfType<CameraLook>();
+            }
+
+            return _cameraLook;
         }
     }
 
