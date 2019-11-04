@@ -73,6 +73,11 @@ public class Player : MonoBehaviour
 
         Move(inputDir.x, inputDir.z, currentSpeed);
 
+        if (controller.isGrounded)
+        {
+            canAirJump = false;
+        }
+
         // If is Grounded
         if (controller.isGrounded || canAirJump)
         {
@@ -93,7 +98,7 @@ public class Player : MonoBehaviour
             {
                 
                 // Set jump height
-                motion.y = currentJumpHeight;
+                motion.y = currentJumpHeight * (canAirJump ? 2f : 1f);
                 // Reset back to false
                 isJumping = false;
                 canAirJump = false;
