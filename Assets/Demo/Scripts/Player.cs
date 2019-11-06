@@ -121,6 +121,10 @@ public class Player : MonoBehaviour
         else
         {
             coyoteTimer = Mathf.Max(0f, coyoteTimer - Time.deltaTime);
+            if (coyoteTimer > 0f)
+            {
+                canAirJump = false;
+            }
         }
 
         // If is Grounded
@@ -196,6 +200,7 @@ public class Player : MonoBehaviour
     }
     public void Jump(float height)
     {
+        coyoteTimer = 0f;
         isJumping = true; // We are jumping!
         currentJumpHeight = height;
     }
