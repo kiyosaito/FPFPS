@@ -10,6 +10,8 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
     protected override void Setup()
     {
         resetableObjects = new List<ResetableObject>(FindObjectsOfType<ResetableObject>());
+
+        enabled = Application.isEditor;
     }
 
     #endregion
@@ -20,6 +22,30 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
     private Quaternion checkpointRotation = Quaternion.identity;
 
     private List<ResetableObject> resetableObjects = null;
+
+    private Dictionary<int, CheckPointTrigger> registeredCheckpoints = new Dictionary<int, CheckPointTrigger>();
+
+    #endregion
+
+    #region MonoBehaviour Functions
+
+    private void Update()
+    {
+        if (Application.isEditor)
+        {
+            KeyCode[] numbers = { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9, };
+
+            for (int i = 0; i < numbers.Length; ++i)
+            {
+                if (Input.GetKeyDown(numbers[i]) && registeredCheckpoints.ContainsKey(i))
+                {
+                    CheckpointReached(registeredCheckpoints[i].SpawnLocation);
+                    StartRespawnSequence();
+                    break;
+                }
+            }
+        }
+    }
 
     #endregion
 
@@ -36,6 +62,18 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
     public void StartRespawnSequence()
     {
         DisablePlayer();
+    }
+
+    public void RegisterCheckpoint(int checkpointID, CheckPointTrigger checkpoint)
+    {
+        if (!registeredCheckpoints.ContainsKey(checkpointID))
+        {
+            registeredCheckpoints.Add(checkpointID, checkpoint);
+        }
+        else
+        {
+            Debug.LogError("Two checkpoints registered with ID " + checkpointID.ToString());
+        }
     }
 
     #endregion
