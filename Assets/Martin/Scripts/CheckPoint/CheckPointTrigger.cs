@@ -4,6 +4,9 @@ public class CheckPointTrigger : MonoBehaviour
 {
     #region Private Variables
 
+    [SerializeField]
+    private int checkpointID = -1;
+
     // In case the player somehow manages to skip a checkpoint, we'd want to disable previous checkpints, to avoid the player accidentally making backwards progress
     [SerializeField]
     private CheckPointTrigger previousCheckpoint = null;
@@ -12,7 +15,11 @@ public class CheckPointTrigger : MonoBehaviour
     [SerializeField]
     private Transform spawnLocation = null;
 
-    private Transform SpawnLocation
+    #endregion
+
+    #region Public Properties
+
+    public Transform SpawnLocation
     {
         get
         {
@@ -34,6 +41,14 @@ public class CheckPointTrigger : MonoBehaviour
     #endregion
 
     #region MonoBehaviour Functions
+
+    private void Start()
+    {
+        if ((Application.isEditor) && (-1 != checkpointID))
+        {
+            CheckPointManager.Instance.RegisterSpawnLocation(checkpointID, SpawnLocation);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

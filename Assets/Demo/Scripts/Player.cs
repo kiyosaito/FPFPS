@@ -35,6 +35,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float airImpulseDecay = 1f;
 
+    public bool IsGrounded
+    {
+        get { return controller.isGrounded; }
+    }
+
     // Functions
     private void Start()
     {
@@ -43,6 +48,15 @@ public class Player : MonoBehaviour
 
         // The initial position of the player acts as the first checkpoint
         CheckPointManager.Instance.CheckpointReached(transform);
+
+        if (Application.isEditor)
+        {
+            GameObject playerLoc = new GameObject("SpawnLocation");
+            Transform playerLocTrans = playerLoc.GetComponent<Transform>();
+            playerLocTrans.position = transform.position;
+            playerLocTrans.rotation = transform.rotation;
+            CheckPointManager.Instance.RegisterSpawnLocation(0, playerLocTrans);
+        }
     }
     private void Update()
     {
@@ -82,9 +96,10 @@ public class Player : MonoBehaviour
         if (controller.isGrounded || canAirJump)
         {
             // .. And jump?
-            if (inputJump)
+            if (!isJumping && (inputJump))
             {
                 Jump(jumpHeight);
+                currentJumpHeight *= (canAirJump ? 2f : 1f);
             }
 
             // Cancel the y velocity if grounded
@@ -98,7 +113,7 @@ public class Player : MonoBehaviour
             {
                 
                 // Set jump height
-                motion.y = currentJumpHeight * (canAirJump ? 2f : 1f);
+                motion.y = currentJumpHeight;
                 // Reset back to false
                 isJumping = false;
                 canAirJump = false;
