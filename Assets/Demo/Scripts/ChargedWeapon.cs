@@ -68,6 +68,12 @@ public class ChargedWeapon : MonoBehaviour
     [SerializeField]
     private float _maxDistance = 100f;
 
+    // Input queue for when the player tries to shoot while the wepon is reloading or cooling down from overload
+    [SerializeField]
+    private float _triggerQueueTime = 0f;
+
+    private float _triggerQueueTimer = 0f;
+
     private ChargedWeaponEffect _shotEffect = null;
 
     private Vector3 _lastHitPos = Vector3.zero;
@@ -143,6 +149,11 @@ public class ChargedWeapon : MonoBehaviour
                         _weaponState = WeaponStates.Charging;
                         _timer = _chargeTime;
                     }
+                    else
+                    {
+                        // Queue the input, in case we are just about to finish reload
+                        _triggerQueueTimer = _triggerQueueTime;
+                    }
                     break;
                 case WeaponStates.Charged:
                     // If the weapon was charged, check if it has overloaded
@@ -161,6 +172,11 @@ public class ChargedWeapon : MonoBehaviour
                         _weaponState = WeaponStates.Charging;
                         _timer = _chargeTime;
                     }
+                    else
+                    {
+                        // Queue the input, in case we are just about to finish cooling down
+                        _triggerQueueTimer = _triggerQueueTime;
+                    }
                     break;
                 default:
                     Assert.IsTrue(false, "Unhandled weapon state");
@@ -173,10 +189,19 @@ public class ChargedWeapon : MonoBehaviour
             switch (_weaponState)
             {
                 case WeaponStates.Standby:
-                    // In standby mode do nothing
+                    // If the trigger queue timer is greater than zero, but the button is now released,
+                    //   then the player pressed the trigger while we were still reloading or cooling down from overload
+                    if (_triggerQueueTimer > 0f)
+                    {
+                        _triggerQueueTimer = 0f;
+                        Shoot(false);
+                        _weaponState = WeaponStates.Reload;
+                        _timer = _reloadTime;
+                    }
                     break;
                 case WeaponStates.Charging:
                     // If the weapon was charging, release a normal shot and start reload
+                    _triggerQueueTimer = 0f;
                     Shoot(false);
                     _weaponState = WeaponStates.Reload;
                     _timer = _reloadTime;
@@ -190,6 +215,7 @@ public class ChargedWeapon : MonoBehaviour
                     break;
                 case WeaponStates.Charged:
                     // If the weapon was charged, release a charged shot
+                    _triggerQueueTimer = 0f;
                     Shoot(true);
                     _weaponState = WeaponStates.Reload;
                     _timer = _reloadTime;
@@ -206,6 +232,8 @@ public class ChargedWeapon : MonoBehaviour
                     Assert.IsTrue(false, "Unhandled weapon state");
                     break;
             }
+
+            _triggerQueueTimer = Mathf.Max(0f, _triggerQueueTimer - Time.deltaTime);
         }
     }
 
