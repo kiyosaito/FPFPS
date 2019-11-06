@@ -46,7 +46,7 @@ public class CheckPointTrigger : MonoBehaviour
     {
         if ((Application.isEditor) && (-1 != checkpointID))
         {
-            CheckPointManager.Instance.RegisterCheckpoint(checkpointID, this);
+            CheckPointManager.Instance.RegisterSpawnLocation(checkpointID, SpawnLocation);
         }
     }
 

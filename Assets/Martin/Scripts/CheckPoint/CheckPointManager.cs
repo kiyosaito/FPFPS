@@ -23,7 +23,7 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
 
     private List<ResetableObject> resetableObjects = null;
 
-    private Dictionary<int, CheckPointTrigger> registeredCheckpoints = new Dictionary<int, CheckPointTrigger>();
+    private Dictionary<int, Transform> registeredCheckpoints = new Dictionary<int, Transform>();
 
     #endregion
 
@@ -39,7 +39,7 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
             {
                 if (Input.GetKeyDown(numbers[i]) && registeredCheckpoints.ContainsKey(i))
                 {
-                    CheckpointReached(registeredCheckpoints[i].SpawnLocation);
+                    CheckpointReached(registeredCheckpoints[i]);
                     StartRespawnSequence();
                     break;
                 }
@@ -64,11 +64,11 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
         DisablePlayer();
     }
 
-    public void RegisterCheckpoint(int checkpointID, CheckPointTrigger checkpoint)
+    public void RegisterSpawnLocation(int checkpointID, Transform spawnLocation)
     {
         if (!registeredCheckpoints.ContainsKey(checkpointID))
         {
-            registeredCheckpoints.Add(checkpointID, checkpoint);
+            registeredCheckpoints.Add(checkpointID, spawnLocation);
         }
         else
         {

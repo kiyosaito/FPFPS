@@ -48,6 +48,15 @@ public class Player : MonoBehaviour
 
         // The initial position of the player acts as the first checkpoint
         CheckPointManager.Instance.CheckpointReached(transform);
+
+        if (Application.isEditor)
+        {
+            GameObject playerLoc = new GameObject("SpawnLocation");
+            Transform playerLocTrans = playerLoc.GetComponent<Transform>();
+            playerLocTrans.position = transform.position;
+            playerLocTrans.rotation = transform.rotation;
+            CheckPointManager.Instance.RegisterSpawnLocation(0, playerLocTrans);
+        }
     }
     private void Update()
     {
