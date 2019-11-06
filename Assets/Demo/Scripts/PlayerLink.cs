@@ -99,5 +99,10 @@ public class PlayerLink : ScriptableObject
         PlayerInstance.Boost(boost);
     }
 
+    public void AirJump()
+    {
+        PlayerInstance.AirJump();
+    }
+
     #endregion
 }

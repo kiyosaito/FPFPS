@@ -2,6 +2,8 @@
 
 public class GameObjectStateToggler : ResetableObject, Target
 {
+    #region Private Vaiables
+
     [SerializeField]
     private GameObject _initialOn = null;
 
@@ -12,6 +14,10 @@ public class GameObjectStateToggler : ResetableObject, Target
     private bool _toggled = false;
 
     private bool _savedToggled = false;
+
+    #endregion
+
+    #region Interface and abstract class implementations
 
     public void GetShot(bool charged, Vector3 point)
     {
@@ -29,12 +35,32 @@ public class GameObjectStateToggler : ResetableObject, Target
         _savedToggled = _toggled;
     }
 
-    private void Toggle()
+    #endregion
+
+    #region Public Functions
+
+    public void TurnOn()
+    {
+        _toggled = false;
+        SetGameObjectStates();
+    }
+
+    public void TurnOff()
+    {
+        _toggled = true;
+        SetGameObjectStates();
+    }
+
+    public void Toggle()
     {
         _toggled = !_toggled;
 
         SetGameObjectStates();
     }
+
+    #endregion
+
+    #region Private Functions
 
     private void SetGameObjectStates()
     {
@@ -48,4 +74,6 @@ public class GameObjectStateToggler : ResetableObject, Target
             _initialOff.SetActive(_toggled);
         }
     }
+
+    #endregion
 }
