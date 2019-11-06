@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 // Interface for targets that can be shot by the weapon
@@ -61,7 +62,7 @@ public class ChargedWeapon : MonoBehaviour
     private LayerMask _hitMask = ~0;
 
     // The current target, if any
-    private Target _currentTarget = null;
+    private List<Target> _currentTargets = null;
 
     // The maximum distance for the weapon
     [SerializeField]
@@ -227,9 +228,12 @@ public class ChargedWeapon : MonoBehaviour
                 _special = null;
             }
         }
-        else if (null != _currentTarget)
+        else if (null != _currentTargets)
         {
-            _currentTarget.GetShot(charged, _lastHitPos);
+            foreach (var currentTarget in _currentTargets)
+            {
+                currentTarget.GetShot(charged, _lastHitPos);
+            }
         }
     }
 
@@ -239,13 +243,13 @@ public class ChargedWeapon : MonoBehaviour
 
     public void AimWeapon()
     {
-        _currentTarget = null;
+        _currentTargets = null;
 
         // We send out a ray from the center of the camera
         RaycastHit hit;
         if (Physics.Raycast(_cam.transform.position, _cam.transform.TransformDirection(Vector3.forward), out hit, _maxDistance, _hitMask))
         {
-            _currentTarget = hit.collider.GetComponent<Target>();
+            _currentTargets = new List<Target>(hit.collider.GetComponents<Target>());
             _lastHitPos = hit.point;
         }
         else
@@ -275,7 +279,7 @@ public class ChargedWeapon : MonoBehaviour
         _timer = 0f;
 
         // Discard target information
-        _currentTarget = null;
+        _currentTargets = null;
         _lastHitPos = Vector3.zero;
         _lastHit = default;
 
