@@ -9,14 +9,23 @@ public class MainMenu : MonoBehaviour
 {
     #region References/Variables
     public AudioMixer audioMixer;
+
+    #region Resolution
     public TMPro.TMP_Dropdown resDropdown;
     private Resolution[] res;
+    #endregion
+
+    #region Screenmode
+    public TMPro.TMP_Dropdown screenModeDropdown;
+    public FullScreenMode[] screenMode = new FullScreenMode[3];
+    #endregion
+
     private int sceneToContinue;
     #endregion
 
     private void Start()
     {
-        
+        #region Resoultion
         res = Screen.resolutions;
 
         resDropdown.ClearOptions();
@@ -38,7 +47,8 @@ public class MainMenu : MonoBehaviour
         resDropdown.AddOptions(resOptions);
         resDropdown.value = curResIndex;
         resDropdown.RefreshShownValue();
-
+        #endregion
+        
     }
 
     #region Options Menu
@@ -60,6 +70,10 @@ public class MainMenu : MonoBehaviour
     {
         Resolution resolution = res[resIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+    public void OptionsMenuScreenMode( )
+    {
+        Screen.fullScreenMode = screenMode[screenModeDropdown.value];
     }
     #endregion
 
