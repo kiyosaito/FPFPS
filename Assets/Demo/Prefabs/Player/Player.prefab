@@ -468,6 +468,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _line: {fileID: 1096684308}
   _shotOrigin: {fileID: 3404265662209814013}
+--- !u!95 &5274221422478949746
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504830128464927584}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a42e87388fa9b1240a6e3aa1fc571827, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6897060732377496900
 GameObject:
   m_ObjectHideFlags: 0

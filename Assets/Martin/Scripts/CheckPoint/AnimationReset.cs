@@ -20,6 +20,8 @@ public class AnimationReset : ResetableObject, Target
 
     private bool savedAlive = true;
 
+    public bool requiresCharge = false;
+
     #endregion
 
     public void Trigger()
@@ -40,7 +42,10 @@ public class AnimationReset : ResetableObject, Target
 
     public void GetShot(bool charged, Vector3 point)
     {
-        Trigger();
+        if((requiresCharge && charged)||!requiresCharge)
+        {
+            Trigger();
+        }     
     }
 
     public override void ResetState()

@@ -82,6 +82,8 @@ public class ChargedWeapon : MonoBehaviour
 
     private SpecialShot _special = null;
 
+    Animator m_Animator;
+
     #endregion
 
     #region Public Properties
@@ -97,6 +99,8 @@ public class ChargedWeapon : MonoBehaviour
 
     private void Start()
     {
+        m_Animator = gameObject.GetComponent<Animator>();
+
         // TODO: Move this to a more generic place, like a GameManager
         for (int i = 0; i < 32; ++i)
         {
@@ -135,10 +139,11 @@ public class ChargedWeapon : MonoBehaviour
                 case WeaponStates.Charging:
                     // If the weapon is charging, check if charging is finished
                     if (0f == _timer)
-                    {
+                    {                       
                         // If charging is done, change state to charged and start overload timer
-                        _weaponState = WeaponStates.Charged;
+                        _weaponState = WeaponStates.Charged;                        
                         _timer = _overloadTime;
+                        m_Animator.SetTrigger("Glove charging");
                     }
                     break;
                 case WeaponStates.Reload:
@@ -162,6 +167,7 @@ public class ChargedWeapon : MonoBehaviour
                         // If the weapon overloads, change state and start cooldown timer
                         _weaponState = WeaponStates.Overload;
                         _timer = _cooldownTime;
+                        m_Animator.SetTrigger("Glove shot");
                     }
                     break;
                 case WeaponStates.Overload:
@@ -170,7 +176,7 @@ public class ChargedWeapon : MonoBehaviour
                     {
                         // If the cooldown is done, start charging the next shot
                         _weaponState = WeaponStates.Charging;
-                        _timer = _chargeTime;
+                        _timer = _chargeTime;                    
                     }
                     else
                     {
@@ -219,6 +225,7 @@ public class ChargedWeapon : MonoBehaviour
                     Shoot(true);
                     _weaponState = WeaponStates.Reload;
                     _timer = _reloadTime;
+                    m_Animator.SetTrigger("Glove shot");
                     break;
                 case WeaponStates.Overload:
                     // If the weapon was overloaded, check if the cooldown is done
