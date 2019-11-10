@@ -5,9 +5,68 @@ public sealed class InputManager : UnitySingleton<InputManager>
 {
     #region Private Variables
 
-    private int _mouseButtonIdx = 0;
+    #region Input Source
 
-    private Dictionary<InputKeys, KeyCode> _keyMapping = new Dictionary<InputKeys, KeyCode>();
+    private abstract class InputSource
+    {
+        public abstract bool GetInput();
+        public abstract bool GetInputDown();
+        public abstract bool GetInputUp();
+    };
+
+    private class InputSourceKeyboard : InputSource
+    {
+        private KeyCode _key = KeyCode.None;
+
+        public override bool GetInput()
+        {
+            return Input.GetKey(_key);
+        }
+
+        public override bool GetInputDown()
+        {
+            return Input.GetKeyDown(_key);
+        }
+
+        public override bool GetInputUp()
+        {
+            return Input.GetKeyUp(_key);
+        }
+
+        public InputSourceKeyboard(KeyCode key)
+        {
+            _key = key;
+        }
+    };
+
+    private class InputSourceMouse : InputSource
+    {
+        private int _mouseButtonIdx = 0;
+
+        public override bool GetInput()
+        {
+            return Input.GetMouseButton(_mouseButtonIdx);
+        }
+
+        public override bool GetInputDown()
+        {
+            return Input.GetMouseButtonDown(_mouseButtonIdx);
+        }
+
+        public override bool GetInputUp()
+        {
+            return Input.GetMouseButtonUp(_mouseButtonIdx);
+        }
+
+        public InputSourceMouse(int idx)
+        {
+            _mouseButtonIdx = idx;
+        }
+    };
+
+    #endregion
+
+    private Dictionary<InputKeys, InputSource[]> _keyMapping = new Dictionary<InputKeys, InputSource[]>();
 
     private float _mouseSensitivity = 1f;
 
@@ -51,13 +110,14 @@ public sealed class InputManager : UnitySingleton<InputManager>
         _axisValues.Add(AxisInputs.MoveVertical, new AxisValue(InputKeys.MoveVerticalPositive, InputKeys.MoveVerticalNegative));
 
         // Default keymapping
-        _keyMapping.Add(InputKeys.MoveHorizontalPositive, KeyCode.D);
-        _keyMapping.Add(InputKeys.MoveHorizontalNegative, KeyCode.A);
-        _keyMapping.Add(InputKeys.MoveVerticalPositive, KeyCode.W);
-        _keyMapping.Add(InputKeys.MoveVerticalNegative, KeyCode.S);
-        _keyMapping.Add(InputKeys.Jump, KeyCode.Space);
-        _keyMapping.Add(InputKeys.Menu, KeyCode.Escape);
-        _keyMapping.Add(InputKeys.QuickRestart, KeyCode.R);
+        _keyMapping.Add(InputKeys.MoveHorizontalPositive, new InputSource[2] { new InputSourceKeyboard(KeyCode.D), new InputSourceKeyboard(KeyCode.RightArrow) });
+        _keyMapping.Add(InputKeys.MoveHorizontalNegative, new InputSource[2] { new InputSourceKeyboard(KeyCode.A), new InputSourceKeyboard(KeyCode.LeftArrow) });
+        _keyMapping.Add(InputKeys.MoveVerticalPositive, new InputSource[2] { new InputSourceKeyboard(KeyCode.W), new InputSourceKeyboard(KeyCode.UpArrow) });
+        _keyMapping.Add(InputKeys.MoveVerticalNegative, new InputSource[2] { new InputSourceKeyboard(KeyCode.S), new InputSourceKeyboard(KeyCode.DownArrow) });
+        _keyMapping.Add(InputKeys.Jump, new InputSource[2] { new InputSourceKeyboard(KeyCode.Space), new InputSourceMouse(1) });
+        _keyMapping.Add(InputKeys.Menu, new InputSource[2] { new InputSourceKeyboard(KeyCode.Escape), null });
+        _keyMapping.Add(InputKeys.QuickRestart, new InputSource[2] { new InputSourceKeyboard(KeyCode.R), null });
+        _keyMapping.Add(InputKeys.Shoot, new InputSource[2] { new InputSourceMouse(0), null });
     }
 
     #endregion
@@ -85,6 +145,7 @@ public sealed class InputManager : UnitySingleton<InputManager>
         Jump,
         Menu,
         QuickRestart,
+        Shoot,
     };
 
     public float GetAxis(AxisInputs axis)
@@ -111,32 +172,47 @@ public sealed class InputManager : UnitySingleton<InputManager>
 
     public bool GetButton(InputKeys inputKey)
     {
-        return Input.GetKey(_keyMapping[inputKey]);
+        bool buttonState = false;
+
+        foreach (var inputSource in _keyMapping[inputKey])
+        {
+            if (null != inputSource)
+            {
+                buttonState = buttonState || inputSource.GetInput();
+            }
+        }
+
+        return buttonState;
     }
 
     public bool GetButtonDown(InputKeys inputKey)
     {
-        return Input.GetKeyDown(_keyMapping[inputKey]);
+        bool buttonState = false;
+
+        foreach (var inputSource in _keyMapping[inputKey])
+        {
+            if (null != inputSource)
+            {
+                buttonState = buttonState || inputSource.GetInputDown();
+            }
+        }
+
+        return buttonState;
     }
 
     public bool GetButtonUp(InputKeys inputKey)
     {
-        return Input.GetKeyUp(_keyMapping[inputKey]);
-    }
+        bool buttonState = false;
 
-    public bool GetMouseButton()
-    {
-        return Input.GetMouseButton(_mouseButtonIdx);
-    }
+        foreach (var inputSource in _keyMapping[inputKey])
+        {
+            if (null != inputSource)
+            {
+                buttonState = buttonState || inputSource.GetInputUp();
+            }
+        }
 
-    public bool GetMouseButtonDown()
-    {
-        return Input.GetMouseButtonDown(_mouseButtonIdx);
-    }
-
-    public bool GetMouseButtonUp()
-    {
-        return Input.GetMouseButtonUp(_mouseButtonIdx);
+        return buttonState;
     }
 
     #endregion
@@ -148,8 +224,8 @@ public sealed class InputManager : UnitySingleton<InputManager>
         foreach (var axisValue in _axisValues)
         {
             float rawAxis = 0f;
-            rawAxis += (Input.GetKey(_keyMapping[axisValue.Value.positiveButton]) ? 1f : 0f);
-            rawAxis += (Input.GetKey(_keyMapping[axisValue.Value.negativeButton]) ? -1f : 0f);
+            rawAxis += (GetButton(axisValue.Value.positiveButton) ? +1f : 0f);
+            rawAxis += (GetButton(axisValue.Value.negativeButton) ? -1f : 0f);
             axisValue.Value.axisValue += Mathf.Clamp(rawAxis - axisValue.Value.axisValue, -1f / _keyboardSensitivity, 1f / _keyboardSensitivity);
         }
     }
