@@ -126,7 +126,7 @@ public class ChargedWeapon : MonoBehaviour
 
         _timer = Mathf.Max(0f, _timer - Time.deltaTime);
 
-        if (InputManager.Instance.GetMouseButton())
+        if (InputManager.Instance.GetButton(InputManager.InputKeys.Shoot))
         {
             // The shoot button is held
             switch (_weaponState)
