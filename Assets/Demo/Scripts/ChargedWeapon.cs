@@ -135,6 +135,7 @@ public class ChargedWeapon : MonoBehaviour
                     // If the weapon was in standby, start charging
                     _weaponState = WeaponStates.Charging;
                     _timer = _chargeTime;
+                    m_Animator.Play("Idle");
                     break;
                 case WeaponStates.Charging:
                     // If the weapon is charging, check if charging is finished
@@ -204,6 +205,7 @@ public class ChargedWeapon : MonoBehaviour
                         _weaponState = WeaponStates.Reload;
                         _timer = _reloadTime;
                     }
+                    m_Animator.Play("Idle");
                     break;
                 case WeaponStates.Charging:
                     // If the weapon was charging, release a normal shot and start reload
