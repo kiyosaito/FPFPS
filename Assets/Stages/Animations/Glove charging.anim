@@ -29,6 +29,160 @@ AnimationClip:
     path: UberGlove/pCube29
     classID: 23
     script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w14
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w13
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w12
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w11
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w10
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w9
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w8
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w7
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w6
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w5
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w4
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w3
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w2
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - time: 0.083333336
+      value: {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - time: 0.13333334
+      value: {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: Max Power Glove/pipboy/keys/white/w1
+    classID: 23
+    script: {fileID: 0}
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -43,10 +197,150 @@ AnimationClip:
       typeID: 23
       customType: 21
       isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 3050112203
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 732533096
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 1554948606
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 3316117572
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 2996879570
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 477758109
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 1803366923
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 4223807386
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 2361728780
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 365711030
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 1657503264
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 4239387523
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 2343099157
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 312576687
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
     pptrCurveMapping:
     - {fileID: 2100000, guid: 52945df02de99f3449ddf1b9b6176f11, type: 2}
     - {fileID: 2100000, guid: d388ff4b0a800d94b831c967c34f2a52, type: 2}
     - {fileID: 2100000, guid: d388ff4b0a800d94b831c967c34f2a52, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
+    - {fileID: 2100000, guid: 83f69dcf61d12494989154b7be8dec72, type: 2}
+    - {fileID: 2100000, guid: 155c4e2423c831e4aa180092789ee36f, type: 2}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
