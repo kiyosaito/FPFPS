@@ -158,6 +158,11 @@ public sealed class InputManager : UnitySingleton<InputManager>
         }
     }
 
+    public KeyCode GetMappedKey(InputKeys inputkey, bool primary)
+    {
+        return _keyMapping[inputkey][primary ? 0 : 1];
+    }
+
     #endregion
 
     #region MonoBehaviour Functions
