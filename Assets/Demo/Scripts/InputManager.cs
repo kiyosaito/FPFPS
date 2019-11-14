@@ -5,72 +5,14 @@ public sealed class InputManager : UnitySingleton<InputManager>
 {
     #region Private Variables
 
-    #region Input Source
-
-    private abstract class InputSource
-    {
-        public abstract bool GetInput();
-        public abstract bool GetInputDown();
-        public abstract bool GetInputUp();
-    };
-
-    private class InputSourceKeyboard : InputSource
-    {
-        private KeyCode _key = KeyCode.None;
-
-        public override bool GetInput()
-        {
-            return Input.GetKey(_key);
-        }
-
-        public override bool GetInputDown()
-        {
-            return Input.GetKeyDown(_key);
-        }
-
-        public override bool GetInputUp()
-        {
-            return Input.GetKeyUp(_key);
-        }
-
-        public InputSourceKeyboard(KeyCode key)
-        {
-            _key = key;
-        }
-    };
-
-    private class InputSourceMouse : InputSource
-    {
-        private int _mouseButtonIdx = 0;
-
-        public override bool GetInput()
-        {
-            return Input.GetMouseButton(_mouseButtonIdx);
-        }
-
-        public override bool GetInputDown()
-        {
-            return Input.GetMouseButtonDown(_mouseButtonIdx);
-        }
-
-        public override bool GetInputUp()
-        {
-            return Input.GetMouseButtonUp(_mouseButtonIdx);
-        }
-
-        public InputSourceMouse(int idx)
-        {
-            _mouseButtonIdx = idx;
-        }
-    };
-
-    #endregion
-
-    private Dictionary<InputKeys, InputSource[]> _keyMapping = new Dictionary<InputKeys, InputSource[]>();
+    private Dictionary<InputKeys, KeyCode[]> _keyMapping = new Dictionary<InputKeys, KeyCode[]>();
 
     private float _mouseSensitivity = 1f;
 
     private float _keyboardSensitivity = 20f;
+
+    // (Is rebinding active, Key to rebind, Primary or secondary binding)
+    private (bool, InputKeys, bool) _rebinding = (false, InputKeys.None, true);
 
     private class AxisValue
     {
@@ -110,14 +52,15 @@ public sealed class InputManager : UnitySingleton<InputManager>
         _axisValues.Add(AxisInputs.MoveVertical, new AxisValue(InputKeys.MoveVerticalPositive, InputKeys.MoveVerticalNegative));
 
         // Default keymapping
-        _keyMapping.Add(InputKeys.MoveHorizontalPositive, new InputSource[2] { new InputSourceKeyboard(KeyCode.D), new InputSourceKeyboard(KeyCode.RightArrow) });
-        _keyMapping.Add(InputKeys.MoveHorizontalNegative, new InputSource[2] { new InputSourceKeyboard(KeyCode.A), new InputSourceKeyboard(KeyCode.LeftArrow) });
-        _keyMapping.Add(InputKeys.MoveVerticalPositive, new InputSource[2] { new InputSourceKeyboard(KeyCode.W), new InputSourceKeyboard(KeyCode.UpArrow) });
-        _keyMapping.Add(InputKeys.MoveVerticalNegative, new InputSource[2] { new InputSourceKeyboard(KeyCode.S), new InputSourceKeyboard(KeyCode.DownArrow) });
-        _keyMapping.Add(InputKeys.Jump, new InputSource[2] { new InputSourceKeyboard(KeyCode.Space), new InputSourceMouse(1) });
-        _keyMapping.Add(InputKeys.Menu, new InputSource[2] { new InputSourceKeyboard(KeyCode.Escape), null });
-        _keyMapping.Add(InputKeys.QuickRestart, new InputSource[2] { new InputSourceKeyboard(KeyCode.R), null });
-        _keyMapping.Add(InputKeys.Shoot, new InputSource[2] { new InputSourceMouse(0), null });
+        _keyMapping.Add(InputKeys.MoveHorizontalPositive, new KeyCode[2] { KeyCode.D, KeyCode.RightArrow });
+        _keyMapping.Add(InputKeys.MoveHorizontalNegative, new KeyCode[2] { KeyCode.A, KeyCode.LeftArrow });
+        _keyMapping.Add(InputKeys.MoveVerticalPositive, new KeyCode[2] { KeyCode.W, KeyCode.UpArrow });
+        _keyMapping.Add(InputKeys.MoveVerticalNegative, new KeyCode[2] { KeyCode.S, KeyCode.DownArrow });
+        _keyMapping.Add(InputKeys.Jump, new KeyCode[2] { KeyCode.Space, KeyCode.Mouse1 });
+        _keyMapping.Add(InputKeys.Menu, new KeyCode[2] { KeyCode.Escape, KeyCode.None });
+        _keyMapping.Add(InputKeys.QuickRestart, new KeyCode[2] { KeyCode.R, KeyCode.None });
+        _keyMapping.Add(InputKeys.Shoot, new KeyCode[2] { KeyCode.Mouse0, KeyCode.None });
+        _keyMapping.Add(InputKeys.None, new KeyCode[2] { KeyCode.None, KeyCode.None });
     }
 
     #endregion
@@ -146,6 +89,7 @@ public sealed class InputManager : UnitySingleton<InputManager>
         Menu,
         QuickRestart,
         Shoot,
+        None,
     };
 
     public float GetAxis(AxisInputs axis)
@@ -174,12 +118,9 @@ public sealed class InputManager : UnitySingleton<InputManager>
     {
         bool buttonState = false;
 
-        foreach (var inputSource in _keyMapping[inputKey])
+        foreach (var keycode in _keyMapping[inputKey])
         {
-            if (null != inputSource)
-            {
-                buttonState = buttonState || inputSource.GetInput();
-            }
+            buttonState = buttonState || Input.GetKey(keycode);
         }
 
         return buttonState;
@@ -189,12 +130,9 @@ public sealed class InputManager : UnitySingleton<InputManager>
     {
         bool buttonState = false;
 
-        foreach (var inputSource in _keyMapping[inputKey])
+        foreach (var keycode in _keyMapping[inputKey])
         {
-            if (null != inputSource)
-            {
-                buttonState = buttonState || inputSource.GetInputDown();
-            }
+            buttonState = buttonState || Input.GetKeyDown(keycode);
         }
 
         return buttonState;
@@ -204,15 +142,20 @@ public sealed class InputManager : UnitySingleton<InputManager>
     {
         bool buttonState = false;
 
-        foreach (var inputSource in _keyMapping[inputKey])
+        foreach (var keycode in _keyMapping[inputKey])
         {
-            if (null != inputSource)
-            {
-                buttonState = buttonState || inputSource.GetInputUp();
-            }
+            buttonState = buttonState || Input.GetKeyUp(keycode);
         }
 
         return buttonState;
+    }
+
+    public void RebindButton(InputKeys inputKey, bool primary)
+    {
+        if (InputKeys.None != inputKey)
+        {
+            _rebinding = (true, inputKey, primary);
+        }
     }
 
     #endregion
@@ -227,6 +170,28 @@ public sealed class InputManager : UnitySingleton<InputManager>
             rawAxis += (GetButton(axisValue.Value.positiveButton) ? +1f : 0f);
             rawAxis += (GetButton(axisValue.Value.negativeButton) ? -1f : 0f);
             axisValue.Value.axisValue += Mathf.Clamp(rawAxis - axisValue.Value.axisValue, -1f / _keyboardSensitivity, 1f / _keyboardSensitivity);
+        }
+
+        if ((_rebinding.Item1) && Input.anyKeyDown)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // Cancel rebind
+                _rebinding = (false, InputKeys.None, true);
+            }
+            else
+            {
+                foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+                {
+                    if (Input.GetKeyDown(vKey))
+                    {
+                        // Rebind button
+                        _keyMapping[_rebinding.Item2][_rebinding.Item3 ? 0 : 1] = vKey;
+                        _rebinding = (false, InputKeys.None, true);
+                        break;
+                    }
+                }
+            }
         }
     }
 
