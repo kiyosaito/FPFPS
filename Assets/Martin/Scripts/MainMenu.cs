@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     #region References/Variables
-    public AudioMixer audioMixer;
+    public AudioMixerGroup master;
+    public AudioMixerGroup sFX;
+    public AudioMixerGroup music;
 
     #region Resolution
     public TMPro.TMP_Dropdown resDropdown;
@@ -52,20 +54,13 @@ public class MainMenu : MonoBehaviour
     }
 
     #region Options Menu
-    public void OptionsMenuSetVolume(float volume)
-    {
-        audioMixer.SetFloat("Volume", volume);
-    }
+    #region Graphics
 
     public void OptionsMenuSetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
     }
-    public void OptionsMenuFullScreenToggle(bool isFullscreen)
-    {
-        Screen.fullScreen = isFullscreen;
-    }
-
+   
     public void OptionsMenuSetResolution(int resIndex)
     {
         Resolution resolution = res[resIndex];
@@ -75,6 +70,29 @@ public class MainMenu : MonoBehaviour
     {
         Screen.fullScreenMode = screenMode[screenModeDropdown.value];
     }
+    #endregion
+    #region Audio
+    public void OptionsMenuSetMainVolume(float volume)
+    {
+        master.audioMixer.SetFloat("Volume", volume);
+    }
+    public void OptionsMenuSetSFXVolume(float volume)
+    {
+        sFX.audioMixer.SetFloat("Volume", volume);
+    }
+    public void OptionsMenuSetMusicVolume(float volume)
+    {
+        music.audioMixer.SetFloat("Volume", volume);
+    }
+    #endregion
+    #region Controls
+    public void OptionsMenuSetMouseSensitivy(float sensitivity)
+    {
+        Debug.Log("new sensitivity " + sensitivity.ToString());
+        InputManager.Instance.MouseSensitivity = sensitivity;
+    }
+
+    #endregion
     #endregion
 
     #region Main Menu
