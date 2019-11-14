@@ -2,44 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicManager : MonoBehaviour
+public class MusicManager : UnitySingleton<MusicManager>
 {
     #region Varibles 
-    public AudioSource adSource; // Declaring the audio source is public
-    public AudioClip[] adClips; // An Array of music clips
-    public static MusicManager instance = null;
+    public AudioSource musicSource; // Declaring the audio source is public
+    public AudioClip[] audiotClips;
+    public AudioClip[] audioClips2; // An Array of music clips
+    public GameObject canvas;
     #endregion
 
     #region Start Coroutine
     public void Awake()
     {
-        StartCoroutine(PlayAudioSequentially());
+        if (canvas.activeSelf == true)
+        {
+            StartCoroutine(PlayAudioV1Sequentially());
+        }
+        else
+        {
+            StartCoroutine(PlayAudioV2Sequentially());
+        }
 
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject); // TO ensure that the music does not stop between scenes
-
-        DontDestroyOnLoad(gameObject);
-        // And also ensures that only one instance of the AudioManager can occur
     }
     #endregion
     private void Start()
     {
-        adSource = FindObjectOfType<AudioSource>();
+        musicSource = FindObjectOfType<AudioSource>();
+        
     }
     #region 
-    IEnumerator PlayAudioSequentially()
+    IEnumerator PlayAudioV1Sequentially()
     {
         yield return null;
 
-        for (int i = 0; i < adClips.Length; i++) // Loops through the array of clips to the source
+        for (int i = 0; i < audioClips2.Length; i++) // Loops through the array of clips to the source
         {
-            adSource.clip = adClips[i];
+            musicSource.clip = audioClips2[i];
 
-            adSource.Play(); // Play the clips
+            musicSource.Play(); // Play the clips
 
-            while (adSource.isPlaying)
+            while (musicSource.isPlaying)
+            {
+                yield return null;
+            }
+        } // Go back and select the next clip in the array
+    }
+    IEnumerator PlayAudioV2Sequentially()
+    {
+        yield return null;
+
+        for (int i = 0; i < audioClips2.Length; i++) // Loops through the array of clips to the source
+        {
+            musicSource.clip = audioClips2[i];
+
+            musicSource.Play(); // Play the clips
+
+            while (musicSource.isPlaying)
             {
                 yield return null;
             }
