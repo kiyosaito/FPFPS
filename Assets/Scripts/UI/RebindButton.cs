@@ -40,6 +40,8 @@ public class RebindButton : MonoBehaviour
         }
     }
 
+    private RebindMenu _rebindMenu = null;
+
     #endregion
 
     #region Public Properties
@@ -55,6 +57,8 @@ public class RebindButton : MonoBehaviour
 
     private void Start()
     {
+        _rebindMenu = GetComponentInParent<RebindMenu>();
+
         // Connect the button onclick event to the start rebind function
         GetComponent<Button>().onClick.AddListener(() => StartRebind());
 
@@ -72,6 +76,14 @@ public class RebindButton : MonoBehaviour
         ButtonTextDisplay.color = (duplicate ? textColorDuplicate : textColorNormal);
     }
 
+    // Set the button text
+    public void SetupButtonText()
+    {
+        // Get the mapped key from the InputManager and update text
+        _mappedKey = InputManager.Instance.GetMappedKey(_inputKey, _primary);
+        ButtonTextDisplay.text = _mappedKey.ToString();
+    }
+
     #endregion
 
     #region Private Functions
@@ -79,30 +91,17 @@ public class RebindButton : MonoBehaviour
     // Start the rebind process
     private void StartRebind()
     {
-        // Change the button text to indicate rebinding is in progress
-        ButtonTextDisplay.text = "Press Key";
-        ButtonTextDisplay.color = textColorNormal;
+        if (!_rebindMenu.RebindInProgress)
+        {
+            _rebindMenu.RebindStarted();
 
-        // Start rebind process via InputManager
-        InputManager.Instance.RebindButton(_inputKey, _primary, StopRebind);
-    }
+            // Change the button text to indicate rebinding is in progress
+            ButtonTextDisplay.text = "Press Key";
+            ButtonTextDisplay.color = textColorNormal;
 
-    // Callback function when rebinding process is over
-    private void StopRebind()
-    {
-        // Reset the button text
-        SetupButtonText();
-
-        // Get the rebind menu to check duplicate input status
-        GetComponentInParent<RebindMenu>().CheckForDuplicates();
-    }
-
-    // Set the button text
-    private void SetupButtonText()
-    {
-        // Get the mapped key from the InputManager and update text
-        _mappedKey = InputManager.Instance.GetMappedKey(_inputKey, _primary);
-        ButtonTextDisplay.text = _mappedKey.ToString();
+            // Start rebind process via InputManager
+            InputManager.Instance.RebindButton(_inputKey, _primary, _rebindMenu.RebindDone);
+        }
     }
 
     #endregion

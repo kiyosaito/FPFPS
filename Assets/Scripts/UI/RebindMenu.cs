@@ -9,6 +9,17 @@ public class RebindMenu : MonoBehaviour
     // List to reference rebind buttons quickly
     private List<RebindButton> _buttons = null;
 
+    private bool _rebindInProgress = false;
+
+    #endregion
+
+    #region Public Properties
+
+    public bool RebindInProgress
+    {
+        get { return _rebindInProgress; }
+    }
+
     #endregion
 
     #region MonoBehavious Functions
@@ -22,6 +33,11 @@ public class RebindMenu : MonoBehaviour
         CheckForDuplicates();
     }
 
+    private void RedyForRebind()
+    {
+        _rebindInProgress = false;
+    }
+
     #endregion
 
     #region Public Functions
@@ -31,22 +47,41 @@ public class RebindMenu : MonoBehaviour
         // Go through all buttons in the list
         for (int i = 0; i < _buttons.Count; ++i)
         {
-            // Set then as not duplicates
-            _buttons[i].SetAsDuplicate(false);
+            bool isDuplicate = false;
 
-            // Go through all buttons in the list after the current one
-            for (int j = i + 1; j < _buttons.Count; ++j)
+            // Get button to update it's text
+            _buttons[i].SetupButtonText();
+
+            // Compare to all other buttons in the list
+            for (int j = 0; j < _buttons.Count; ++j)
             {
-                // If they have the same keybind (that isn't None), then mark both as duplicates
-                if ((KeyCode.None != _buttons[i].MappedKey) && (_buttons[i].MappedKey == _buttons[j].MappedKey))
+                if (i != j)
                 {
-                    _buttons[i].SetAsDuplicate(true);
-                    _buttons[j].SetAsDuplicate(true);
+                    // If they have the same keybind (that isn't None), then mark both as duplicates
+                    if ((KeyCode.None != _buttons[i].MappedKey) && (_buttons[i].MappedKey == _buttons[j].MappedKey))
+                    {
+                        isDuplicate = true;
+                        _buttons[j].SetAsDuplicate(true);
 
-                    // We don't break, as there could be more duplicates later in the list, so we have to go through all
+                        // We don't break, as there could be more duplicates later in the list, so we have to go through all
+                    }
                 }
             }
+
+            _buttons[i].SetAsDuplicate(isDuplicate);
         }
+    }
+
+    public void RebindStarted()
+    {
+        _rebindInProgress = true;
+    }
+
+    public void RebindDone()
+    {
+        CheckForDuplicates();
+
+        Invoke("RedyForRebind", 0.5f);
     }
 
     #endregion

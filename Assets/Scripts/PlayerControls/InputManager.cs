@@ -200,7 +200,23 @@ public sealed class InputManager : UnitySingleton<InputManager>
                     if (Input.GetKeyDown(vKey))
                     {
                         // Rebind button
-                        _keyMapping[_rebinding.Item2][_rebinding.Item3 ? 0 : 1] = vKey;
+
+                        // If the other keybind is the same, set that to none
+                        if (_keyMapping[_rebinding.Item2][_rebinding.Item3 ? 1 : 0] == vKey)
+                        {
+                            _keyMapping[_rebinding.Item2][_rebinding.Item3 ? 1 : 0] = KeyCode.None;
+                        }
+
+                        // If the new keybind is the same as the exisitng one, set the keybind to none
+                        if (_keyMapping[_rebinding.Item2][_rebinding.Item3 ? 0 : 1] == vKey)
+                        {
+                            _keyMapping[_rebinding.Item2][_rebinding.Item3 ? 0 : 1] = KeyCode.None;
+                        }
+                        else
+                        {
+                            _keyMapping[_rebinding.Item2][_rebinding.Item3 ? 0 : 1] = vKey;
+                        }
+
                         _rebinding = (false, InputKeys.None, true);
 
                         if (null != _rebindCallback)
