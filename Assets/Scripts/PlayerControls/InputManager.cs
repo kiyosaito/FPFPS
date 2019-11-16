@@ -25,6 +25,8 @@ public sealed class InputManager : UnitySingleton<InputManager>
 
     private Dictionary<AxisInputs, AxisValue> _axisValues = new Dictionary<AxisInputs, AxisValue>();
 
+    private System.Action _rebindCallback = null;
+
     #endregion
 
     #region Public Properties
@@ -150,11 +152,12 @@ public sealed class InputManager : UnitySingleton<InputManager>
         return buttonState;
     }
 
-    public void RebindButton(InputKeys inputKey, bool primary)
+    public void RebindButton(InputKeys inputKey, bool primary, System.Action callback)
     {
         if (InputKeys.None != inputKey)
         {
             _rebinding = (true, inputKey, primary);
+            _rebindCallback = callback;
         }
     }
 
@@ -183,6 +186,12 @@ public sealed class InputManager : UnitySingleton<InputManager>
             {
                 // Cancel rebind
                 _rebinding = (false, InputKeys.None, true);
+
+                if(null != _rebindCallback)
+                {
+                    _rebindCallback();
+                    _rebindCallback = null;
+                }
             }
             else
             {
@@ -193,6 +202,12 @@ public sealed class InputManager : UnitySingleton<InputManager>
                         // Rebind button
                         _keyMapping[_rebinding.Item2][_rebinding.Item3 ? 0 : 1] = vKey;
                         _rebinding = (false, InputKeys.None, true);
+
+                        if (null != _rebindCallback)
+                        {
+                            _rebindCallback();
+                            _rebindCallback = null;
+                        }
                         break;
                     }
                 }
