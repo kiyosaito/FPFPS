@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class AnimationReset : ResetableObject, Target
+public class AnimationReset : ResetableObject
 {
     #region Private variablse
 
@@ -38,14 +38,6 @@ public class AnimationReset : ResetableObject, Target
 
             animator.Play(startDyingStateName);
         }
-    }
-
-    public void GetShot(bool charged, Vector3 point)
-    {
-        if((requiresCharge && charged)||!requiresCharge)
-        {
-            Trigger();
-        }     
     }
 
     public override void ResetState()
