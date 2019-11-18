@@ -23,7 +23,16 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
 
     private List<ResetableObject> resetableObjects = null;
 
-    private Dictionary<int, Transform> registeredCheckpoints = new Dictionary<int, Transform>();
+    private Dictionary<int, CheckPointTrigger> registeredCheckpoints = new Dictionary<int, CheckPointTrigger>();
+
+    #endregion
+
+    #region Public Properties
+
+    public int CheckpointCount
+    {
+        get { return registeredCheckpoints.Count; }
+    }
 
     #endregion
 
@@ -33,15 +42,18 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
     {
         if (Application.isEditor)
         {
-            KeyCode[] numbers = { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9, };
-
-            for (int i = 0; i < numbers.Length; ++i)
+            if (Input.anyKeyDown)
             {
-                if (Input.GetKeyDown(numbers[i]) && registeredCheckpoints.ContainsKey(i))
+                KeyCode[] numbers = { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9, };
+
+                for (int i = 0; i < numbers.Length; ++i)
                 {
-                    CheckpointReached(registeredCheckpoints[i]);
-                    StartRespawnSequence();
-                    break;
+                    if (Input.GetKeyDown(numbers[i]) && registeredCheckpoints.ContainsKey(i))
+                    {
+                        CheckpointReached(i);
+                        StartRespawnSequence();
+                        break;
+                    }
                 }
             }
         }
@@ -51,10 +63,20 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
 
     #region Public Functions
 
-    public void CheckpointReached(Transform respawnTransform)
+    public void Init()
     {
-        checkpointLocation = respawnTransform.position;
-        checkpointRotation = respawnTransform.rotation;
+        foreach (var checkpoint in FindObjectsOfType<CheckPointTrigger>())
+        {
+            checkpoint.Register();
+        }
+    }
+
+    public void CheckpointReached(int checkpointID)
+    {
+        Debug.Log("Reached checkpoint " + checkpointID);
+
+        checkpointLocation = registeredCheckpoints[checkpointID].SpawnLocation.position;
+        checkpointRotation = registeredCheckpoints[checkpointID].SpawnLocation.rotation;
 
         SaveStates();
     }
@@ -64,11 +86,11 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
         DisablePlayer();
     }
 
-    public void RegisterSpawnLocation(int checkpointID, Transform spawnLocation)
+    public void RegisterCheckpoint(int checkpointID, CheckPointTrigger checkpoint)
     {
         if (!registeredCheckpoints.ContainsKey(checkpointID))
         {
-            registeredCheckpoints.Add(checkpointID, spawnLocation);
+            registeredCheckpoints.Add(checkpointID, checkpoint);
         }
         else
         {

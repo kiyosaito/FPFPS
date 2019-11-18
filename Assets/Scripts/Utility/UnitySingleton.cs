@@ -111,8 +111,7 @@ public class UnitySingleton<T> : MonoBehaviour where T : UnitySingleton<T>
 
     #region MonoBehaviour Functions
 
-    // While awake runs multiple times, it runs first, even before start, so it's used to register the static reference
-    private void Awake()
+    private void Start()
     {
         // Activate the lock for thread safety
         lock (instanceGetLock)

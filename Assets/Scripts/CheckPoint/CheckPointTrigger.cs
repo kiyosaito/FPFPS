@@ -42,20 +42,28 @@ public class CheckPointTrigger : MonoBehaviour
 
     #region MonoBehaviour Functions
 
-    private void Start()
-    {
-        if ((Application.isEditor) && (-1 != checkpointID))
-        {
-            CheckPointManager.Instance.RegisterSpawnLocation(checkpointID, SpawnLocation);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag(Player.playerTag))
         {
-            CheckPointManager.Instance.CheckpointReached(SpawnLocation);
+            CheckPointManager.Instance.CheckpointReached(checkpointID);
             DisableCheckpoint();
+        }
+    }
+
+    #endregion
+
+    #region Public Functions
+
+    public void Register()
+    {
+        if (-1 != checkpointID)
+        {
+            CheckPointManager.Instance.RegisterCheckpoint(checkpointID, this);
+        }
+        else
+        {
+            Debug.LogError("Checkpoint ID not set");
         }
     }
 
