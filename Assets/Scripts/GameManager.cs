@@ -49,6 +49,7 @@ public class GameManager : UnitySingleton<GameManager>
         Level_1,
         Level_2,
         Level_3,
+        Unknown,
     }
 
     public enum TimerDifficultySetting
@@ -123,7 +124,7 @@ public class GameManager : UnitySingleton<GameManager>
 
     public GameScene GetCurrentScene()
     {
-        GameScene currentScene = GameScene.MainMenu;
+        GameScene currentScene = GameScene.Unknown;
         string currentSceneName = SceneManager.GetActiveScene().name;
 
         foreach (var pair in _sceneNames)
