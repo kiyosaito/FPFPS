@@ -10,6 +10,7 @@ public class GameManager : UnitySingleton<GameManager>
     protected override void Setup()
     {
         _sceneNames.Add(GameScene.MainMenu, "MainMenu");
+        _sceneNames.Add(GameScene.LevelSelect, "....");
         _sceneNames.Add(GameScene.Level_1, "Stage 1");
         _sceneNames.Add(GameScene.Level_2, "Stage 2");
         _sceneNames.Add(GameScene.Level_3, "Stage 3");
@@ -47,6 +48,7 @@ public class GameManager : UnitySingleton<GameManager>
     {
         Unknown,
         MainMenu,
+        LevelSelect,
         Level_1 = 1,
         Level_2 = 2,
         Level_3 = 3,

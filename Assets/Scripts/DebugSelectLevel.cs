@@ -9,4 +9,9 @@ public class DebugSelectLevel : MonoBehaviour
     {
         GameManager.Instance.SelectLevel(_level);
     }
+
+    public void Continue()
+    {
+        GameManager.Instance.ContinueGame();
+    }
 }
