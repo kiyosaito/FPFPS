@@ -77,6 +77,8 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
         checkpointRotation = registeredCheckpoints[checkpointID].SpawnLocation.rotation;
 
         SaveStates();
+
+        TimerManager.Instance.CheckpointReached(checkpointID);
     }
 
     public void StartRespawnSequence()

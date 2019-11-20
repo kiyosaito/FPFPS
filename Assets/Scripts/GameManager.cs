@@ -45,11 +45,11 @@ public class GameManager : UnitySingleton<GameManager>
 
     public enum GameScene
     {
-        MainMenu,
-        Level_1,
-        Level_2,
-        Level_3,
         Unknown,
+        MainMenu,
+        Level_1 = 1,
+        Level_2 = 2,
+        Level_3 = 3,
     }
 
     public enum TimerDifficultySetting

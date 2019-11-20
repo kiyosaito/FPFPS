@@ -9,11 +9,32 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private bool total = true;
 
+    [SerializeField]
+    private bool diff = false;
+
+    [SerializeField]
+    private int segment = 1;
+
     private void Update()
     {
-        float time = total ? TimerManager.Instance.TotalTime : TimerManager.Instance.SegmentTime;
+        float time = total ? TimerManager.Instance.TotalTime : (diff ? TimerManager.Instance.GetSplitDiffTime(segment) : TimerManager.Instance.GetSplitTime(segment));
 
-        timer.text = ((((((int)time) / 60)) < 10) ? "0" : "") + (((int)time) / 60).ToString() + ":" + (((((int)time) % 60) < 10) ? "0" : "")
-            + (((int)time) % 60).ToString() + "." + (((((int)(time * 100f)) % 100) < 10) ? "0" : "" ) + (((int)(time * 100f)) % 100).ToString();
+        if (float.IsNaN(time))
+        {
+            timer.text = "";
+        }
+        else
+        {
+            string prefix = "";
+
+            if (!total && diff)
+            {
+                prefix = (time < 0) ? "-" : "+";
+                time = Mathf.Abs(time);
+            }
+
+            timer.text = prefix + ((((((int)time) / 60)) < 10) ? "0" : "") + (((int)time) / 60).ToString() + ":" + (((((int)time) % 60) < 10) ? "0" : "")
+                + (((int)time) % 60).ToString() + "." + (((((int)(time * 100f)) % 100) < 10) ? "0" : "") + (((int)(time * 100f)) % 100).ToString();
+        }
     }
 }
