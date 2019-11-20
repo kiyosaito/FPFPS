@@ -15,6 +15,8 @@ public class CheckPointTrigger : MonoBehaviour
     [SerializeField]
     private Transform spawnLocation = null;
 
+    private bool registerd = false;
+
     #endregion
 
     #region Public Properties
@@ -44,11 +46,16 @@ public class CheckPointTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag(Player.playerTag))
+        if (registerd && (other.gameObject.CompareTag(Player.playerTag)))
         {
             CheckPointManager.Instance.CheckpointReached(checkpointID);
             DisableCheckpoint();
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        OnTriggerEnter(other);
     }
 
     #endregion
@@ -60,6 +67,7 @@ public class CheckPointTrigger : MonoBehaviour
         if (-1 != checkpointID)
         {
             CheckPointManager.Instance.RegisterCheckpoint(checkpointID, this);
+            registerd = true;
         }
         else
         {

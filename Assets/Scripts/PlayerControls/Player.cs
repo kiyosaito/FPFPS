@@ -61,27 +61,17 @@ public class Player : MonoBehaviour
     {
         if (!GameManager.Instance.Initialised)
         {
-            Debug.Log("Started in level scene. Reloading through GameManager");
-            enabled = false;
-            GameManager.Instance.SelectLevel(GameManager.Instance.GetCurrentScene());
-        }
-        else
-        {
-            controller = GetComponent<CharacterController>();
-            currentSpeed = moveSpeed;
-
-            // The initial position of the player acts as the first checkpoint
-            //CheckPointManager.Instance.CheckpointReached(transform);
+            if (GameManager.GameScene.Unknown != GameManager.Instance.GetCurrentScene())
+            {
+                Debug.Log("Started in level scene. Reloading through GameManager");
+                enabled = false;
+                GameManager.Instance.SelectLevel(GameManager.Instance.GetCurrentScene());
+                return;
+            }
         }
 
-        /*if (Application.isEditor)
-        {
-            GameObject playerLoc = new GameObject("SpawnLocation");
-            Transform playerLocTrans = playerLoc.GetComponent<Transform>();
-            playerLocTrans.position = transform.position;
-            playerLocTrans.rotation = transform.rotation;
-            CheckPointManager.Instance.RegisterSpawnLocation(0, playerLocTrans);
-        }*/
+        controller = GetComponent<CharacterController>();
+        currentSpeed = moveSpeed;
     }
     private void Update()
     {

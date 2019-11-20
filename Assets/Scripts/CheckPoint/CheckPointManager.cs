@@ -73,12 +73,12 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
 
     public void CheckpointReached(int checkpointID)
     {
-        Debug.Log("Reached checkpoint " + checkpointID);
-
         checkpointLocation = registeredCheckpoints[checkpointID].SpawnLocation.position;
         checkpointRotation = registeredCheckpoints[checkpointID].SpawnLocation.rotation;
 
         SaveStates();
+
+        TimerManager.Instance.CheckpointReached(checkpointID);
     }
 
     public void StartRespawnSequence()

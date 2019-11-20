@@ -4,6 +4,67 @@ using UnityEngine;
 
 public class TimerManager : UnitySingleton<TimerManager>
 {
+    #region TimerData
+
+    private class TimerData : PersistableData
+    {
+        public float TotalTime = 0f;
+        public float[] SegmentTimes = null;
+
+        public override void Save(GameDataWriter writer)
+        {
+            writer.Write(TotalTime);
+            writer.Write(SegmentTimes.Length);
+            for(int i = 0; i < SegmentTimes.Length; ++i)
+            {
+                writer.Write(SegmentTimes[i]);
+            }
+        }
+
+        protected override void Init(GameDataReader reader)
+        {
+            TotalTime = reader.ReadFloat();
+            SegmentTimes = new float[reader.ReadInt()];
+            for (int i = 0; i < SegmentTimes.Length; ++i)
+            {
+                SegmentTimes[i] = reader.ReadFloat();
+            }
+        }
+
+        public TimerData() { }
+    }
+
+    private void SaveData()
+    {
+        TimerData data = new TimerData();
+        data.TotalTime = _totalTime;
+        data.SegmentTimes = new float[_finishedSplitTimes.Length];
+        for (int i = 0; i < _finishedSplitTimes.Length; ++i)
+        {
+            data.SegmentTimes[i] = _finishedSplitTimes[i];
+        }
+
+        GameDataWriter.SaveData(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + " times", data);
+    }
+
+    private void LoadData()
+    {
+        TimerData data = GameDataReader.LoadData<TimerData>(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + " times");
+
+        if (null != data)
+        {
+            _hasLoadedTimes = true;
+
+            _previousSplitTimes = new float[data.SegmentTimes.Length];
+            for (int i = 0; i < _previousSplitTimes.Length; ++i)
+            {
+                _previousSplitTimes[i] = data.SegmentTimes[i];
+            }
+        }
+    }
+
+    #endregion
+
     #region Function Overrides
 
     protected override bool ShouldSurviveSceneChange()
@@ -15,15 +76,21 @@ public class TimerManager : UnitySingleton<TimerManager>
 
     #region Private Variables
 
+    private bool _running = true;
+
     private float _totalTime = 0f;
 
-    private float _segmentTime = 0f;
+    private float _currentSegmentTime = 0f;
 
     private float _remainingTime = 0f;
 
-    private float[] _finishedSegmentTimes = null;
+    private float[] _finishedSplitTimes = null;
 
-    private float[] _previousSegmentTimes = null;
+    private float[] _previousSplitTimes = null;
+
+    private bool _hasLoadedTimes = false;
+
+    private int _currentSegment = 0;
 
     #endregion
 
@@ -34,9 +101,9 @@ public class TimerManager : UnitySingleton<TimerManager>
         get { return _totalTime; }
     }
 
-    public float SegmentTime
+    public float CurrentSegmentTime
     {
-        get { return _segmentTime; }
+        get { return _currentSegmentTime; }
     }
 
     public float RemainingTime
@@ -50,8 +117,11 @@ public class TimerManager : UnitySingleton<TimerManager>
 
     private void Update()
     {
-        _totalTime += Time.deltaTime;
-        _segmentTime += Time.deltaTime;
+        if (_running)
+        {
+            _totalTime += Time.deltaTime;
+            _currentSegmentTime += Time.deltaTime;
+        }
     }
 
     #endregion
@@ -62,33 +132,71 @@ public class TimerManager : UnitySingleton<TimerManager>
     {
         int checkpointCount = CheckPointManager.Instance.CheckpointCount;
 
-        _finishedSegmentTimes = new float[checkpointCount + 1];
+        _finishedSplitTimes = new float[checkpointCount + 1];
 
         for(int i = 0; i < checkpointCount; ++i)
         {
-            _finishedSegmentTimes[i] = 0f;
+            _finishedSplitTimes[i] = 0f;
         }
 
-        _previousSegmentTimes = new float[checkpointCount + 1];
+        _previousSplitTimes = new float[checkpointCount + 1];
 
         for (int i = 0; i < checkpointCount; ++i)
         {
-            _previousSegmentTimes[i] = 0f;
+            _previousSplitTimes[i] = 0f;
         }
 
         _totalTime = 0f;
-        _segmentTime = 0f;
+        _currentSegmentTime = 0f;
+
+        LoadData();
     }
 
     public void CheckpointReached(int checkpointID)
     {
-        _finishedSegmentTimes[checkpointID] = _segmentTime;
-        _segmentTime = 0f;
+        _finishedSplitTimes[checkpointID] = _totalTime;
+        _currentSegmentTime = 0f;
+        _currentSegment = checkpointID + 1;
+    }
+
+    public float GetSplitTime(int idx)
+    {
+        float segmentTime = 0f;
+
+        if (idx == _currentSegment)
+        {
+            segmentTime = _totalTime;
+        }
+        else if (null != _finishedSplitTimes)
+        {
+            segmentTime = _finishedSplitTimes[idx];
+        }
+
+        return segmentTime;
+    }
+
+    public float GetSplitDiffTime(int idx)
+    {
+        float segmentDiffTime = float.NaN;
+
+        if (_hasLoadedTimes)
+        {
+            if (idx < _currentSegment)
+            {
+                segmentDiffTime = _finishedSplitTimes[idx] - _previousSplitTimes[idx];
+            }
+        }
+
+        return segmentDiffTime;
     }
 
     public void LevelFinished()
     {
-        _finishedSegmentTimes[_finishedSegmentTimes.Length - 1] = _segmentTime;
+        _finishedSplitTimes[_finishedSplitTimes.Length - 1] = _totalTime;
+        _currentSegment = _finishedSplitTimes.Length;
+        _running = false;
+
+        SaveData();
     }
 
     #endregion
