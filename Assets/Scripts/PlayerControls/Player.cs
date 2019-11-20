@@ -75,6 +75,14 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        // Debug Testing
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true; // ... Invisible!
+            GameManager.Instance.LevelFinished();
+        }
+
         if (InputManager.Instance.GetButtonDown(InputManager.InputKeys.QuickRestart))
         {
             // If the player presses the restart button, respawn the player at the last checkpoint

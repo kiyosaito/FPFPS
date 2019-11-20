@@ -167,7 +167,7 @@ public class TimerManager : UnitySingleton<TimerManager>
         {
             segmentTime = _totalTime;
         }
-        else if (null != _finishedSplitTimes)
+        else if ((null != _finishedSplitTimes) && (idx < _finishedSplitTimes.Length))
         {
             segmentTime = _finishedSplitTimes[idx];
         }

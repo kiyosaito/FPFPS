@@ -10,7 +10,7 @@ public class GameManager : UnitySingleton<GameManager>
     protected override void Setup()
     {
         _sceneNames.Add(GameScene.MainMenu, "MainMenu");
-        _sceneNames.Add(GameScene.LevelSelect, "....");
+        _sceneNames.Add(GameScene.LevelSelect, "Demo Menu");
         _sceneNames.Add(GameScene.Level_1, "Stage 1");
         _sceneNames.Add(GameScene.Level_2, "Stage 2");
         _sceneNames.Add(GameScene.Level_3, "Stage 3");
@@ -46,9 +46,9 @@ public class GameManager : UnitySingleton<GameManager>
 
     public enum GameScene
     {
-        Unknown,
-        MainMenu,
-        LevelSelect,
+        Unknown = 101,
+        MainMenu = 102,
+        LevelSelect = 103,
         Level_1 = 1,
         Level_2 = 2,
         Level_3 = 3,
@@ -114,7 +114,7 @@ public class GameManager : UnitySingleton<GameManager>
     {
         if (_levelSelectMode)
         {
-            // TODO: Load level select menu/scene
+            SceneManager.LoadScene(_sceneNames[GameScene.LevelSelect]);
         }
         else
         {
