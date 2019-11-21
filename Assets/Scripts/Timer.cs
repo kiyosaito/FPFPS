@@ -15,9 +15,13 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private int segment = 1;
 
+    [SerializeField]
+    private bool best = false;
+
     private void Update()
     {
         float time = total ? TimerManager.Instance.TotalTime : (diff ? TimerManager.Instance.GetSplitDiffTime(segment) : TimerManager.Instance.GetSplitTime(segment));
+        time = best ? TimerManager.Instance.GetSumOfBestSegments() : time;
 
         if (float.IsNaN(time))
         {
