@@ -78,9 +78,8 @@ public class Player : MonoBehaviour
         // Debug Testing
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true; // ... Invisible!
-            GameManager.Instance.LevelFinished();
+            canAirJump = true;
+            isJumping = true;
         }
 
         if (InputManager.Instance.GetButtonDown(InputManager.InputKeys.QuickRestart))
