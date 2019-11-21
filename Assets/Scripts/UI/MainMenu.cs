@@ -8,15 +8,21 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     #region References/Variables
+    #region Audio
     public AudioMixerGroup master;
     public AudioMixerGroup sFX;
     public AudioMixerGroup music;
-
+    #endregion
     #region Resolution
     public TMPro.TMP_Dropdown resDropdown;
     private Resolution[] res;
     #endregion
-
+    #region OptionsButtons
+    public Button graphicsButton;
+    public Button audioButton;
+    public Button controlsButton;
+    public Button backButton;
+    #endregion
     #region Screenmode
     public TMPro.TMP_Dropdown screenModeDropdown;
     public FullScreenMode[] screenMode = new FullScreenMode[3];
@@ -92,6 +98,14 @@ public class MainMenu : MonoBehaviour
         InputManager.Instance.MouseSensitivity = sensitivity;
     }
 
+    public void ButtonIsEnabled(bool buttonEnabled)
+    {
+        graphicsButton.interactable = buttonEnabled;
+        audioButton.interactable = buttonEnabled;
+        controlsButton.interactable = buttonEnabled;
+        backButton.interactable = buttonEnabled;
+    }
+    
     #endregion
     #endregion
 
