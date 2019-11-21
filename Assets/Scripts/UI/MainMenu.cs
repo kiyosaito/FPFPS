@@ -80,15 +80,15 @@ public class MainMenu : MonoBehaviour
     #region Audio
     public void OptionsMenuSetMainVolume(float volume)
     {
-        master.audioMixer.SetFloat("Volume", volume);
+        master.audioMixer.SetFloat("MasterVol", volume);
     }
     public void OptionsMenuSetSFXVolume(float volume)
     {
-        sFX.audioMixer.SetFloat("Volume", volume);
+        sFX.audioMixer.SetFloat("SFXVol", volume);
     }
     public void OptionsMenuSetMusicVolume(float volume)
     {
-        music.audioMixer.SetFloat("Volume", volume);
+        music.audioMixer.SetFloat("MusicVol", volume);
     }
     #endregion
     #region Controls
