@@ -68,6 +68,12 @@ public class Player : MonoBehaviour
                 GameManager.Instance.SelectLevel(GameManager.Instance.GetCurrentScene());
                 return;
             }
+            else
+            {
+                Debug.Log("Started in unknown level scene. Initialising level from player script");
+                CheckPointManager.Instance.Init();
+                TimerManager.Instance.StartTimers();
+            }
         }
 
         controller = GetComponent<CharacterController>();
@@ -75,8 +81,8 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        // Debug Testing
-        if (Input.GetKeyDown(KeyCode.F1))
+        // TODO: remove Debug Testing
+        if ((Application.isEditor) && (Input.GetKeyDown(KeyCode.F1)))
         {
             canAirJump = true;
             isJumping = true;
