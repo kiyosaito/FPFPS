@@ -60,6 +60,12 @@ public class MainMenu : MonoBehaviour
     }
 
     #region Options Menu
+    #region Gameplay
+    public void OptionsMenuTimeScale(float scale)
+    {
+        Time.timeScale = scale;
+    }
+    #endregion
     #region Graphics
 
     public void OptionsMenuSetQuality(int qualityIndex)
