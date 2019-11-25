@@ -28,6 +28,9 @@ public class MainMenu : MonoBehaviour
     public FullScreenMode[] screenMode = new FullScreenMode[3];
     #endregion
 
+    public GameObject toggle1;
+    public GameObject toggle2;
+    public GameObject toggle3;
     private int sceneToContinue;
     #endregion
 
@@ -71,7 +74,22 @@ public class MainMenu : MonoBehaviour
     }
     public void DisplayTimer(bool exist)
     {
-        GameManager.Instance
+        GameManager.Instance.ShowTimer = exist;
+        toggle1.SetActive(exist);
+        toggle2.SetActive(exist);
+        toggle3.SetActive(exist);
+    }
+    public void SplitInfo(bool exist)
+    {
+        GameManager.Instance.ShowSplits = exist;
+    }
+    public void Segment(bool exist)
+    {
+        GameManager.Instance.ShowSegmentTime = exist;
+    }
+    public void Comparison(bool exist)
+    {
+        GameManager.Instance.ShowTotalTimeComparison = exist;
     }
     #endregion
     #region Graphics
