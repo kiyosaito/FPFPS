@@ -65,6 +65,14 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = scale;
     }
+    public void SetDifficulty(int difficultyIndex)
+    {
+        GameManager.Instance.Difficulty = (GameManager.TimerDifficultySetting)(difficultyIndex);
+    }
+    public void DisplayTimer(bool exist)
+    {
+        GameManager.Instance
+    }
     #endregion
     #region Graphics
 

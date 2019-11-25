@@ -24,7 +24,7 @@ public class GameManager : UnitySingleton<GameManager>
 
     private Dictionary<GameScene, string> _sceneNames = new Dictionary<GameScene, string>();
 
-    private TimerDifficultySetting _timerDifficultySetting = TimerDifficultySetting.Normal;
+    private TimerDifficultySetting _timerDifficultySetting = TimerDifficultySetting.Forte;
 
     private bool _showTotalTime = true;
 
@@ -56,10 +56,16 @@ public class GameManager : UnitySingleton<GameManager>
 
     public enum TimerDifficultySetting
     {
-        Hard,   // Fortissimo   // Reaching a checkpoint sets remaining time to checkpoint time
-        Normal, // Forte        // Reaching a checkpoint adds checkpoint time to remaining time, extra time can be lost with deaths
-        Medium, // Piano        // Reaching a checkpoint adds checkpoint time to remaining time, gained time is retained on death
-        Easy,   // Pianissimo   // There is no remaining time
+        Fortissimo,   // Hard   // Reaching a checkpoint sets remaining time to checkpoint time
+        Forte, // Normal        // Reaching a checkpoint adds checkpoint time to remaining time, extra time can be lost with deaths
+        Piano, // Medium        // Reaching a checkpoint adds checkpoint time to remaining time, gained time is retained on death
+        Pianissimo,   // Easy   // There is no remaining time
+    }
+
+    public TimerDifficultySetting Difficulty
+    {
+        get { return _timerDifficultySetting; }
+        set { _timerDifficultySetting = value; }
     }
 
     public bool ShowTotalTime
