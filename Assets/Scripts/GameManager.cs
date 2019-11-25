@@ -26,11 +26,13 @@ public class GameManager : UnitySingleton<GameManager>
 
     private TimerDifficultySetting _timerDifficultySetting = TimerDifficultySetting.Forte;
 
-    private bool _showTotalTime = true;
+    private bool _showTimer = true;
 
     private bool _showSplits = false;
 
     private bool _showSegmentTime = false;
+
+    private bool _showTotalTimeComparison = false;
 
     private GameScene _levelReached = GameScene.MainMenu;
 
@@ -68,19 +70,28 @@ public class GameManager : UnitySingleton<GameManager>
         set { _timerDifficultySetting = value; }
     }
 
-    public bool ShowTotalTime
+    public bool ShowTimer
     {
-        get { return _showTotalTime; }
+        get { return _showTimer; }
+        set { _showTimer = value; }
     }
 
     public bool ShowSplits
     {
         get { return _showSplits; }
+        set { _showSplits = value; }
     }
 
     public bool ShowSegmentTime
     {
         get { return _showSegmentTime; }
+        set { _showSegmentTime = value; }
+    }
+
+    public bool ShowTotalTimeComparison
+    {
+        get { return _showTotalTimeComparison; }
+        set { _showTotalTimeComparison = value; }
     }
 
     public GameScene CurrentLevel
