@@ -8,8 +8,9 @@ public class TimerManager : UnitySingleton<TimerManager>
 
     private class TimerData : PersistableData
     {
-        private const int _version = 1;
+        public const int CurrentFormatVersoin = 1;
 
+        public float FileVersion = 0;
         public float PBTotalTime = 0f;
         public float[] PBSplitTimes = null;
         public float[] PBSegmentTimes = null;
@@ -17,7 +18,7 @@ public class TimerManager : UnitySingleton<TimerManager>
 
         public override void Save(GameDataWriter writer)
         {
-            writer.Write(-_version);
+            writer.Write(-CurrentFormatVersoin);
 
             writer.Write(PBTotalTime);
 
@@ -42,9 +43,9 @@ public class TimerManager : UnitySingleton<TimerManager>
 
         protected override void Init(GameDataReader reader)
         {
-            int version = -reader.ReadInt();
+            FileVersion = -reader.ReadInt();
 
-            if (_version == version)
+            if (CurrentFormatVersoin == FileVersion)
             {
                 PBTotalTime = reader.ReadFloat();
 
@@ -146,7 +147,7 @@ public class TimerManager : UnitySingleton<TimerManager>
     {
         TimerData data = GameDataReader.LoadData<TimerData>(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + " times");
 
-        if (null != data)
+        if ((null != data) && (TimerData.CurrentFormatVersoin == data.FileVersion))
         {
             _hasLoadedTimes = true;
 
