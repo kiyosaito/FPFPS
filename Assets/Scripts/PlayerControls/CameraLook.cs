@@ -32,7 +32,7 @@ public class CameraLook : MonoBehaviour
             return;
         }
 
-        isCursorHidden = isCursorHidden != (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Menu));
+        isCursorHidden = (0f != Time.timeScale);
 
         if (isCursorHidden)
         {

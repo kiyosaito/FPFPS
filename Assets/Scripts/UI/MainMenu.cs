@@ -152,21 +152,12 @@ public class MainMenu : MonoBehaviour
     #region Main Menu
     public void MainMenuNewGame()
     {
-        SceneManager.LoadScene(1);
-        //SaveLoad.ResetSaves();
+        GameManager.Instance.StartNewGame();
     }
 
     public void MainMenuLoadLevel()
     {
-        sceneToContinue = PlayerPrefs.GetInt("SavedScene");
-        if (sceneToContinue != 0)
-        {
-            SceneManager.LoadScene(sceneToContinue);
-        }
-        else
-        {
-            return;
-        }
+        GameManager.Instance.ContinueGame();
     }
 
     public void MainMenuQuit()

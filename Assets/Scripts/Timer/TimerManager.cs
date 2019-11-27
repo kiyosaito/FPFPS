@@ -386,6 +386,9 @@ public class TimerManager : UnitySingleton<TimerManager>
         _running = false;
 
         SaveData();
+
+        // TODO : Change to actual level finished menu
+        GameObject.Find("TempFinish").GetComponent<PauseMenu>().Pausing();
     }
 
     #endregion
