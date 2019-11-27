@@ -16,6 +16,10 @@ public class PauseMenu : MonoBehaviour
 
     public bool ispaused;
 
+    // TODO : For demo only, remove later
+    [SerializeField]
+    private bool isLevelEndMenu = false;
+
     private void Start()
     {
         ispaused = false;
@@ -24,7 +28,7 @@ public class PauseMenu : MonoBehaviour
     private void Update()
     {
 
-        if (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Menu))
+        if ((!isLevelEndMenu) && (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Menu)))
         {
             if (ispaused == false)
             {

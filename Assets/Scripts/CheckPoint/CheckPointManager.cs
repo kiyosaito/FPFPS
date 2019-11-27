@@ -52,6 +52,7 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
                 {
                     if (Input.GetKeyDown(numbers[i]) && registeredCheckpoints.ContainsKey(i))
                     {
+                        TimerManager.Instance.InvalidateTimes();
                         CheckpointReached(i);
                         StartRespawnSequence();
                         break;
