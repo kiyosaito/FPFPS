@@ -5,23 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    private GameObject pause;
-    private GameObject pauseOptions;
-    private GameObject warnings;
+    [SerializeField]
+    private GameObject pause = null;
+
+    [SerializeField]
+    private GameObject pauseOptions = null;
+
+    [SerializeField]
+    private GameObject warnings = null;
+
     public bool ispaused;
+
+    // TODO : For demo only, remove later
+    [SerializeField]
+    private bool isLevelEndMenu = false;
 
     private void Start()
     {
-        pause = GameObject.Find("Hologram");
-        pauseOptions = GameObject.Find("PauseOptions");
-        warnings = GameObject.Find("Warnings");
         ispaused = false;
         Unpausing();
     }
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if ((!isLevelEndMenu) && (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Menu)))
         {
             if (ispaused == false)
             {
@@ -36,7 +43,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void Pausing()
     {
-        Time.timeScale = 0;
+        Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         pause.gameObject.SetActive(true);
@@ -44,7 +51,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void Unpausing()
     {
-        Time.timeScale = 1;
+        Time.timeScale = GameManager.Instance.GameTimeScale;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         warnings.gameObject.SetActive(false);
@@ -54,10 +61,16 @@ public class PauseMenu : MonoBehaviour
     }
     public void QTM()
     {
-        SceneManager.LoadScene("MainMenu");
+        GameManager.Instance.BackToMain();
     }
     public void Quit()
     {
         Application.Quit();
+    }
+
+    // TODO : Remove this later, temporarily added for demo build, should be on level finished menu script
+    public void NextLevel()
+    {
+        GameManager.Instance.LevelFinished();
     }
 }

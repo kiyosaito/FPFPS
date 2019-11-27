@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
         {
             canAirJump = true;
             isJumping = true;
+            TimerManager.Instance.InvalidateTimes();
         }
 
         if (InputManager.Instance.GetButtonDown(InputManager.InputKeys.QuickRestart))

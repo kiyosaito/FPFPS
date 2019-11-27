@@ -189,6 +189,8 @@ public class TimerManager : UnitySingleton<TimerManager>
 
     #region Private Variables
 
+    private bool _validTimes = true;
+
     [SerializeField]
     private bool _running = true;
 
@@ -385,7 +387,18 @@ public class TimerManager : UnitySingleton<TimerManager>
         _currentSegment = _checkpointCount + 1;
         _running = false;
 
-        SaveData();
+        if (_validTimes)
+        {
+            SaveData();
+        }
+
+        // TODO : Change to actual level finished menu
+        GameObject.Find("TempFinish").GetComponent<PauseMenu>().Pausing();
+    }
+
+    public void InvalidateTimes()
+    {
+        _validTimes = false;
     }
 
     #endregion
