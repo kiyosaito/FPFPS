@@ -232,6 +232,22 @@ public class GameManager : UnitySingleton<GameManager>
         SceneManager.LoadScene(_sceneNames[GameScene.MainMenu]);
     }
 
+    public void GoToLevelSelectMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(_sceneNames[GameScene.LevelSelect]);
+    }
+
+    private void Update()
+    {
+        GameScene current = GetCurrentScene();
+        if ((GameScene.LevelSelect == current) || (GameScene.MainMenu == current))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
     #endregion
 
     #region Private Functions

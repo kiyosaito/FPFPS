@@ -42,6 +42,11 @@ public class CameraLook : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false; // ... Invisible!
         }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
 
         // Clamp the camera on pitch
         float newPitch = Mathf.Clamp(euler.x - InputManager.Instance.GetMouseAxis(InputManager.MouseAxisInputs.LookVertical) * speed.y * Time.deltaTime, minPitch, maxPitch);

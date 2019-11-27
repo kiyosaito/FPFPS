@@ -24,4 +24,9 @@ public class DebugSelectLevel : MonoBehaviour
     {
         GameManager.Instance.StartNewGame();
     }
+
+    public void LevelSelect()
+    {
+        GameManager.Instance.GoToLevelSelectMenu();
+    }
 }
