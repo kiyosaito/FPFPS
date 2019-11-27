@@ -256,12 +256,12 @@ public class TimerManager : UnitySingleton<TimerManager>
 
     #region MonoBehaviour Functions
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_running)
         {
-            _totalTime += Time.deltaTime;
-            _currentSegmentTime += Time.deltaTime;
+            _totalTime += Time.fixedUnscaledDeltaTime;
+            _currentSegmentTime += Time.fixedUnscaledDeltaTime;
         }
     }
 

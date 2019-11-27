@@ -14,4 +14,14 @@ public class DebugSelectLevel : MonoBehaviour
     {
         GameManager.Instance.ContinueGame();
     }
+
+    public void BackToMain()
+    {
+        GameManager.Instance.BackToMain();
+    }
+
+    public void StartNewGame()
+    {
+        GameManager.Instance.StartNewGame();
+    }
 }

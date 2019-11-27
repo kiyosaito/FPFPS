@@ -47,10 +47,14 @@ public class RebindMenu : MonoBehaviour
         // Go through all buttons in the list
         for (int i = 0; i < _buttons.Count; ++i)
         {
-            bool isDuplicate = false;
-
             // Get button to update it's text
             _buttons[i].SetupButtonText();
+        }
+
+        // Go through all buttons in the list again
+        for (int i = 0; i < _buttons.Count; ++i)
+        {
+            bool isDuplicate = false;
 
             // Compare to all other buttons in the list
             for (int j = 0; j < _buttons.Count; ++j)
@@ -82,6 +86,12 @@ public class RebindMenu : MonoBehaviour
         CheckForDuplicates();
 
         Invoke("RedyForRebind", 0.5f);
+    }
+
+    public void ResetKeybindsToDefault()
+    {
+        InputManager.Instance.ResetKeybindsToDefault();
+        CheckForDuplicates();
     }
 
     #endregion

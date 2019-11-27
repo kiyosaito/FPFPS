@@ -78,6 +78,7 @@ public class Player : MonoBehaviour
 
         controller = GetComponent<CharacterController>();
         currentSpeed = moveSpeed;
+        gottaGoFast = GameManager.Instance.GottaGoFast;
     }
     private void Update()
     {

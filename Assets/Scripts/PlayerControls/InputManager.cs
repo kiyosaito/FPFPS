@@ -53,21 +53,33 @@ public sealed class InputManager : UnitySingleton<InputManager>
         _axisValues.Add(AxisInputs.MoveHorizontal, new AxisValue(InputKeys.MoveHorizontalPositive, InputKeys.MoveHorizontalNegative));
         _axisValues.Add(AxisInputs.MoveVertical, new AxisValue(InputKeys.MoveVerticalPositive, InputKeys.MoveVerticalNegative));
 
-        // Default keymapping
-        _keyMapping.Add(InputKeys.MoveHorizontalPositive, new KeyCode[2] { KeyCode.D, KeyCode.RightArrow });
-        _keyMapping.Add(InputKeys.MoveHorizontalNegative, new KeyCode[2] { KeyCode.A, KeyCode.LeftArrow });
-        _keyMapping.Add(InputKeys.MoveVerticalPositive, new KeyCode[2] { KeyCode.W, KeyCode.UpArrow });
-        _keyMapping.Add(InputKeys.MoveVerticalNegative, new KeyCode[2] { KeyCode.S, KeyCode.DownArrow });
-        _keyMapping.Add(InputKeys.Jump, new KeyCode[2] { KeyCode.Space, KeyCode.Mouse1 });
-        _keyMapping.Add(InputKeys.Menu, new KeyCode[2] { KeyCode.Escape, KeyCode.None });
-        _keyMapping.Add(InputKeys.QuickRestart, new KeyCode[2] { KeyCode.R, KeyCode.None });
-        _keyMapping.Add(InputKeys.Shoot, new KeyCode[2] { KeyCode.Mouse0, KeyCode.None });
-        _keyMapping.Add(InputKeys.None, new KeyCode[2] { KeyCode.None, KeyCode.None });
+        ResetKeybindsToDefault();
     }
 
     #endregion
 
     #region Public Functions
+
+    public void ResetKeybindsToDefault()
+    {
+        Dictionary<InputKeys, KeyCode[]> defaultKeymapping = new Dictionary<InputKeys, KeyCode[]>();
+
+        // Default keymapping
+        defaultKeymapping.Add(InputKeys.MoveHorizontalPositive, new KeyCode[2] { KeyCode.D, KeyCode.RightArrow });
+        defaultKeymapping.Add(InputKeys.MoveHorizontalNegative, new KeyCode[2] { KeyCode.A, KeyCode.LeftArrow });
+        defaultKeymapping.Add(InputKeys.MoveVerticalPositive, new KeyCode[2] { KeyCode.W, KeyCode.UpArrow });
+        defaultKeymapping.Add(InputKeys.MoveVerticalNegative, new KeyCode[2] { KeyCode.S, KeyCode.DownArrow });
+        defaultKeymapping.Add(InputKeys.Jump, new KeyCode[2] { KeyCode.Space, KeyCode.Mouse1 });
+        defaultKeymapping.Add(InputKeys.Menu, new KeyCode[2] { KeyCode.Escape, KeyCode.None });
+        defaultKeymapping.Add(InputKeys.QuickRestart, new KeyCode[2] { KeyCode.R, KeyCode.None });
+        defaultKeymapping.Add(InputKeys.Shoot, new KeyCode[2] { KeyCode.Mouse0, KeyCode.None });
+        defaultKeymapping.Add(InputKeys.None, new KeyCode[2] { KeyCode.None, KeyCode.None });
+
+        Dictionary<InputKeys, KeyCode[]> tmp = _keyMapping;
+        _keyMapping = defaultKeymapping;
+        tmp.Clear();
+        tmp = null;
+    }
 
     public enum AxisInputs
     {

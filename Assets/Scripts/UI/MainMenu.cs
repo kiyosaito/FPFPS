@@ -66,7 +66,7 @@ public class MainMenu : MonoBehaviour
     #region Gameplay
     public void OptionsMenuTimeScale(float scale)
     {
-        Time.timeScale = scale;
+        GameManager.Instance.GameTimeScale = scale;
     }
     public void SetDifficulty(int difficultyIndex)
     {
@@ -78,6 +78,14 @@ public class MainMenu : MonoBehaviour
         toggle1.SetActive(exist);
         toggle2.SetActive(exist);
         toggle3.SetActive(exist);
+    }
+    public void GottaGoFast(bool exist)
+    {
+        GameManager.Instance.GottaGoFast = exist;
+    }
+    public void Speedrun(bool exist)
+    {
+        GameManager.Instance.SpeedrunMode = exist;
     }
     public void SplitInfo(bool exist)
     {

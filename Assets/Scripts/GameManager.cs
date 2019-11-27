@@ -10,7 +10,7 @@ public class GameManager : UnitySingleton<GameManager>
     protected override void Setup()
     {
         _sceneNames.Add(GameScene.MainMenu, "MainMenu");
-        _sceneNames.Add(GameScene.LevelSelect, "Demo Menu");
+        _sceneNames.Add(GameScene.LevelSelect, "LevelSelect");
         _sceneNames.Add(GameScene.Level_1, "Stage 1");
         _sceneNames.Add(GameScene.Level_2, "Stage 2");
         _sceneNames.Add(GameScene.Level_3, "Stage 3");
@@ -24,19 +24,40 @@ public class GameManager : UnitySingleton<GameManager>
 
     private Dictionary<GameScene, string> _sceneNames = new Dictionary<GameScene, string>();
 
+    [SerializeField]
+    private float _gameTimeScale = 1f;
+
+    [SerializeField]
+    private bool _gottaGoFast = false;
+
+    [SerializeField]
+    private bool _speedrunMode = false;
+
+    [SerializeField]
     private TimerDifficultySetting _timerDifficultySetting = TimerDifficultySetting.Forte;
 
+    [SerializeField]
     private bool _showTimer = true;
 
+    [SerializeField]
     private bool _showSplits = false;
 
+    [SerializeField]
     private bool _showSegmentTime = false;
 
+    [SerializeField]
     private bool _showTotalTimeComparison = false;
 
-    private GameScene _levelReached = GameScene.MainMenu;
+    [SerializeField]
+    private int _levelReached = -1;
 
+    [SerializeField]
+    private int _currentLevelProgress = -1;
+
+    [SerializeField]
     private GameScene _currentLevel = GameScene.MainMenu;
+
+    private List<GameScene> _levelProgression = new List<GameScene>(new GameScene[3] {GameScene.Level_1, GameScene.Level_2, GameScene.Level_3});
 
     private bool _levelSelectMode = false;
 
@@ -48,20 +69,40 @@ public class GameManager : UnitySingleton<GameManager>
 
     public enum GameScene
     {
-        Unknown = 101,
-        MainMenu = 102,
-        LevelSelect = 103,
-        Level_1 = 1,
-        Level_2 = 2,
-        Level_3 = 3,
+        Level_1,
+        Level_2,
+        Level_3,
+        Unknown,
+        MainMenu,
+        LevelSelect,
+    }
+
+    public bool FirstLevelReached { get { return (-1 != _levelReached); } }
+
+    public float GameTimeScale
+    {
+        get { return _gameTimeScale; }
+        set { _gameTimeScale = value; }
+    }
+
+    public bool GottaGoFast
+    {
+        get { return _gottaGoFast; }
+        set { _gottaGoFast = value; }
+    }
+
+    public bool SpeedrunMode
+    {
+        get { return _speedrunMode; }
+        set { _speedrunMode = value; }
     }
 
     public enum TimerDifficultySetting
     {
-        Fortissimo,   // Hard   // Reaching a checkpoint sets remaining time to checkpoint time
-        Forte, // Normal        // Reaching a checkpoint adds checkpoint time to remaining time, extra time can be lost with deaths
-        Piano, // Medium        // Reaching a checkpoint adds checkpoint time to remaining time, gained time is retained on death
-        Pianissimo,   // Easy   // There is no remaining time
+        Fortissimo, // Hard     // Reaching a checkpoint sets remaining time to checkpoint time
+        Forte,      // Normal   // Reaching a checkpoint adds checkpoint time to remaining time, extra time can be lost with deaths
+        Piano,      // Medium   // Reaching a checkpoint adds checkpoint time to remaining time, gained time is retained on death
+        Pianissimo, // Easy     // There is no remaining time
     }
 
     public TimerDifficultySetting Difficulty
@@ -112,17 +153,32 @@ public class GameManager : UnitySingleton<GameManager>
     {
         _levelSelectMode = true;
 
+        _currentLevel = level;
+
         LoadLevel(level);
+    }
+
+    public void StartNewGame()
+    {
+        _levelSelectMode = false;
+
+        _currentLevelProgress = 0;
+        _currentLevel = _levelProgression[_currentLevelProgress];
+
+        LoadLevel(_currentLevel);
     }
 
     public void ContinueGame()
     {
         _levelSelectMode = false;
 
-        if (0 == _currentLevel)
+        if (-1 == _currentLevelProgress)
         {
-            ++_currentLevel;
+            ++_currentLevelProgress;
+            ++_levelReached;
         }
+
+        _currentLevel = _levelProgression[_currentLevelProgress];
 
         LoadLevel(_currentLevel);
     }
@@ -131,12 +187,24 @@ public class GameManager : UnitySingleton<GameManager>
     {
         if (_levelSelectMode)
         {
+            Time.timeScale = 1f;
             SceneManager.LoadScene(_sceneNames[GameScene.LevelSelect]);
         }
         else
         {
-            _currentLevel = (GameScene)(((int)_currentLevel) + 1);
+            ++_currentLevelProgress;
+            _levelReached = Mathf.Max(_levelReached, _currentLevelProgress);
 
+            _currentLevel = _levelProgression[_currentLevelProgress];
+
+            LoadLevel(_currentLevel);
+        }
+    }
+
+    public void RestartLevel()
+    {
+        if (_levelProgression.Contains(_currentLevel))
+        {
             LoadLevel(_currentLevel);
         }
     }
@@ -156,6 +224,12 @@ public class GameManager : UnitySingleton<GameManager>
         }
 
         return currentScene;
+    }
+
+    public void BackToMain()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(_sceneNames[GameScene.MainMenu]);
     }
 
     #endregion
@@ -188,6 +262,7 @@ public class GameManager : UnitySingleton<GameManager>
         SceneManager.sceneLoaded -= InitialiseLevel;
 
         _initialised = true;
+        Time.timeScale = _gameTimeScale;
         CheckPointManager.Instance.Init();
         TimerManager.Instance.StartTimers();
     }

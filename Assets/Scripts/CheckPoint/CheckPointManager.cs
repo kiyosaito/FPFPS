@@ -18,6 +18,8 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
 
     #region Private Variables
 
+    private bool speedrunMode = false;
+
     private Vector3 checkpointLocation = Vector3.zero;
     private Quaternion checkpointRotation = Quaternion.identity;
 
@@ -65,6 +67,7 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
 
     public void Init()
     {
+        speedrunMode = GameManager.Instance.SpeedrunMode;
         foreach (var checkpoint in FindObjectsOfType<CheckPointTrigger>())
         {
             checkpoint.Register();
@@ -104,19 +107,27 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
 
     private void DisablePlayer()
     {
+        // TODO: Add visual effects
         PlayerLink.Instance.PlayerInstance.enabled = false;
         Invoke("RespawnPlayer", 0.5f);
     }
 
     private void RespawnPlayer()
     {
-        // TODO: Add visual effect to hide reset
-        PlayerLink.Instance.PlayerInstance.Warp(checkpointLocation);
-        PlayerLink.Instance.PlayerInstance.ResetPlayer();
-        PlayerLink.Instance.CameraLookInstance.ResetCamera(checkpointRotation);
-        PlayerLink.Instance.WeaponInstance.ResetWeapon();
-        ResetStates();
-        Invoke("EnablePlayer", 0.5f);
+        if ((speedrunMode) && (GameManager.GameScene.Unknown != GameManager.Instance.GetCurrentScene()))
+        {
+            GameManager.Instance.RestartLevel();
+        }
+        else
+        {
+            // TODO: Add visual effects
+            PlayerLink.Instance.PlayerInstance.Warp(checkpointLocation);
+            PlayerLink.Instance.PlayerInstance.ResetPlayer();
+            PlayerLink.Instance.CameraLookInstance.ResetCamera(checkpointRotation);
+            PlayerLink.Instance.WeaponInstance.ResetWeapon();
+            ResetStates();
+            Invoke("EnablePlayer", 0.5f);
+        }
     }
 
     private void EnablePlayer()
