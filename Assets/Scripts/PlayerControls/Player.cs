@@ -51,6 +51,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool gottaGoFast = false;
 
+    // Input buffer
+    float inputH = 0f;
+    float inputV = 0f;
+    bool inputJump = false;
+
     public bool IsGrounded
     {
         get { return controller.isGrounded; }
@@ -98,12 +103,12 @@ public class Player : MonoBehaviour
         }
 
         // W A S D / Right Left Up Down Arrow Input
-        float inputH = InputManager.Instance.GetAxis(InputManager.AxisInputs.MoveHorizontal);
-        float inputV = InputManager.Instance.GetAxis(InputManager.AxisInputs.MoveVertical);
+        inputH = InputManager.Instance.GetAxis(InputManager.AxisInputs.MoveHorizontal);
+        inputV = InputManager.Instance.GetAxis(InputManager.AxisInputs.MoveVertical);
         // Left Shift Input
 
         // Space Bar Input
-        bool inputJump = false;
+        inputJump = false;
         if (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Jump))
         {
             inputJump = true;
@@ -114,6 +119,9 @@ public class Player : MonoBehaviour
             jumpQueueTimer = Mathf.Max(0f, jumpQueueTimer - Time.deltaTime);
         }
         inputJump = inputJump || (jumpQueueTimer > 0f);
+    }
+    private void FixedUpdate()
+    {
         // Put Horizontal & Vertical input into vector
         Vector3 inputDir = new Vector3(inputH, 0f, (gottaGoFast ? 1f : inputV));
         // Rotate direction to Player's Direction
