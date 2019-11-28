@@ -20,32 +20,151 @@ public class GameManager : UnitySingleton<GameManager>
 
     #endregion
 
+    #region OptionsData
+
+    private class OptionsData : PersistableData
+    {
+        public const int CurrentFormatVersion = 1;
+
+        public float FileVersion = 0;
+
+        public int ScreenMode = 2;
+        public int ResolutionIdx = -1;
+        public int QualityLevelIndex = 5;
+        public float MasterVolume = 0f;
+        public float SFXVolume = 0f;
+        public float MusicVolume = 0f;
+        public float GameTimeScale = 1f;
+        public bool GottaGoFast = false;
+        public bool SpeedrunMode = false;
+        public int TimerDifficultySetting = (int)(GameManager.TimerDifficultySetting.Forte);
+        public bool ShowTimer = true;
+        public bool ShowSplits = false;
+        public bool ShowSegmentTime = false;
+        public bool ShowTotalTimeComparison = false;
+        public int LevelReached = -1;
+        public int CurrentLevelProgress = -1;
+
+        public override void Save(GameDataWriter writer)
+        {
+            writer.Write(-CurrentFormatVersion);
+
+            writer.Write(ScreenMode);
+            writer.Write(ResolutionIdx);
+            writer.Write(QualityLevelIndex);
+            writer.Write(MasterVolume);
+            writer.Write(SFXVolume);
+            writer.Write(MusicVolume);
+            writer.Write(GameTimeScale);
+            writer.Write(GottaGoFast);
+            writer.Write(SpeedrunMode);
+            writer.Write(TimerDifficultySetting);
+            writer.Write(ShowTimer);
+            writer.Write(ShowSplits);
+            writer.Write(ShowSegmentTime);
+            writer.Write(ShowTotalTimeComparison);
+            writer.Write(LevelReached);
+            writer.Write(CurrentLevelProgress);
+        }
+
+        protected override void Init(GameDataReader reader)
+        {
+            FileVersion = -reader.ReadInt();
+
+            if (CurrentFormatVersion == FileVersion)
+            {
+                ScreenMode = reader.ReadInt();
+                ResolutionIdx = reader.ReadInt();
+                QualityLevelIndex = reader.ReadInt();
+                MasterVolume = reader.ReadFloat();
+                SFXVolume = reader.ReadFloat();
+                MusicVolume = reader.ReadFloat();
+                GameTimeScale = reader.ReadFloat();
+                GottaGoFast = reader.ReadBool();
+                SpeedrunMode = reader.ReadBool();
+                TimerDifficultySetting = reader.ReadInt();
+                ShowTimer = reader.ReadBool();
+                ShowSplits = reader.ReadBool();
+                ShowSegmentTime = reader.ReadBool();
+                ShowTotalTimeComparison = reader.ReadBool();
+                LevelReached = reader.ReadInt();
+                CurrentLevelProgress = reader.ReadInt();
+            }
+        }
+
+        public OptionsData() { }
+    }
+
+    private void SaveData()
+    {
+        OptionsData data = new OptionsData();
+
+        data.ScreenMode = _screenMode;
+        data.ResolutionIdx = _resolutionIdx;
+        data.QualityLevelIndex = _qualityLevelIndex;
+        data.MasterVolume = _masterVolume;
+        data.SFXVolume = _sFXVolume;
+        data.MusicVolume = _musicVolume;
+        data.GameTimeScale = _gameTimeScale;
+        data.GottaGoFast = _gottaGoFast;
+        data.SpeedrunMode = _speedrunMode;
+        data.TimerDifficultySetting = (int)(_timerDifficultySetting);
+        data.ShowTimer = _showTimer;
+        data.ShowSplits = _showSplits;
+        data.ShowSegmentTime = _showSegmentTime;
+        data.ShowTotalTimeComparison = _showTotalTimeComparison;
+        data.LevelReached = _levelReached;
+        data.CurrentLevelProgress = _currentLevelProgress;
+
+        GameDataWriter.SaveData("Settings", data);
+    }
+
+    private void LoadData()
+    {
+        OptionsData data = GameDataReader.LoadData<OptionsData>("Settings");
+
+        if ((null != data) && (OptionsData.CurrentFormatVersion == data.FileVersion))
+        {
+            _screenMode = data.ScreenMode;
+            _resolutionIdx = data.ResolutionIdx;
+            _qualityLevelIndex = data.QualityLevelIndex;
+            _masterVolume = data.MasterVolume;
+            _sFXVolume = data.SFXVolume;
+            _musicVolume = data.MusicVolume;
+            _gameTimeScale = data.GameTimeScale;
+            _gottaGoFast = data.GottaGoFast;
+            _speedrunMode = data.SpeedrunMode;
+            _timerDifficultySetting = (TimerDifficultySetting)(data.TimerDifficultySetting);
+            _showTimer = data.ShowTimer;
+            _showSplits = data.ShowSplits;
+            _showSegmentTime = data.ShowSegmentTime;
+            _showTotalTimeComparison = data.ShowTotalTimeComparison;
+            _levelReached = data.LevelReached;
+            _currentLevelProgress = data.CurrentLevelProgress;
+        }
+    }
+
+    #endregion
+
     #region Private Variables
+
+    private bool _optionsLoaded = false;
 
     private Dictionary<GameScene, string> _sceneNames = new Dictionary<GameScene, string>();
 
-    [SerializeField]
+    private int _screenMode = 2;
+    private int _resolutionIdx = -1;
+    private int _qualityLevelIndex = 5;
+    private float _masterVolume = 0f;
+    private float _sFXVolume = 0f;
+    private float _musicVolume = 0f;
     private float _gameTimeScale = 1f;
-
-    [SerializeField]
     private bool _gottaGoFast = false;
-
-    [SerializeField]
     private bool _speedrunMode = false;
-
-    [SerializeField]
     private TimerDifficultySetting _timerDifficultySetting = TimerDifficultySetting.Forte;
-
-    [SerializeField]
     private bool _showTimer = true;
-
-    [SerializeField]
     private bool _showSplits = false;
-
-    [SerializeField]
     private bool _showSegmentTime = false;
-
-    [SerializeField]
     private bool _showTotalTimeComparison = false;
 
     [SerializeField]
@@ -54,7 +173,6 @@ public class GameManager : UnitySingleton<GameManager>
     [SerializeField]
     private int _currentLevelProgress = -1;
 
-    [SerializeField]
     private GameScene _currentLevel = GameScene.MainMenu;
 
     private List<GameScene> _levelProgression = new List<GameScene>(new GameScene[3] {GameScene.Level_1, GameScene.Level_2, GameScene.Level_3});
@@ -78,6 +196,42 @@ public class GameManager : UnitySingleton<GameManager>
     }
 
     public bool FirstLevelReached { get { return (-1 != _levelReached); } }
+
+    public int ScreenMode
+    {
+        get { return _screenMode; }
+        set { _screenMode = value; }
+    }
+
+    public int GameResolutionIdx
+    {
+        get { return _resolutionIdx; }
+        set { _resolutionIdx = value; }
+    }
+
+    public float MasterVolume
+    {
+        get { return _masterVolume; }
+        set { _masterVolume = value; }
+    }
+
+    public int QualityLevelIndex
+    {
+        get { return _qualityLevelIndex; }
+        set { _qualityLevelIndex = value; }
+    }
+
+    public float SFXVolume
+    {
+        get { return _sFXVolume; }
+        set { _sFXVolume = value; }
+    }
+
+    public float MusicVolume
+    {
+        get { return _musicVolume; }
+        set { _musicVolume = value; }
+    }
 
     public float GameTimeScale
     {
@@ -148,6 +302,20 @@ public class GameManager : UnitySingleton<GameManager>
     #endregion
 
     #region Public Functions
+
+    public void LoadSavedOptions()
+    {
+        if (!_optionsLoaded)
+        {
+            _optionsLoaded = true;
+            LoadData();
+        }
+    }
+
+    public void SaveOptions()
+    {
+        SaveData();
+    }
 
     public void SelectLevel(GameScene level)
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RebindMenu : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class RebindMenu : MonoBehaviour
     private List<RebindButton> _buttons = null;
 
     private bool _rebindInProgress = false;
+
+    [SerializeField]
+    private MainMenu _mainMenu = null;
+
+    [SerializeField]
+    private Button _resetKeybindsButton = null;
 
     #endregion
 
@@ -33,9 +40,11 @@ public class RebindMenu : MonoBehaviour
         CheckForDuplicates();
     }
 
-    private void RedyForRebind()
+    private void ReadyForRebind()
     {
         _rebindInProgress = false;
+        _mainMenu.ButtonIsEnabled(true);
+        _resetKeybindsButton.interactable = true;
     }
 
     #endregion
@@ -78,6 +87,8 @@ public class RebindMenu : MonoBehaviour
 
     public void RebindStarted()
     {
+        _mainMenu.ButtonIsEnabled(false);
+        _resetKeybindsButton.interactable = false;
         _rebindInProgress = true;
     }
 
@@ -85,13 +96,24 @@ public class RebindMenu : MonoBehaviour
     {
         CheckForDuplicates();
 
-        Invoke("RedyForRebind", 0.5f);
+        StartCoroutine(DelayReady());
     }
 
     public void ResetKeybindsToDefault()
     {
         InputManager.Instance.ResetKeybindsToDefault();
         CheckForDuplicates();
+    }
+
+    #endregion
+
+    #region Private Functions
+
+    private IEnumerator DelayReady()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        ReadyForRebind();
     }
 
     #endregion

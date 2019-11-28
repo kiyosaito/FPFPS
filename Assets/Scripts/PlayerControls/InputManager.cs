@@ -3,7 +3,94 @@ using UnityEngine;
 
 public sealed class InputManager : UnitySingleton<InputManager>
 {
+    #region OptionsData
+
+    private class OptionsData : PersistableData
+    {
+        public const int CurrentFormatVersion = 1;
+
+        public float FileVersion = 0;
+
+        public float MouseSensitivity = 1f;
+
+        public List<(int, int, int)> Keymappings = new List<(int, int, int)>();
+
+        public override void Save(GameDataWriter writer)
+        {
+            writer.Write(-CurrentFormatVersion);
+
+            writer.Write(MouseSensitivity);
+
+            writer.Write(Keymappings.Count);
+
+            for (int i = 0; i < Keymappings.Count; ++i)
+            {
+                writer.Write(Keymappings[i].Item1);
+                writer.Write(Keymappings[i].Item2);
+                writer.Write(Keymappings[i].Item3);
+            }
+        }
+
+        protected override void Init(GameDataReader reader)
+        {
+            FileVersion = -reader.ReadInt();
+
+            if (CurrentFormatVersion == FileVersion)
+            {
+                MouseSensitivity = reader.ReadFloat();
+
+                int keybindCount = reader.ReadInt();
+                for (int i = 0; i < keybindCount; ++i)
+                {
+                    Keymappings.Add((reader.ReadInt(), reader.ReadInt(), reader.ReadInt()));
+                }
+            }
+        }
+
+        public OptionsData() { }
+    }
+
+    private void SaveData()
+    {
+        OptionsData data = new OptionsData();
+
+        data.MouseSensitivity = _mouseSensitivity;
+
+        foreach (var keybind in _keyMapping)
+        {
+            data.Keymappings.Add(((int)(keybind.Key), (int)(keybind.Value[0]), (int)(keybind.Value[1])));
+        }
+
+        GameDataWriter.SaveData("InputSettings", data);
+    }
+
+    private void LoadData()
+    {
+        OptionsData data = GameDataReader.LoadData<OptionsData>("InputSettings");
+
+        if ((null != data) && (OptionsData.CurrentFormatVersion == data.FileVersion))
+        {
+            _mouseSensitivity = data.MouseSensitivity;
+
+            Dictionary<InputKeys, KeyCode[]> defaultKeymapping = new Dictionary<InputKeys, KeyCode[]>();
+
+            foreach (var keybind in data.Keymappings)
+            {
+                defaultKeymapping.Add((InputKeys)(keybind.Item1), new KeyCode[2] { (KeyCode)(keybind.Item2), (KeyCode)(keybind.Item3) });
+            }
+
+            Dictionary<InputKeys, KeyCode[]> tmp = _keyMapping;
+            _keyMapping = defaultKeymapping;
+            tmp.Clear();
+            tmp = null;
+        }
+    }
+
+    #endregion
+
     #region Private Variables
+
+    private bool _optionsLoaded = false;
 
     private Dictionary<InputKeys, KeyCode[]> _keyMapping = new Dictionary<InputKeys, KeyCode[]>();
 
@@ -33,8 +120,9 @@ public sealed class InputManager : UnitySingleton<InputManager>
 
     public float MouseSensitivity
     {
-        get { return _mouseSensitivity; }
-        set { _mouseSensitivity = value; }
+        // Convert range 1 - 9 to 0.2 - 5 with 5 converting to 1
+        get { return (Mathf.Log(_mouseSensitivity * 5.0625f, 1.5f) + 1f); }
+        set { _mouseSensitivity = Mathf.Pow(1.5f, (Mathf.Clamp(value, 1f, 9f) - 1f)) / 5.0625f; }
     }
 
     public float KeyboardSensitivity
@@ -59,6 +147,20 @@ public sealed class InputManager : UnitySingleton<InputManager>
     #endregion
 
     #region Public Functions
+
+    public void LoadSavedOptions()
+    {
+        if (!_optionsLoaded)
+        {
+            _optionsLoaded = true;
+            LoadData();
+        }
+    }
+
+    public void SaveOptions()
+    {
+        SaveData();
+    }
 
     public void ResetKeybindsToDefault()
     {
