@@ -40,7 +40,7 @@ public class RebindMenu : MonoBehaviour
         CheckForDuplicates();
     }
 
-    private void RedyForRebind()
+    private void ReadyForRebind()
     {
         _rebindInProgress = false;
         _mainMenu.ButtonIsEnabled(true);
@@ -96,13 +96,24 @@ public class RebindMenu : MonoBehaviour
     {
         CheckForDuplicates();
 
-        Invoke("RedyForRebind", 0.5f);
+        StartCoroutine(DelayReady());
     }
 
     public void ResetKeybindsToDefault()
     {
         InputManager.Instance.ResetKeybindsToDefault();
         CheckForDuplicates();
+    }
+
+    #endregion
+
+    #region Private Functions
+
+    private IEnumerator DelayReady()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        ReadyForRebind();
     }
 
     #endregion
