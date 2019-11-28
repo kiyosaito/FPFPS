@@ -8,7 +8,7 @@ public class TimerManager : UnitySingleton<TimerManager>
 
     private class TimerData : PersistableData
     {
-        public const int CurrentFormatVersoin = 1;
+        public const int CurrentFormatVersion = 1;
 
         public float FileVersion = 0;
         public float PBTotalTime = 0f;
@@ -18,7 +18,7 @@ public class TimerManager : UnitySingleton<TimerManager>
 
         public override void Save(GameDataWriter writer)
         {
-            writer.Write(-CurrentFormatVersoin);
+            writer.Write(-CurrentFormatVersion);
 
             writer.Write(PBTotalTime);
 
@@ -45,7 +45,7 @@ public class TimerManager : UnitySingleton<TimerManager>
         {
             FileVersion = -reader.ReadInt();
 
-            if (CurrentFormatVersoin == FileVersion)
+            if (CurrentFormatVersion == FileVersion)
             {
                 PBTotalTime = reader.ReadFloat();
 
@@ -147,7 +147,7 @@ public class TimerManager : UnitySingleton<TimerManager>
     {
         TimerData data = GameDataReader.LoadData<TimerData>(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + " times");
 
-        if ((null != data) && (TimerData.CurrentFormatVersoin == data.FileVersion))
+        if ((null != data) && (TimerData.CurrentFormatVersion == data.FileVersion))
         {
             _hasLoadedTimes = true;
 

@@ -22,6 +22,11 @@ public class GameDataWriter
         _writer = writer;
     }
 
+    public void Write(bool data)
+    {
+        _writer.Write(data);
+    }
+
     public void Write(int data)
     {
         _writer.Write(data);
@@ -87,6 +92,11 @@ public class GameDataReader
     private GameDataReader(BinaryReader reader)
     {
         _reader = reader;
+    }
+
+    public bool ReadBool()
+    {
+        return _reader.ReadBoolean();
     }
 
     public int ReadInt()
