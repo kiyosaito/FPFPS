@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class AudioManager : UnitySingleton<AudioManager>
 {
     #region Varibles 
-    private GameObject musicManager, sFXManager;
-    public AudioSource musicSource, sFXSource;
+    private GameObject musicManager;
+    public AudioSource musicSource;
     public AudioClip menuMusicV1, menuMusicV2;
     public AudioClip[] musicClips;
     public GameObject canvasV1, canvasV2;
@@ -19,8 +19,6 @@ public class AudioManager : UnitySingleton<AudioManager>
     {
         musicManager = GameObject.Find("Music Source");
         musicSource = musicManager.GetComponent<AudioSource>();
-        sFXManager = GameObject.Find("SFX Source");
-        sFXSource = sFXManager.GetComponent<AudioSource>();
     }
     private void Update()
     {
