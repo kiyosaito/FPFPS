@@ -192,7 +192,7 @@ public class TimerManager : UnitySingleton<TimerManager>
     private bool _validTimes = true;
 
     [SerializeField]
-    private bool _running = true;
+    private bool _running = false;
 
     [SerializeField]
     private float _totalTime = 0f;
@@ -230,6 +230,8 @@ public class TimerManager : UnitySingleton<TimerManager>
     [SerializeField]
     private int _checkpointCount = 0;
 
+    private float _unscaledLastTime = 0f;
+
     #endregion
 
     #region Public Properties
@@ -242,6 +244,41 @@ public class TimerManager : UnitySingleton<TimerManager>
     public float CurrentSegmentTime
     {
         get { return _currentSegmentTime; }
+    }
+
+    public float PBTime
+    {
+        get { return (_hasLoadedTimes ? _pbTime : float.NaN); }
+    }
+
+    public float SumOfBestTime
+    {
+        get
+        {
+            float sum = float.NaN;
+
+            if (_hasLoadedTimes)
+            {
+                sum = 0f;
+
+                foreach (var bestSegmentTime in _bestSegmentTimes)
+                {
+                    sum += bestSegmentTime;
+                }
+            }
+
+            return sum;
+        }
+    }
+
+    public float PBSegmentTime
+    {
+        get { return ((_hasLoadedTimes && _currentSegment <= _checkpointCount + 1) ? _pbSegmentTimes[(_currentSegment <= _checkpointCount) ? _currentSegment : _checkpointCount] : float.NaN); }
+    }
+
+    public float BestSegmentTime
+    {
+        get { return ((_hasLoadedTimes && _currentSegment <= _checkpointCount + 1) ? _bestSegmentTimes[(_currentSegment <= _checkpointCount) ? _currentSegment : _checkpointCount] : float.NaN); }
     }
 
     public float RemainingTime
@@ -262,8 +299,12 @@ public class TimerManager : UnitySingleton<TimerManager>
     {
         if (_running)
         {
-            _totalTime += Time.fixedUnscaledDeltaTime;
-            _currentSegmentTime += Time.fixedUnscaledDeltaTime;
+            float unscaledDeltaTime = Time.fixedUnscaledTime - _unscaledLastTime;
+
+            _totalTime += unscaledDeltaTime;
+            _currentSegmentTime += unscaledDeltaTime;
+
+            _unscaledLastTime = Time.unscaledTime;
         }
     }
 
@@ -293,6 +334,14 @@ public class TimerManager : UnitySingleton<TimerManager>
         _currentSegmentTime = 0f;
 
         LoadData();
+
+        _running = true;
+        _unscaledLastTime = Time.unscaledTime;
+    }
+
+    public void UnPause()
+    {
+        _unscaledLastTime = Time.unscaledTime;
     }
 
     public void CheckpointReached(int checkpointID)
@@ -364,21 +413,27 @@ public class TimerManager : UnitySingleton<TimerManager>
         return segmentDiffTime;
     }
 
-    public float GetSumOfBestSegments()
+    public Color SplitColor(int idx)
     {
-        float sumOfBestSegments = float.NaN;
+        Color splitColor = Color.white;
 
-        if (_hasLoadedTimes)
+        if (!_hasLoadedTimes)
         {
-            sumOfBestSegments = 0f;
-
-            for (int i = 0; i < _checkpointCount + 1; ++i)
+            splitColor = Color.yellow;
+        }
+        else if (idx < _currentSegment)
+        {
+            if (_currentSegmentTimes[idx] < _bestSegmentTimes[idx])
             {
-                sumOfBestSegments += _bestSegmentTimes[i];
+                splitColor = Color.yellow;
+            }
+            else
+            {
+                splitColor = (GetSplitDiffTime(idx) < 0f) ? Color.green : Color.red;
             }
         }
 
-        return sumOfBestSegments;
+        return splitColor;
     }
 
     public void LevelFinished()

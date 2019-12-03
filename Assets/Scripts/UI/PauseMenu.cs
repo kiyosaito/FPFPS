@@ -58,6 +58,7 @@ public class PauseMenu : MonoBehaviour
         pauseOptions.gameObject.SetActive(true);
         pause.gameObject.SetActive(false);
         ispaused = false;
+        TimerManager.Instance.UnPause();
     }
     public void QTM()
     {

@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool gottaGoFast = false;
 
+    private bool iBelieveIcanFly = false;
+
     // Input buffer
     float inputH = 0f;
     float inputV = 0f;
@@ -88,10 +90,9 @@ public class Player : MonoBehaviour
     private void Update()
     {
         // TODO: remove Debug Testing
-        if ((Application.isEditor) && (Input.GetKeyDown(KeyCode.F1)))
+        if ((Application.isEditor) && (Input.GetKeyDown(KeyCode.ScrollLock)))
         {
-            canAirJump = true;
-            isJumping = true;
+            iBelieveIcanFly = !iBelieveIcanFly;
             TimerManager.Instance.InvalidateTimes();
         }
 
@@ -180,7 +181,18 @@ public class Player : MonoBehaviour
 
 
         motion.y += gravity * Time.deltaTime;
-        controller.Move((motion + outsideImpulse) * Time.deltaTime);
+
+        if ((!iBelieveIcanFly) || (!Application.isEditor))
+        {
+            controller.Move((motion + outsideImpulse) * Time.deltaTime);
+        }
+        else
+        {
+            motion.y = 0f;
+            Quaternion rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0f);
+            float speed = (Input.GetKey(KeyCode.LeftShift)) ? 10f : 2f;
+            controller.Move(rotation * new Vector3(inputH * moveSpeed, 0f, inputV * moveSpeed) * speed * Time.deltaTime);
+        }
 
         for (int i = 0; i < 3; ++i)
         {

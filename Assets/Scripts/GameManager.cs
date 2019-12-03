@@ -449,6 +449,12 @@ public class GameManager : UnitySingleton<GameManager>
         Time.timeScale = _gameTimeScale;
         CheckPointManager.Instance.Init();
         TimerManager.Instance.StartTimers();
+
+        TimerMenu timerMenu = FindObjectOfType<TimerMenu>();
+        if (null != timerMenu)
+        {
+            timerMenu.Init();
+        }
     }
 
     #endregion

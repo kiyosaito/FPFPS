@@ -21,7 +21,7 @@ public class Timer : MonoBehaviour
     private void Update()
     {
         float time = total ? TimerManager.Instance.TotalTime : (diff ? TimerManager.Instance.GetSplitDiffTime(segment) : TimerManager.Instance.GetSplitTime(segment));
-        time = best ? TimerManager.Instance.GetSumOfBestSegments() : time;
+        time = best ? TimerManager.Instance.SumOfBestTime : time;
 
         if (float.IsNaN(time))
         {
