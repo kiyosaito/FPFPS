@@ -931,11 +931,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6153840466984245379}
     m_Modifications:
-    - target: {fileID: 6134042689863592302, guid: 7d8f0a26a257f4f43ba033dbc4589248,
-        type: 3}
-      propertyPath: m_Name
-      value: SoundEffectStuff(Continious) Variant
-      objectReference: {fileID: 0}
     - target: {fileID: 252685421742486196, guid: 7d8f0a26a257f4f43ba033dbc4589248,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -990,6 +985,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134042689863592302, guid: 7d8f0a26a257f4f43ba033dbc4589248,
+        type: 3}
+      propertyPath: m_Name
+      value: SoundEffectStuff(Continious) Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d8f0a26a257f4f43ba033dbc4589248, type: 3}
