@@ -11,11 +11,10 @@ public class GameManager : UnitySingleton<GameManager>
     {
         _sceneNames.Add(GameScene.MainMenu, "MainMenu");
         _sceneNames.Add(GameScene.LevelSelect, "LevelSelect");
+        _sceneNames.Add(GameScene.EndMenu, "Victory");
         _sceneNames.Add(GameScene.Level_1, "Stage 1");
         _sceneNames.Add(GameScene.Level_2, "Stage 2");
         _sceneNames.Add(GameScene.Level_3, "Stage 3");
-
-        // TODO: Load timer related settings, and level progression
     }
 
     #endregion
@@ -175,7 +174,13 @@ public class GameManager : UnitySingleton<GameManager>
 
     private GameScene _currentLevel = GameScene.MainMenu;
 
-    private List<GameScene> _levelProgression = new List<GameScene>(new GameScene[3] {GameScene.Level_1, GameScene.Level_2, GameScene.Level_3});
+    private List<GameScene> _levelProgression = new List<GameScene>
+        ( new GameScene[4] {
+            GameScene.Level_1,
+            GameScene.Level_2,
+            GameScene.Level_3,
+            GameScene.EndMenu
+        });
 
     private bool _levelSelectMode = false;
 
@@ -193,6 +198,7 @@ public class GameManager : UnitySingleton<GameManager>
         Unknown,
         MainMenu,
         LevelSelect,
+        EndMenu,
     }
 
     public bool FirstLevelReached { get { return (-1 != _levelReached); } }
