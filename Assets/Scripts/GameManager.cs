@@ -356,7 +356,7 @@ public class GameManager : UnitySingleton<GameManager>
         if (_levelSelectMode)
         {
             Time.timeScale = 1f;
-            SceneManager.LoadScene(_sceneNames[GameScene.LevelSelect]);
+            SceneManagerLoadScene(_sceneNames[GameScene.LevelSelect]);
         }
         else
         {
@@ -397,13 +397,13 @@ public class GameManager : UnitySingleton<GameManager>
     public void BackToMain()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(_sceneNames[GameScene.MainMenu]);
+        SceneManagerLoadScene(_sceneNames[GameScene.MainMenu]);
     }
 
     public void GoToLevelSelectMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(_sceneNames[GameScene.LevelSelect]);
+        SceneManagerLoadScene(_sceneNames[GameScene.LevelSelect]);
     }
 
     private void Update()
@@ -438,7 +438,7 @@ public class GameManager : UnitySingleton<GameManager>
 
         SceneManager.sceneLoaded += InitialiseLevel;
 
-        SceneManager.LoadScene(_sceneNames[level]);
+        SceneManagerLoadScene(_sceneNames[level]);
     }
 
     private void InitialiseLevel(Scene scene, LoadSceneMode mode)
@@ -455,6 +455,16 @@ public class GameManager : UnitySingleton<GameManager>
         {
             timerMenu.Init();
         }
+    }
+
+    private void SceneManagerLoadScene(string sceneName)
+    {
+        if (null != AudioManager.Instance)
+        {
+            // Inform Audio Manager
+        }
+
+        SceneManager.LoadScene(sceneName);
     }
 
     #endregion
