@@ -9,27 +9,34 @@ public class AudioManager : UnitySingleton<AudioManager>
     private GameObject musicManager;
     public AudioSource musicSource;
     public AudioClip menuMusicV1, menuMusicV2;
+    public AudioClip level1, level2, level3;
     public AudioClip[] musicClips;
-    public GameObject canvasV1, canvasV2;
+    public GameManager.GameScene lastScene = GameManager.GameScene.Unknown;
+
     #endregion
-
-
 
     private void Start()
     {
-        musicManager = GameObject.Find("Music Source");
-        musicSource = musicManager.GetComponent<AudioSource>();
+        SceneChanged();
     }
-    private void Update()
+
+    public void SceneChanged()
     {
-        MainMenuMusic();
+        if (lastScene != GameManager.Instance.GetCurrentScene())
+        {
+            MainMenuMusic();
+            GameMusic();
+        }
+
+        lastScene = GameManager.Instance.GetCurrentScene();
     }
 
     void MainMenuMusic()
     {
         if ((GameManager.GameScene.MainMenu == GameManager.Instance.GetCurrentScene()) || (GameManager.GameScene.LevelSelect == GameManager.Instance.GetCurrentScene()))
         {
-            if (GameManager.Instance.FirstLevelReached == false)
+            // Change after menu V1 is in game
+            if (false && (GameManager.Instance.FirstLevelReached == false))
             {
                 musicSource.clip = menuMusicV1;
                 musicSource.loop = true;
@@ -45,11 +52,32 @@ public class AudioManager : UnitySingleton<AudioManager>
     }
     void GameMusic()
     {
-        if ((GameManager.GameScene.MainMenu != GameManager.Instance.GetCurrentScene()) || (GameManager.GameScene.LevelSelect != GameManager.Instance.GetCurrentScene()))
+        //if ((GameManager.GameScene.MainMenu != GameManager.Instance.GetCurrentScene()) || (GameManager.GameScene.LevelSelect != GameManager.Instance.GetCurrentScene()))
+        //{
+        //    StartCoroutine(PlayAudioSequentially());
+        //}
+
+        if (GameManager.GameScene.Level_1 == GameManager.Instance.GetCurrentScene())
         {
-            StartCoroutine(PlayAudioSequentially());
+            musicSource.clip = level1;
+            musicSource.loop = true;
+            musicSource.Play();
+        }
+        if (GameManager.GameScene.Level_2 == GameManager.Instance.GetCurrentScene())
+        {
+            musicSource.clip = level2;
+            musicSource.loop = true;
+            musicSource.Play();
+        }
+        if (GameManager.GameScene.Level_3 == GameManager.Instance.GetCurrentScene())
+        {
+            musicSource.clip = level3;
+            musicSource.loop = true;
+            musicSource.Play();
         }
     }
+
+
 
     #region 
     IEnumerator PlayAudioSequentially()

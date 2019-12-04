@@ -462,6 +462,7 @@ public class GameManager : UnitySingleton<GameManager>
         if (null != AudioManager.Instance)
         {
             // Inform Audio Manager
+            AudioManager.Instance.SceneChanged();
         }
 
         SceneManager.LoadScene(sceneName);
