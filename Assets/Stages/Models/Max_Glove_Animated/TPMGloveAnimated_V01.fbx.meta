@@ -1,0 +1,508 @@
+fileFormatVersion: 2
+guid: fc88df22cd587b744be0afbf6ae95576
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: pasted__b1
+    100002: pasted__b1 1
+    100004: pasted__b10
+    100006: pasted__b2
+    100008: pasted__b2 1
+    100010: pasted__b3
+    100012: pasted__b3 1
+    100014: pasted__b4
+    100016: pasted__b5
+    100018: pasted__b6
+    100020: pasted__b7
+    100022: pasted__b8
+    100024: pasted__b9
+    100026: pasted__BK_01
+    100028: pasted__BK_02
+    100030: pasted__BK_03
+    100032: pasted__BK_04
+    100034: pasted__BK_05
+    100036: pasted__BK_06
+    100038: pasted__BK_07
+    100040: pasted__BK_08
+    100042: pasted__BK_09
+    100044: pasted__BK_10
+    100046: pasted__black
+    100048: pasted__black_keys
+    100050: pasted__buttons
+    100052: pasted__joint2
+    100054: pasted__joint2 1
+    100056: pasted__joint2 10
+    100058: pasted__joint2 11
+    100060: pasted__joint2 12
+    100062: pasted__joint2 13
+    100064: pasted__joint2 2
+    100066: pasted__joint2 3
+    100068: pasted__joint2 4
+    100070: pasted__joint2 5
+    100072: pasted__joint2 6
+    100074: pasted__joint2 7
+    100076: pasted__joint2 8
+    100078: pasted__joint2 9
+    100080: pasted__joint4
+    100082: pasted__joint4 1
+    100084: pasted__joint4 2
+    100086: pasted__joint4 3
+    100088: pasted__joint4 4
+    100090: pasted__joint4 5
+    100092: pasted__joint4 6
+    100094: pasted__joint4 7
+    100096: pasted__joint4 8
+    100098: pasted__joint4 9
+    100100: pasted__k1
+    100102: pasted__k2
+    100104: pasted__k3
+    100106: pasted__KB_button_01
+    100108: pasted__KB_button_02
+    100110: pasted__KB_knob_01
+    100112: pasted__KB_knob_02
+    100114: pasted__KB_knob_03
+    100116: pasted__keyboard_base
+    100118: pasted__keyboard_root
+    100120: pasted__keys
+    100122: pasted__L_bicep
+    100124: pasted__L_forearm
+    100126: pasted__L_hand
+    100128: pasted__L_index_00
+    100130: pasted__L_index_01
+    100132: pasted__L_index_02
+    100134: pasted__L_index_03
+    100136: pasted__L_middle_00
+    100138: pasted__L_middle_01
+    100140: pasted__L_middle_02
+    100142: pasted__L_middle_03
+    100144: pasted__L_pinky_00
+    100146: pasted__L_pinky_01
+    100148: pasted__L_pinky_02
+    100150: pasted__L_pinky_03
+    100152: pasted__L_ring_00
+    100154: pasted__L_ring_01
+    100156: pasted__L_ring_02
+    100158: pasted__L_ring_03
+    100160: pasted__L_thumb_00
+    100162: pasted__L_thumb_01
+    100164: pasted__L_thumb_02
+    100166: pasted__L_thumb_03
+    100168: pasted__left_arm
+    100170: pasted__master
+    100172: pasted__mesh
+    100174: pasted__pipboy
+    100176: pasted__R_bicep
+    100178: pasted__R_forearm
+    100180: pasted__R_hand
+    100182: pasted__R_index_00
+    100184: pasted__R_index_01
+    100186: pasted__R_index_02
+    100188: pasted__R_index_03
+    100190: pasted__R_middle_00
+    100192: pasted__R_middle_01
+    100194: pasted__R_middle_02
+    100196: pasted__R_middle_03
+    100198: pasted__R_pinky_00
+    100200: pasted__R_pinky_01
+    100202: pasted__R_pinky_02
+    100204: pasted__R_pinky_03
+    100206: pasted__R_ring_00
+    100208: pasted__R_ring_01
+    100210: pasted__R_ring_02
+    100212: pasted__R_ring_03
+    100214: pasted__R_thumb_00
+    100216: pasted__R_thumb_01
+    100218: pasted__R_thumb_02
+    100220: pasted__R_thumb_03
+    100222: pasted__rig
+    100224: pasted__right_arm
+    100226: pasted__root
+    100228: pasted__w1
+    100230: pasted__w10
+    100232: pasted__w11
+    100234: pasted__w12
+    100236: pasted__w13
+    100238: pasted__w14
+    100240: pasted__w2
+    100242: pasted__w3
+    100244: pasted__w4
+    100246: pasted__w5
+    100248: pasted__w6
+    100250: pasted__w7
+    100252: pasted__w8
+    100254: pasted__w9
+    100256: pasted__white
+    100258: pasted__white_keys
+    100260: pasted__WK_01
+    100262: pasted__WK_02
+    100264: pasted__WK_03
+    100266: pasted__WK_04
+    100268: pasted__WK_05
+    100270: pasted__WK_06
+    100272: pasted__WK_07
+    100274: pasted__WK_08
+    100276: pasted__WK_09
+    100278: pasted__WK_10
+    100280: pasted__WK_11
+    100282: pasted__WK_12
+    100284: pasted__WK_13
+    100286: pasted__WK_14
+    100288: //RootNode
+    400000: pasted__b1
+    400002: pasted__b1 1
+    400004: pasted__b10
+    400006: pasted__b2
+    400008: pasted__b2 1
+    400010: pasted__b3
+    400012: pasted__b3 1
+    400014: pasted__b4
+    400016: pasted__b5
+    400018: pasted__b6
+    400020: pasted__b7
+    400022: pasted__b8
+    400024: pasted__b9
+    400026: pasted__BK_01
+    400028: pasted__BK_02
+    400030: pasted__BK_03
+    400032: pasted__BK_04
+    400034: pasted__BK_05
+    400036: pasted__BK_06
+    400038: pasted__BK_07
+    400040: pasted__BK_08
+    400042: pasted__BK_09
+    400044: pasted__BK_10
+    400046: pasted__black
+    400048: pasted__black_keys
+    400050: pasted__buttons
+    400052: pasted__joint2
+    400054: pasted__joint2 1
+    400056: pasted__joint2 10
+    400058: pasted__joint2 11
+    400060: pasted__joint2 12
+    400062: pasted__joint2 13
+    400064: pasted__joint2 2
+    400066: pasted__joint2 3
+    400068: pasted__joint2 4
+    400070: pasted__joint2 5
+    400072: pasted__joint2 6
+    400074: pasted__joint2 7
+    400076: pasted__joint2 8
+    400078: pasted__joint2 9
+    400080: pasted__joint4
+    400082: pasted__joint4 1
+    400084: pasted__joint4 2
+    400086: pasted__joint4 3
+    400088: pasted__joint4 4
+    400090: pasted__joint4 5
+    400092: pasted__joint4 6
+    400094: pasted__joint4 7
+    400096: pasted__joint4 8
+    400098: pasted__joint4 9
+    400100: pasted__k1
+    400102: pasted__k2
+    400104: pasted__k3
+    400106: pasted__KB_button_01
+    400108: pasted__KB_button_02
+    400110: pasted__KB_knob_01
+    400112: pasted__KB_knob_02
+    400114: pasted__KB_knob_03
+    400116: pasted__keyboard_base
+    400118: pasted__keyboard_root
+    400120: pasted__keys
+    400122: pasted__L_bicep
+    400124: pasted__L_forearm
+    400126: pasted__L_hand
+    400128: pasted__L_index_00
+    400130: pasted__L_index_01
+    400132: pasted__L_index_02
+    400134: pasted__L_index_03
+    400136: pasted__L_middle_00
+    400138: pasted__L_middle_01
+    400140: pasted__L_middle_02
+    400142: pasted__L_middle_03
+    400144: pasted__L_pinky_00
+    400146: pasted__L_pinky_01
+    400148: pasted__L_pinky_02
+    400150: pasted__L_pinky_03
+    400152: pasted__L_ring_00
+    400154: pasted__L_ring_01
+    400156: pasted__L_ring_02
+    400158: pasted__L_ring_03
+    400160: pasted__L_thumb_00
+    400162: pasted__L_thumb_01
+    400164: pasted__L_thumb_02
+    400166: pasted__L_thumb_03
+    400168: pasted__left_arm
+    400170: pasted__master
+    400172: pasted__mesh
+    400174: pasted__pipboy
+    400176: pasted__R_bicep
+    400178: pasted__R_forearm
+    400180: pasted__R_hand
+    400182: pasted__R_index_00
+    400184: pasted__R_index_01
+    400186: pasted__R_index_02
+    400188: pasted__R_index_03
+    400190: pasted__R_middle_00
+    400192: pasted__R_middle_01
+    400194: pasted__R_middle_02
+    400196: pasted__R_middle_03
+    400198: pasted__R_pinky_00
+    400200: pasted__R_pinky_01
+    400202: pasted__R_pinky_02
+    400204: pasted__R_pinky_03
+    400206: pasted__R_ring_00
+    400208: pasted__R_ring_01
+    400210: pasted__R_ring_02
+    400212: pasted__R_ring_03
+    400214: pasted__R_thumb_00
+    400216: pasted__R_thumb_01
+    400218: pasted__R_thumb_02
+    400220: pasted__R_thumb_03
+    400222: pasted__rig
+    400224: pasted__right_arm
+    400226: pasted__root
+    400228: pasted__w1
+    400230: pasted__w10
+    400232: pasted__w11
+    400234: pasted__w12
+    400236: pasted__w13
+    400238: pasted__w14
+    400240: pasted__w2
+    400242: pasted__w3
+    400244: pasted__w4
+    400246: pasted__w5
+    400248: pasted__w6
+    400250: pasted__w7
+    400252: pasted__w8
+    400254: pasted__w9
+    400256: pasted__white
+    400258: pasted__white_keys
+    400260: pasted__WK_01
+    400262: pasted__WK_02
+    400264: pasted__WK_03
+    400266: pasted__WK_04
+    400268: pasted__WK_05
+    400270: pasted__WK_06
+    400272: pasted__WK_07
+    400274: pasted__WK_08
+    400276: pasted__WK_09
+    400278: pasted__WK_10
+    400280: pasted__WK_11
+    400282: pasted__WK_12
+    400284: pasted__WK_13
+    400286: pasted__WK_14
+    400288: //RootNode
+    2100000: pasted__blinn1
+    2100002: pasted__blinn2
+    4300000: pasted__left_arm
+    4300002: pasted__right_arm
+    4300004: pasted__b1
+    4300006: pasted__b2
+    4300008: pasted__b3
+    4300010: pasted__b4
+    4300012: pasted__b5
+    4300014: pasted__b6
+    4300016: pasted__b7
+    4300018: pasted__b8
+    4300020: pasted__b9
+    4300022: pasted__b10
+    4300024: pasted__w1
+    4300026: pasted__w2
+    4300028: pasted__w3
+    4300030: pasted__w4
+    4300032: pasted__w5
+    4300034: pasted__w6
+    4300036: pasted__w7
+    4300038: pasted__w8
+    4300040: pasted__w9
+    4300042: pasted__w10
+    4300044: pasted__w11
+    4300046: pasted__w12
+    4300048: pasted__w13
+    4300050: pasted__w14
+    4300052: pasted__b1
+    4300054: pasted__b2
+    4300056: pasted__b3
+    4300058: pasted__k1
+    4300060: pasted__k2
+    4300062: pasted__k3
+    4300064: pasted__keyboard_base
+    7400000: Idle
+    7400002: Shoot
+    9500000: //RootNode
+    13700000: pasted__b1
+    13700002: pasted__b1 1
+    13700004: pasted__b10
+    13700006: pasted__b2
+    13700008: pasted__b2 1
+    13700010: pasted__b3
+    13700012: pasted__b3 1
+    13700014: pasted__b4
+    13700016: pasted__b5
+    13700018: pasted__b6
+    13700020: pasted__b7
+    13700022: pasted__b8
+    13700024: pasted__b9
+    13700026: pasted__k1
+    13700028: pasted__k2
+    13700030: pasted__k3
+    13700032: pasted__keyboard_base
+    13700034: pasted__left_arm
+    13700036: pasted__right_arm
+    13700038: pasted__w1
+    13700040: pasted__w10
+    13700042: pasted__w11
+    13700044: pasted__w12
+    13700046: pasted__w13
+    13700048: pasted__w14
+    13700050: pasted__w2
+    13700052: pasted__w3
+    13700054: pasted__w4
+    13700056: pasted__w5
+    13700058: pasted__w6
+    13700060: pasted__w7
+    13700062: pasted__w8
+    13700064: pasted__w9
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Shoot
+      takeName: Take 001
+      firstFrame: 50
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
