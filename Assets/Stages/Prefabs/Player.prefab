@@ -687,7 +687,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4504830128464927584}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -887,14 +887,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7249350176442853818}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.44599998, y: -0.014999986, z: 1.339}
+  m_LocalRotation: {x: -0, y: -0.08493024, z: -0, w: 0.99638695}
+  m_LocalPosition: {x: -0.583, y: 0.205, z: -0.304}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8086122111191024414}
   m_Father: {fileID: 6655367998244050183}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -9.744, z: 0}
 --- !u!1 &8049382489991914815
 GameObject:
   m_ObjectHideFlags: 0
