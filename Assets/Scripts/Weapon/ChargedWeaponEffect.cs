@@ -22,7 +22,10 @@ public class ChargedWeaponEffect : MonoBehaviour
     private GameObject _powerSpark = null;
 
     [SerializeField]
-    private GameObject soundEffect;
+    private GameObject chargedSoundEffect;
+
+    [SerializeField]
+    private GameObject normalSoundEffect;
     #endregion
 
     #region MonoBehaviour Functions
@@ -53,8 +56,14 @@ public class ChargedWeaponEffect : MonoBehaviour
         _line.endColor = (charged ? Color.red : Color.yellow);
         _line.enabled = true;
         Invoke("TurnOff", 0.25f);*/
-
-        soundEffect.GetComponent<SFXRandomizer>().SoundEffect();
+        if (charged)
+        {
+            chargedSoundEffect.GetComponent<SFXRandomizer>().SoundEffect();
+        }
+        else
+        {
+            normalSoundEffect.GetComponent<SFXRandomizer>().SoundEffect();
+        }
         _weaponAnimation.Play("Shoot");
         Instantiate<GameObject>((charged ? _powerSpark : _spark), targetPos, transform.rotation);
     }

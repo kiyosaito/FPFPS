@@ -49,7 +49,7 @@ MonoBehaviour:
   menuMusicV1: {fileID: 8300000, guid: cf79e4c7c78007c4fb4836e881ce71a3, type: 3}
   menuMusicV2: {fileID: 8300000, guid: 7c62cfc605f0acb45a7aaf74cf442431, type: 3}
   level1: {fileID: 8300000, guid: f23c20783bef3b8429c759170a82cc8c, type: 3}
-  level2: {fileID: 8300000, guid: 37151cc820cf14342befe551a1dd72f3, type: 3}
+  level2: {fileID: 8300000, guid: 1d8257acac1af584aa21aaf5a12c2cb3, type: 3}
   level3: {fileID: 8300000, guid: 14a6cc9443dd29945875aeae7abe03a4, type: 3}
   musicClips: []
   lastScene: 3
