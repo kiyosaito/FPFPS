@@ -28,7 +28,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3432049467291936216}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,7 +48,7 @@ MonoBehaviour:
   musicSource: {fileID: 7596823590704481777}
   menuMusicV1: {fileID: 8300000, guid: cf79e4c7c78007c4fb4836e881ce71a3, type: 3}
   menuMusicV2: {fileID: 8300000, guid: 7c62cfc605f0acb45a7aaf74cf442431, type: 3}
-  level1: {fileID: 8300000, guid: bfca1667a18604948aacaf6fca8e592a, type: 3}
+  level1: {fileID: 8300000, guid: f23c20783bef3b8429c759170a82cc8c, type: 3}
   level2: {fileID: 8300000, guid: 37151cc820cf14342befe551a1dd72f3, type: 3}
   level3: {fileID: 8300000, guid: 14a6cc9443dd29945875aeae7abe03a4, type: 3}
   musicClips: []
@@ -149,3 +150,83 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &3361546597363631810
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2893445985527433904}
+    m_Modifications:
+    - target: {fileID: 6315820471800477888, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_Name
+      value: SoundEffectStuff(Death) Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8086600486696464374, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4ae33af19a1e43f4dbfa84f6e8127b44, type: 3}
+--- !u!4 &3432049467291936216 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 74179786406716186, guid: 4ae33af19a1e43f4dbfa84f6e8127b44,
+    type: 3}
+  m_PrefabInstance: {fileID: 3361546597363631810}
+  m_PrefabAsset: {fileID: 0}

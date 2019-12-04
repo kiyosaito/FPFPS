@@ -21,6 +21,8 @@ public class ChargedWeaponEffect : MonoBehaviour
     [SerializeField]
     private GameObject _powerSpark = null;
 
+    [SerializeField]
+    private GameObject soundEffect;
     #endregion
 
     #region MonoBehaviour Functions
@@ -52,6 +54,7 @@ public class ChargedWeaponEffect : MonoBehaviour
         _line.enabled = true;
         Invoke("TurnOff", 0.25f);*/
 
+        soundEffect.GetComponent<SFXRandomizer>().SoundEffect();
         _weaponAnimation.Play("Shoot");
         Instantiate<GameObject>((charged ? _powerSpark : _spark), targetPos, transform.rotation);
     }

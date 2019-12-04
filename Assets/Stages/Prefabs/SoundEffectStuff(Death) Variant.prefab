@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &9116112819592557205
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2964702326016461397, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_Name
+      value: SoundEffectStuff(Death) Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188885098776990095, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519249801178735663, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: soundVariations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519249801178735663, guid: d11a79442f3aa314082f9bdc02ae1181,
+        type: 3}
+      propertyPath: soundVariations.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1ff5006ee806ca74fbd77698cb59e91a, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d11a79442f3aa314082f9bdc02ae1181, type: 3}

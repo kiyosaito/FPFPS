@@ -109,6 +109,7 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
     private void DisablePlayer()
     {
         // TODO: Add visual effects
+        GameObject.Find("SoundEffectStuff(Death) Variant").GetComponent<SFXRandomizer>().SoundEffect();
         PlayerLink.Instance.PlayerInstance.enabled = false;
         Invoke("RespawnPlayer", 0.5f);
     }
