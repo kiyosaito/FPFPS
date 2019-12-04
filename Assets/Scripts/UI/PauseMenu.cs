@@ -43,11 +43,15 @@ public class PauseMenu : MonoBehaviour
     }
     public void Pausing()
     {
-        Time.timeScale = 0f;
+        Time.timeScale = isLevelEndMenu ? 1f : 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         pause.gameObject.SetActive(true);
         ispaused = true;
+        if (isLevelEndMenu)
+        {
+            FindObjectOfType<Player>().enabled = false;
+        }
     }
     public void Unpausing()
     {
