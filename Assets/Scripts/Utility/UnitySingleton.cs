@@ -31,6 +31,8 @@ public class UnitySingleton<T> : MonoBehaviour where T : UnitySingleton<T>
     // Virtual function that will run exactly once before an Instance is accessed, override in derived class for setup
     protected virtual void Setup() { }
 
+    protected bool IsRegistered { get { return _registered; } }
+
     #endregion
 
     #region Public Properties

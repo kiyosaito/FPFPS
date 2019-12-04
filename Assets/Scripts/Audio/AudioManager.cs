@@ -18,7 +18,12 @@ public class AudioManager : UnitySingleton<AudioManager>
     protected override void Start()
     {
         base.Start();
-        SceneChanged(GameManager.Instance.GetCurrentScene());
+
+        if (IsRegistered)
+        {
+            musicSource.enabled = true;
+            SceneChanged(GameManager.Instance.GetCurrentScene());
+        }
     }
 
     public void SceneChanged(GameManager.GameScene newScene)
