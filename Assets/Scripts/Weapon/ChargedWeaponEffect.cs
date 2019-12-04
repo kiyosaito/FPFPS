@@ -15,6 +15,12 @@ public class ChargedWeaponEffect : MonoBehaviour
     [SerializeField]
     private Animator _weaponAnimation = null;
 
+    [SerializeField]
+    private GameObject _spark = null;
+
+    [SerializeField]
+    private GameObject _powerSpark = null;
+
     #endregion
 
     #region MonoBehaviour Functions
@@ -47,6 +53,7 @@ public class ChargedWeaponEffect : MonoBehaviour
         Invoke("TurnOff", 0.25f);*/
 
         _weaponAnimation.Play("Shoot");
+        Instantiate<GameObject>((charged ? _powerSpark : _spark), targetPos, transform.rotation);
     }
 
     #endregion
