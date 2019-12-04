@@ -27,9 +27,16 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
 
     private Dictionary<int, CheckPointTrigger> registeredCheckpoints = new Dictionary<int, CheckPointTrigger>();
 
+    private bool respawnInProgress = false;
+
     #endregion
 
     #region Public Properties
+
+    public bool RespawnInProgress
+    {
+        get { return respawnInProgress; }
+    }
 
     public int CheckpointCount
     {
@@ -108,6 +115,7 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
 
     private void DisablePlayer()
     {
+        respawnInProgress = true;
         // TODO: Add visual effects
         GameObject.Find("SoundEffectStuff(Death) Variant").GetComponent<SFXRandomizer>().SoundEffect();
         PlayerLink.Instance.PlayerInstance.enabled = false;
@@ -135,6 +143,7 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
     private void EnablePlayer()
     {
         PlayerLink.Instance.PlayerInstance.enabled = true;
+        respawnInProgress = false;
     }
 
     private void SaveStates()

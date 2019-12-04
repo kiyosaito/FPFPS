@@ -236,6 +236,11 @@ public class TimerManager : UnitySingleton<TimerManager>
 
     #region Public Properties
 
+    public bool LevelIsFinished
+    {
+        get { return _currentSegment == (_checkpointCount + 1); }
+    }
+
     public float TotalTime
     {
         get { return _totalTime; }
