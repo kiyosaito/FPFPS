@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 50480823633974674}
   - component: {fileID: 50480823633974673}
   - component: {fileID: 8391953603676520492}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Power Spark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
