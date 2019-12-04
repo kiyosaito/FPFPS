@@ -14,6 +14,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private GameObject warnings = null;
 
+    [SerializeField]
+    private Animator endScreen = null;
+
     public bool ispaused;
 
     // TODO : For demo only, remove later
@@ -28,7 +31,8 @@ public class PauseMenu : MonoBehaviour
     private void Update()
     {
 
-        if ((!isLevelEndMenu) && (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Menu)))
+        if ((!isLevelEndMenu) && (InputManager.Instance.GetButtonDown(InputManager.InputKeys.Menu)
+            && (!TimerManager.Instance.LevelIsFinished) && (!CheckPointManager.Instance.RespawnInProgress)))
         {
             if (ispaused == false)
             {
@@ -50,6 +54,7 @@ public class PauseMenu : MonoBehaviour
         ispaused = true;
         if (isLevelEndMenu)
         {
+            endScreen.Play("Victory");
             FindObjectOfType<Player>().enabled = false;
         }
     }
