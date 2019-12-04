@@ -51,6 +51,7 @@ MonoBehaviour:
   level2: {fileID: 8300000, guid: 37151cc820cf14342befe551a1dd72f3, type: 3}
   level3: {fileID: 8300000, guid: 14a6cc9443dd29945875aeae7abe03a4, type: 3}
   musicClips: []
+  lastScene: 3
 --- !u!82 &7596823590704481777
 AudioSource:
   m_ObjectHideFlags: 0
@@ -63,7 +64,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 243940804096675954, guid: b06c1383a16fcac41bfd67bd84dd0b2c,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

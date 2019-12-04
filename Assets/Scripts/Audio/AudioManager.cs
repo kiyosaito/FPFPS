@@ -15,25 +15,27 @@ public class AudioManager : UnitySingleton<AudioManager>
 
     #endregion
 
-    private void Start()
+    protected override void Start()
     {
-        SceneChanged();
+        base.Start();
+        SceneChanged(GameManager.Instance.GetCurrentScene());
     }
 
-    public void SceneChanged()
+    public void SceneChanged(GameManager.GameScene newScene)
     {
-        if (lastScene != GameManager.Instance.GetCurrentScene())
+        Debug.Log(lastScene.ToString() + " to " + newScene.ToString());
+        if (lastScene != newScene)
         {
-            MainMenuMusic();
-            GameMusic();
+            MainMenuMusic(newScene);
+            GameMusic(newScene);
         }
 
-        lastScene = GameManager.Instance.GetCurrentScene();
+        lastScene = newScene;
     }
 
-    void MainMenuMusic()
+    void MainMenuMusic(GameManager.GameScene scene)
     {
-        if ((GameManager.GameScene.MainMenu == GameManager.Instance.GetCurrentScene()) || (GameManager.GameScene.LevelSelect == GameManager.Instance.GetCurrentScene()))
+        if ((GameManager.GameScene.MainMenu == scene) || (GameManager.GameScene.LevelSelect == scene))
         {
             // Change after menu V1 is in game
             if (false && (GameManager.Instance.FirstLevelReached == false))
@@ -50,26 +52,21 @@ public class AudioManager : UnitySingleton<AudioManager>
             }
         }
     }
-    void GameMusic()
+    void GameMusic(GameManager.GameScene scene)
     {
-        //if ((GameManager.GameScene.MainMenu != GameManager.Instance.GetCurrentScene()) || (GameManager.GameScene.LevelSelect != GameManager.Instance.GetCurrentScene()))
-        //{
-        //    StartCoroutine(PlayAudioSequentially());
-        //}
-
-        if (GameManager.GameScene.Level_1 == GameManager.Instance.GetCurrentScene())
+        if (GameManager.GameScene.Level_1 == scene)
         {
             musicSource.clip = level1;
             musicSource.loop = true;
             musicSource.Play();
         }
-        if (GameManager.GameScene.Level_2 == GameManager.Instance.GetCurrentScene())
+        if (GameManager.GameScene.Level_2 == scene)
         {
             musicSource.clip = level2;
             musicSource.loop = true;
             musicSource.Play();
         }
-        if (GameManager.GameScene.Level_3 == GameManager.Instance.GetCurrentScene())
+        if (GameManager.GameScene.Level_3 == scene)
         {
             musicSource.clip = level3;
             musicSource.loop = true;

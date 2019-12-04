@@ -111,7 +111,7 @@ public class UnitySingleton<T> : MonoBehaviour where T : UnitySingleton<T>
 
     #region MonoBehaviour Functions
 
-    private void Start()
+    protected virtual void Start()
     {
         // Activate the lock for thread safety
         lock (instanceGetLock)
