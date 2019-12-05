@@ -117,7 +117,11 @@ public class CheckPointManager : UnitySingleton<CheckPointManager>
     {
         respawnInProgress = true;
         // TODO: Add visual effects
-        GameObject.Find("SoundEffectStuff(Death) Variant").GetComponent<SFXRandomizer>().SoundEffect();
+        GameObject deathSound = GameObject.Find("SoundEffectStuff(Death) Variant");
+        if (null != deathSound)
+        {
+            deathSound.GetComponent<SFXRandomizer>().SoundEffect();
+        }
         PlayerLink.Instance.PlayerInstance.enabled = false;
         Invoke("RespawnPlayer", 0.5f);
     }
