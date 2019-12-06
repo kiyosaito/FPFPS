@@ -28,7 +28,6 @@ public class AudioManager : UnitySingleton<AudioManager>
 
     public void SceneChanged(GameManager.GameScene newScene)
     {
-        Debug.Log(lastScene.ToString() + " to " + newScene.ToString());
         if (lastScene != newScene)
         {
             MainMenuMusic(newScene);

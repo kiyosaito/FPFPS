@@ -33,14 +33,28 @@ public class TextFadeInOut : MonoBehaviour
 
     public void FadeIn()
     {
+        if (FadeState.Idle == _fadeState)
+        {
+            _timer = _fadeInTime;
+        }
+        else if (FadeState.FadeOut == _fadeState)
+        {
+            _timer = (1f - (_timer / _fadeOutTime)) * _fadeInTime;
+        }
         _fadeState = FadeState.FadeIn;
-        _timer = _fadeInTime;
     }
 
     public void FadeOut()
     {
+        if (FadeState.Idle == _fadeState)
+        {
+            _timer = _fadeOutTime;
+        }
+        else if (FadeState.FadeIn == _fadeState)
+        {
+            _timer = (1f - (_timer / _fadeInTime)) * _fadeOutTime;
+        }
         _fadeState = FadeState.FadeOut;
-        _timer = _fadeOutTime;
     }
 
     private void Start()

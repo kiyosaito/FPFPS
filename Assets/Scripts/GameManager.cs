@@ -12,6 +12,7 @@ public class GameManager : UnitySingleton<GameManager>
         _sceneNames.Add(GameScene.MainMenu, "MainMenu");
         _sceneNames.Add(GameScene.LevelSelect, "LevelSelect");
         _sceneNames.Add(GameScene.EndMenu, "Victory");
+        _sceneNames.Add(GameScene.Tutorial_1, "Tutorial 1");
         _sceneNames.Add(GameScene.Level_1, "Stage 1");
         _sceneNames.Add(GameScene.Level_2, "Stage 2");
         _sceneNames.Add(GameScene.Level_3, "Stage 3");
@@ -23,7 +24,7 @@ public class GameManager : UnitySingleton<GameManager>
 
     private class OptionsData : PersistableData
     {
-        public const int CurrentFormatVersion = 1;
+        public const int CurrentFormatVersion = 2;
 
         public float FileVersion = 0;
 
@@ -172,10 +173,9 @@ public class GameManager : UnitySingleton<GameManager>
     [SerializeField]
     private int _currentLevelProgress = -1;
 
-    private GameScene _currentLevel = GameScene.MainMenu;
-
     private List<GameScene> _levelProgression = new List<GameScene>
-        ( new GameScene[4] {
+        ( new GameScene[5] {
+            GameScene.Tutorial_1,
             GameScene.Level_1,
             GameScene.Level_2,
             GameScene.Level_3,
@@ -192,6 +192,7 @@ public class GameManager : UnitySingleton<GameManager>
 
     public enum GameScene
     {
+        Tutorial_1,
         Level_1,
         Level_2,
         Level_3,
@@ -295,11 +296,6 @@ public class GameManager : UnitySingleton<GameManager>
         set { _showTotalTimeComparison = value; }
     }
 
-    public GameScene CurrentLevel
-    {
-        get { return _currentLevel; }
-    }
-
     public bool Initialised
     {
         get { return _initialised; }
@@ -327,8 +323,6 @@ public class GameManager : UnitySingleton<GameManager>
     {
         _levelSelectMode = true;
 
-        _currentLevel = level;
-
         LoadLevel(level);
     }
 
@@ -337,9 +331,9 @@ public class GameManager : UnitySingleton<GameManager>
         _levelSelectMode = false;
 
         _currentLevelProgress = 0;
-        _currentLevel = _levelProgression[_currentLevelProgress];
+        SaveOptions();
 
-        LoadLevel(_currentLevel);
+        LoadLevel(_levelProgression[_currentLevelProgress]);
     }
 
     public void ContinueGame()
@@ -349,15 +343,24 @@ public class GameManager : UnitySingleton<GameManager>
         if (-1 == _currentLevelProgress)
         {
             ++_currentLevelProgress;
-            ++_levelReached;
+            _levelReached = Mathf.Max(_levelReached, _currentLevelProgress);
+            SaveOptions();
         }
 
-        _currentLevel = _levelProgression[_currentLevelProgress];
-
-        LoadLevel(_currentLevel);
+        LoadLevel(_levelProgression[_currentLevelProgress]);
     }
 
     public void LevelFinished()
+    {
+        if (!_levelSelectMode)
+        {
+            ++_currentLevelProgress;
+            _levelReached = Mathf.Max(_levelReached, _currentLevelProgress);
+            SaveOptions();
+        }
+    }
+
+    public void LoadNextLevel()
     {
         if (_levelSelectMode)
         {
@@ -366,20 +369,17 @@ public class GameManager : UnitySingleton<GameManager>
         }
         else
         {
-            ++_currentLevelProgress;
-            _levelReached = Mathf.Max(_levelReached, _currentLevelProgress);
-
-            _currentLevel = _levelProgression[_currentLevelProgress];
-
-            LoadLevel(_currentLevel);
+            LoadLevel(_levelProgression[_currentLevelProgress]);
         }
     }
 
     public void RestartLevel()
     {
-        if (_levelProgression.Contains(_currentLevel))
+        GameScene currentLevel = GetCurrentScene();
+
+        if (_levelProgression.Contains(currentLevel))
         {
-            LoadLevel(_currentLevel);
+            LoadLevel(currentLevel);
         }
     }
 

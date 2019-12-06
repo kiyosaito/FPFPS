@@ -10,9 +10,6 @@ public class ChargedWeaponEffect : MonoBehaviour
     private LineRenderer _line = null;
 
     [SerializeField]
-    private Transform _shotOrigin = null;
-
-    [SerializeField]
     private Animator _weaponAnimation = null;
 
     [SerializeField]
@@ -22,10 +19,10 @@ public class ChargedWeaponEffect : MonoBehaviour
     private GameObject _powerSpark = null;
 
     [SerializeField]
-    private GameObject chargedSoundEffect;
+    private GameObject chargedSoundEffect = null;
 
     [SerializeField]
-    private GameObject normalSoundEffect;
+    private GameObject normalSoundEffect = null;
     #endregion
 
     #region MonoBehaviour Functions
@@ -50,12 +47,6 @@ public class ChargedWeaponEffect : MonoBehaviour
 
     public void PlayShotEffect(bool charged, Vector3 targetPos)
     {
-        /*_line.SetPosition(0, _shotOrigin.position);
-        _line.SetPosition(1, targetPos);
-        _line.startColor = (charged ? Color.red : Color.yellow);
-        _line.endColor = (charged ? Color.red : Color.yellow);
-        _line.enabled = true;
-        Invoke("TurnOff", 0.25f);*/
         if (charged)
         {
             chargedSoundEffect.GetComponent<SFXRandomizer>().SoundEffect();

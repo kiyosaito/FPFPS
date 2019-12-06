@@ -81,6 +81,6 @@ public class PauseMenu : MonoBehaviour
     // TODO : Remove this later, temporarily added for demo build, should be on level finished menu script
     public void NextLevel()
     {
-        GameManager.Instance.LevelFinished();
+        GameManager.Instance.LoadNextLevel();
     }
 }

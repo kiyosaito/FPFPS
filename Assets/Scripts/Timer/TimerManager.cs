@@ -8,7 +8,7 @@ public class TimerManager : UnitySingleton<TimerManager>
 
     private class TimerData : PersistableData
     {
-        public const int CurrentFormatVersion = 1;
+        public const int CurrentFormatVersion = 3;
 
         public float FileVersion = 0;
         public float PBTotalTime = 0f;
@@ -453,6 +453,7 @@ public class TimerManager : UnitySingleton<TimerManager>
         }
 
         // TODO : Change to actual level finished menu
+        GameManager.Instance.LevelFinished();
         GameObject.Find("TempFinish").GetComponent<PauseMenu>().Pausing();
     }
 

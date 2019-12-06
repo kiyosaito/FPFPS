@@ -15,6 +15,12 @@ public class DebugSelectLevel : MonoBehaviour
         GameManager.Instance.ContinueGame();
     }
 
+    public void LevelFinished()
+    {
+        GameManager.Instance.LevelFinished();
+        GameObject.Find("TempFinish").GetComponent<PauseMenu>().Pausing();
+    }
+
     public void BackToMain()
     {
         GameManager.Instance.BackToMain();
